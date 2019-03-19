@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- status="OFF"，可以去掉，它的含义为是否记录log4j2本身的event信息，默认是OFF -->
+<configuration status="OFF" monitorInterval="1800">
+
+	<!-- 定义下面的引用名 -->
+	<Properties>
+		<!-- 先注释，正式部署后，再使用 -->
+		<Property name="basePath">${web:rootDir}</Property>
+		<Property name="every_file_size">20M</Property><!-- 日志切割的最小单位 -->
+		<Property name="output_log_level">debug</Property><!-- 日志输出级别 -->
+
+		<!--默认日志文件 -->
+		<Property name="file_name">${basePath}/logs/templog.log</Property>
+		<Property name="rolling_file_name">${basePath}/logs/templog-%d{yyyy-MM-dd}-%i.log.gz
+		</Property>
+		<Property name="log_pattern">%d{yyyy-MM-dd HH:mm:ss} %-5level %-20c{36}[%M:%L] - %msg%xEx%n</Property>
+
+		<!--默认异常日志文件 -->
+		<Property name="errorfile_name">${basePath}/logs/errorlog.log</Property>
+		<Property name="error_file_name">${basePath}/logs/errorlog-%d{yyyy-MM-dd}-%i.log.gz
+		</Property>
+
+		<!--默认控制台日志配置 -->
+		<Property name="console_pattern">%-5level %d{HH:mm:ss} %-20l - %msg%xEx%n</Property>
+	</Properties>
+
+	<!--先定义所有的Appenders -->
+	<Appenders>
+		<!--这个输出控制台的配置 -->
+		<Console name="Console" target="SYSTEM_OUT">
+			<!--控制台只输出level及以上级别的信息（onMatch），其他的直接拒绝（onMismatch） -->
+			<ThresholdFilter level="DEBUG" onMatch="ACCEPT"
+				onMismatch="DENY" />
+			<!--这个都知道是输出日志的格式 -->
+			<PatternLayout pattern="${console_pattern}" />
+		</Console>
+
+		<!--这个会打印出所有的信息，每次大小超过size，则这size大小的日志会自动存入按年份-月份建立的文件夹下面并进行压缩，作为存档 -->
+		<!-- 按月生成归档日志，可以使用 filePattern="logs/$${date:yyyy-MM}/app-%d{MM-dd-yyyy}-%i.log.gz" -->
+		<RollingFile name="RollingFile" fileName="${file_name}"
+			filePattern="${rolling_file_name}">
+			<Filters>
+				<ThresholdFilter level="DEBUG" onMatch="NEUTRAL"
+					onMismatch="DENY" />
+				<ThresholdFilter level="ERROR" onMatch="DENY"
+					onMismatch="ACCEPT" />
+			</Filters>
+
+			<PatternLayout pattern="${log_pattern}" />
+			<SizeBasedTriggeringPolicy
+				size="${every_file_size}" />
+		</RollingFile>
+
+		<RollingFile name="ErrorFile" fileName="${errorfile_name}"
+			filePattern="${error_file_name}">
+			<ThresholdFilter level="ERROR" onMatch="ACCEPT"
+				onMismatch="DENY" />
+			<PatternLayout pattern="${log_pattern}" />
+			<SizeBasedTriggeringPolicy
+				size="${every_file_size}" />
+		</RollingFile>
+
+		<!--如果需要配置多个Rollingfile地址，还需要在root下添加appender-ref ref="RollingFile1"/> 
+			<RollingFile name="RollingFile1" fileName="logs/app1.log" filePattern="logs/app1-%d{yyyy-MM-dd}-%i.log.gz"> 
+			<PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss z} %-5level %class{36} %L 
+			%M - %msg%xEx%n"/> <SizeBasedTriggeringPolicy size="10MB"/> </RollingFile> -->
+	</Appenders>
+
+	<!--然后定义Loggers，只有定义了Loggers并引入的Appender，Appender才会生效 -->
+	<Loggers>
+		<!-- 3rdparty Loggers -->
+		<logger name="org.springframework.core" level="error"></logger>
+		<logger name="org.springframework.beans" level="error"></logger>
+		<logger name="org.springframework.context" level="error"></logger>
+		<logger name="org.springframework.web" level="error"></logger>
+		<logger name="org.jboss.netty" level="error"></logger>
+		<logger name="org.apache.http" level="error"></logger>
+		<!--建立一个默认的Root的logger，需要在Root的level中指定输出的级别， -->
+		<Root level="${output_log_level}">
+			<Appender-ref ref="Console" />
+			<Appender-ref ref="RollingFile" />
+			<Appender-ref ref="ErrorFile" />
+		</Root>
+	</Loggers>
+
+</configuration>
