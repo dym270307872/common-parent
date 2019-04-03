@@ -12,6 +12,7 @@
         <module>common-core</module>
         <module>common-util</module>
         <module>common-log</module>
+        <module>common-cache</module>
     </modules>
 
 
