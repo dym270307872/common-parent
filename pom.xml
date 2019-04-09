@@ -19,7 +19,8 @@
     <properties>
 
         <!-- spring begin -->
-        <spring.version>4.3.14.RELEASE</spring.version>
+        <spring.version>4.3.19.RELEASE</spring.version>
+        <spring-data.version>1.13.15.RELEASE</spring-data.version>
         <!-- spring end -->
 
         <!-- druid begin -->
@@ -126,7 +127,7 @@
             <dependency>
                 <groupId>org.springframework.data</groupId>
                 <artifactId>spring-data-commons</artifactId>
-                <version>1.13.7.RELEASE</version>
+                <version>${spring-data.version}</version>
             </dependency>
 
 
