@@ -14,10 +14,10 @@ import java.util.Collections;
  * </p>
  * 
  * @author DYAOMING
- * @since 2019-04-03
+ * @since 2019-04-09
  * @version V1.0
  */
-public class MyCacheManager extends AbstractCacheManager {
+public class CacheManager extends AbstractCacheManager {
 
 	private String	name	= "default";
 	private long	timeout	= 300L;
@@ -34,6 +34,24 @@ public class MyCacheManager extends AbstractCacheManager {
 
 	public void setTimeout(long timeout) {
 		this.timeout = timeout;
+	}
+
+
+
+	/**
+	 * <p>
+	 * 加密标识设置
+	 * </p>
+	 * 
+	 * @param secret String类型 加密标识
+	 */
+	public void setSecret(String secret) {
+
+		if ("true".equalsIgnoreCase(secret)) {
+			this.secret = true;
+		} else {
+			this.secret = false;
+		}
 	}
 
 	private Collection<? extends Cache> caches = Collections.emptySet();

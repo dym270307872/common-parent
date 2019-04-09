@@ -1,8 +1,5 @@
 /**
- * <p>缓存配置包</p>
- * 
- * @author DYAOMING
- * @since 2019-04-03
- * @version V1.0
+ * <p>缓存基础包</p>
+ * @author DYM
  */
 package cn.dyaoming.cache;
