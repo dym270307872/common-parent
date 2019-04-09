@@ -27,17 +27,3 @@ hs_err_pid*
 .settings
 *.project
 *.classpath
-.settings
-/*.project
-.settings
-*.classpath
-*.project
-.settings
-.settings
-/common-log/*.project
-/common-log/*.iml
-/common-log/*.classpath
-.project
-commonutil.iml
-.settings
-.classpath
