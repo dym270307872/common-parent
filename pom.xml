@@ -264,7 +264,7 @@
         </dependencies>
     </dependencyManagement>
 
-    <distributionManagement>
+    <!-- <distributionManagement>
         <repository>
             <id>mY-repo-access</id>
             <name>Nexus Release Repository</name>
@@ -274,6 +274,19 @@
             <id>mY-repo-access</id>
             <name>Nexus Snapshot Repository</name>
             <url>http://localhost:8020/repository/maven-snapshots/</url>
+        </snapshotRepository>
+    </distributionManagement> -->
+    
+    <distributionManagement>
+        <!--<repository>
+            <id>maven-center-access</id>
+            <name>mavenCenter Release Repository</name>
+            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+        </repository>-->
+        <snapshotRepository>
+            <id>maven-center-access</id>
+            <name>mavenCenter Snapshot Repository</name>
+            <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
         </snapshotRepository>
     </distributionManagement>
 
