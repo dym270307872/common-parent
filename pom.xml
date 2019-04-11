@@ -287,6 +287,7 @@
             <id>maven-center-access</id>
             <name>mavenCenter Snapshot Repository</name>
             <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+            
         </snapshotRepository>
     </distributionManagement>
 
