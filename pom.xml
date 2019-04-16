@@ -1,308 +1,385 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
 
-    <groupId>cn.dyaoming.common</groupId>
-    <artifactId>common-parent</artifactId>
-    <packaging>pom</packaging>
-    <version>1.0.0-SNAPSHOT</version>
-    <modules>
-        <module>common-core</module>
-        <module>common-util</module>
-        <module>common-log</module>
-        <module>common-cache</module>
-    </modules>
-
-
-    <properties>
-
-        <!-- spring begin -->
-        <spring.version>4.3.19.RELEASE</spring.version>
-        <spring-data.version>1.13.15.RELEASE</spring-data.version>
-        <!-- spring end -->
-
-        <!-- druid begin -->
-        <druid.version>1.0.26</druid.version>
-        <!-- druid end -->
-
-        <!-- json begin -->
-        <jackson.version>2.8.1</jackson.version>
-        <fastjson.version>1.2.17</fastjson.version>
-        <!-- json end -->
-
-        <!-- servlet jsp jstl begin -->
-        <servlet-api.version>3.0.1</servlet-api.version>
-        <jsp-api.version>2.0</jsp-api.version>
-        <jstl.version>1.2</jstl.version>
-        <!-- servlet jsp jstl end -->
-
-        <!-- mybatis begin -->
-        <mybatis.version>3.3.0</mybatis.version>
-        <mybatis.spring.version>1.2.3</mybatis.spring.version>
-        <mybatis.mapper.version>3.3.9</mybatis.mapper.version>
-        <mybatis.paginator.version>5.0.0</mybatis.paginator.version>
-        <!-- mybatis end -->
-
-        <!-- log begin -->
-        <slf4j.version>1.7.24</slf4j.version>
-        <log4j.version>1.2.17</log4j.version>
-        <!-- log end -->
-
-        <!--文件start-->
-        <commons-io.version>2.1</commons-io.version>
-        <commons-lang3.version>3.1</commons-lang3.version>
-        <commons-fileupload.version>1.3.1-jenkins-1</commons-fileupload.version>
-        <commons-net.version>3.0.1</commons-net.version>
-        <!--文件end-->
-
-        <!-- junit begin -->
-        <junit.version>4.12</junit.version>
-        <!-- junit end  -->
-
-        <!-- 文件拷贝时的编码 -->
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <!-- 编译时的编码 -->
-        <maven.compiler.encoding>UTF-8</maven.compiler.encoding>
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
-    </properties>
-
-    <dependencyManagement>
-        <dependencies>
-            <!-- https://mvnrepository.com/artifact/com.alibaba/druid -->
-            <dependency>
-                <groupId>com.alibaba</groupId>
-                <artifactId>druid</artifactId>
-                <version>1.1.10</version>
-            </dependency>
-
-            <dependency>
-                <groupId>com.alibaba</groupId>
-                <artifactId>fastjson</artifactId>
-                <version>1.2.47</version>
-            </dependency>
-
-            <!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
-            <dependency>
-                <groupId>mysql</groupId>
-                <artifactId>mysql-connector-java</artifactId>
-                <version>5.1.38</version>
-            </dependency>
+	<groupId>cn.dyaoming.common</groupId>
+	<artifactId>common-parent</artifactId>
+	<packaging>pom</packaging>
+	<version>1.0.0-SNAPSHOT</version>
+	<modules>
+		<module>common-core</module>
+		<module>common-util</module>
+		<module>common-log</module>
+		<module>common-cache</module>
+	</modules>
 
 
-            <!-- https://mvnrepository.com/artifact/org.mybatis/mybatis -->
-            <dependency>
-                <groupId>org.mybatis</groupId>
-                <artifactId>mybatis</artifactId>
-                <version>${mybatis.version}</version>
-            </dependency>
 
-            <dependency>
-                <groupId>org.mybatis</groupId>
-                <artifactId>mybatis-spring</artifactId>
-                <version>${mybatis.spring.version}</version>
-            </dependency>
+	<properties>
 
-            <!-- mybatis plugins begin -->
-            <dependency>
-                <groupId>tk.mybatis</groupId>
-                <artifactId>mapper</artifactId>
-                <version>${mybatis.mapper.version}</version>
-            </dependency>
-            <!-- mybatis plugins end -->
+		<!-- spring begin -->
+		<spring.version>4.3.19.RELEASE</spring.version>
+		<spring-data.version>1.13.15.RELEASE</spring-data.version>
+		<!-- spring end -->
 
-            <!--pagehelep start -->
-            <dependency>
-                <groupId>com.github.pagehelper</groupId>
-                <artifactId>pagehelper</artifactId>
-                <version>${mybatis.paginator.version}</version>
-            </dependency>
-            <!--pagehelp end -->
+		<!-- druid begin -->
+		<druid.version>1.1.10</druid.version>
+		<mysql.version>5.1.38</mysql.version>
+		<oracle.version></oracle.version>
+		<!-- druid end -->
 
+		<!-- json begin -->
+		<jackson.version>2.8.1</jackson.version>
+		<fastjson.version>1.2.47</fastjson.version>
+		<!-- json end -->
 
-            <!-- Spring dependencies -->
-            <dependency>
-                <groupId>org.springframework.data</groupId>
-                <artifactId>spring-data-commons</artifactId>
-                <version>${spring-data.version}</version>
-            </dependency>
+		<!-- servlet jsp jstl begin -->
+		<servlet-api.version>3.1.0</servlet-api.version>
+		<jsp-api.version>2.0</jsp-api.version>
+		<freemarker.version>2.3.28</freemarker.version>
+		<jstl.version>1.2</jstl.version>
+		<taglibs.version>1.2.5</taglibs.version>
+		<!-- servlet jsp jstl end -->
 
+		<!-- mybatis begin -->
+		<mybatis.version>3.3.0</mybatis.version>
+		<mybatis.spring.version>1.2.3</mybatis.spring.version>
+		<mybatis.mapper.version>3.3.9</mybatis.mapper.version>
+		<mybatis.paginator.version>5.0.0</mybatis.paginator.version>
+		<!-- mybatis end -->
 
-            <!-- https://mvnrepository.com/artifact/org.springframework/spring-orm -->
-            <dependency>
-                <groupId>org.springframework</groupId>
-                <artifactId>spring-orm</artifactId>
-                <version>${spring.version}</version>
-            </dependency>
+		<!-- log begin -->
+		<slf4j.version>1.7.25</slf4j.version>
+		<log4j.version>1.2.17</log4j.version>
+		<log4j2.version>2.2</log4j2.version>
+		<!-- log end -->
 
-            <!--spring start -->
-            <!-- 添加Spring依赖 -->
-            <dependency>
-                <groupId>org.springframework</groupId>
-                <artifactId>spring-core</artifactId>
-                <version>${spring.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework</groupId>
-                <artifactId>spring-webmvc</artifactId>
-                <version>${spring.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework</groupId>
-                <artifactId>spring-context</artifactId>
-                <version>${spring.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework</groupId>
-                <artifactId>spring-context-support</artifactId>
-                <version>${spring.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework</groupId>
-                <artifactId>spring-aop</artifactId>
-                <version>${spring.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework</groupId>
-                <artifactId>spring-aspects</artifactId>
-                <version>${spring.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework</groupId>
-                <artifactId>spring-tx</artifactId>
-                <version>${spring.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework</groupId>
-                <artifactId>spring-jdbc</artifactId>
-                <version>${spring.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework</groupId>
-                <artifactId>spring-web</artifactId>
-                <version>${spring.version}</version>
-            </dependency>
-            <!--spring end -->
+		<!--文件组件 start -->
+		<commons-io.version>2.1</commons-io.version>
+		<commons-lang3.version>3.1</commons-lang3.version>
+		<commons-fileupload.version>1.3.1-jenkins-1</commons-fileupload.version>
+		<commons-net.version>3.0.1</commons-net.version>
+		<!--文件组件 end -->
 
-            <dependency>
-                <groupId>javax.servlet</groupId>
-                <artifactId>javax.servlet-api</artifactId>
-                <version>3.1.0</version>
-                <scope>provided</scope>
-            </dependency>
+		<!-- junit begin -->
+		<junit.version>4.12</junit.version>
+		<!-- junit end -->
 
-            <dependency>
-                <groupId>org.freemarker</groupId>
-                <artifactId>freemarker</artifactId>
-                <version>2.3.28</version>
-            </dependency>
+		<!-- 文件拷贝时的编码 -->
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<!-- 编译时的编码 -->
+		<maven.compiler.encoding>UTF-8</maven.compiler.encoding>
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<maven.compiler.target>1.8</maven.compiler.target>
+	</properties>
 
-            <dependency>
-                <groupId>javax.servlet.jsp.jstl</groupId>
-                <artifactId>jstl-api</artifactId>
-                <version>1.2</version>
-            </dependency>
-            <!-- https://mvnrepository.com/artifact/org.apache.taglibs/taglibs-standard-impl -->
-            <dependency>
-                <groupId>org.apache.taglibs</groupId>
-                <artifactId>taglibs-standard-impl</artifactId>
-                <version>1.2.5</version>
-            </dependency>
+	<dependencyManagement>
+		<dependencies>
+<!-- druid begin -->
+
+			<dependency>
+				<groupId>com.alibaba</groupId>
+				<artifactId>druid</artifactId>
+				<version>${druid.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>mysql</groupId>
+				<artifactId>mysql-connector-java</artifactId>
+				<version>${mysql.version}</version>
+			</dependency>
+			
+<!-- druid end -->
 
 
-            <!--log start -->
-            <dependency>
-                <groupId>org.slf4j</groupId>
-                <artifactId>slf4j-log4j12</artifactId>
-                <version>1.7.25</version>
-                <scope>test</scope>
-            </dependency>
-            <!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-api -->
-            <dependency>
-                <groupId>org.slf4j</groupId>
-                <artifactId>slf4j-api</artifactId>
-                <version>1.7.25</version>
-            </dependency>
+			<dependency>
+				<groupId>com.alibaba</groupId>
+				<artifactId>fastjson</artifactId>
+				<version>${fastjson.version}</version>
+			</dependency>
+			
 
-            <!-- https://mvnrepository.com/artifact/log4j/log4j -->
-            <dependency>
-                <groupId>log4j</groupId>
-                <artifactId>log4j</artifactId>
-                <version>1.2.17</version>
-            </dependency>
-            <!-- https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-core -->
-            <dependency>
-                <groupId>org.apache.logging.log4j</groupId>
-                <artifactId>log4j-core</artifactId>
-                <version>2.2</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.logging.log4j</groupId>
-                <artifactId>log4j-api</artifactId>
-                <version>2.2</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.logging.log4j</groupId>
-                <artifactId>log4j-web</artifactId>
-                <version>2.2</version>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework</groupId>
-                <artifactId>spring-test</artifactId>
-                <version>${spring.version}</version>
-                <scope>test</scope>
-            </dependency>
-            <dependency>
-                <groupId>junit</groupId>
-                <artifactId>junit</artifactId>
-                <version>4.12</version>
-                <scope>test</scope>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
 
-    <!-- <distributionManagement>
-        <repository>
-            <id>mY-repo-access</id>
-            <name>Nexus Release Repository</name>
-            <url>http://localhost:8020/repository/maven-releases/</url>
-        </repository>
-        <snapshotRepository>
-            <id>mY-repo-access</id>
-            <name>Nexus Snapshot Repository</name>
-            <url>http://localhost:8020/repository/maven-snapshots/</url>
-        </snapshotRepository>
-    </distributionManagement> -->
-    
-    <distributionManagement>
-        <!--<repository>
-            <id>maven-center-access</id>
-            <name>mavenCenter Release Repository</name>
-            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
-        </repository>-->
-        <snapshotRepository>
-            <id>maven-center-access</id>
-            <name>mavenCenter Snapshot Repository</name>
-            <url>https://oss.sonatype.org/content/repositories/snapshots/</url>            
-        </snapshotRepository>
-    </distributionManagement>
+			<dependency>
+				<groupId>org.mybatis</groupId>
+				<artifactId>mybatis</artifactId>
+				<version>${mybatis.version}</version>
+			</dependency>
 
-    <build>
-        <pluginManagement>
-            <plugins>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-compiler-plugin</artifactId>
-                    <configuration>
-                        <source>${maven.compiler.source}</source>
-                        <target>${maven.compiler.target}</target>
-                    </configuration>
-                </plugin>
-            </plugins>
-        </pluginManagement>
-    </build>
+			<dependency>
+				<groupId>org.mybatis</groupId>
+				<artifactId>mybatis-spring</artifactId>
+				<version>${mybatis.spring.version}</version>
+			</dependency>
+
+			<!-- mybatis plugins begin -->
+			<dependency>
+				<groupId>tk.mybatis</groupId>
+				<artifactId>mapper</artifactId>
+				<version>${mybatis.mapper.version}</version>
+			</dependency>
+			<!-- mybatis plugins end -->
+
+			<!--pagehelep start -->
+			<dependency>
+				<groupId>com.github.pagehelper</groupId>
+				<artifactId>pagehelper</artifactId>
+				<version>${mybatis.paginator.version}</version>
+			</dependency>
+			<!--pagehelp end -->
+
+
+			<!-- Spring dependencies -->
+			<dependency>
+				<groupId>org.springframework.data</groupId>
+				<artifactId>spring-data-commons</artifactId>
+				<version>${spring-data.version}</version>
+			</dependency>
+
+
+			<!-- https://mvnrepository.com/artifact/org.springframework/spring-orm -->
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-orm</artifactId>
+				<version>${spring.version}</version>
+			</dependency>
+
+			<!--spring start -->
+			<!-- 添加Spring依赖 -->
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-core</artifactId>
+				<version>${spring.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-webmvc</artifactId>
+				<version>${spring.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-context</artifactId>
+				<version>${spring.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-context-support</artifactId>
+				<version>${spring.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-aop</artifactId>
+				<version>${spring.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-aspects</artifactId>
+				<version>${spring.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-tx</artifactId>
+				<version>${spring.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-jdbc</artifactId>
+				<version>${spring.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-web</artifactId>
+				<version>${spring.version}</version>
+			</dependency>
+			<!--spring end -->
+
+
+			<dependency>
+				<groupId>javax.servlet</groupId>
+				<artifactId>javax.servlet-api</artifactId>
+				<version>${servlet-api.version}</version>
+				<scope>provided</scope>
+			</dependency>
+
+			<dependency>
+				<groupId>org.freemarker</groupId>
+				<artifactId>freemarker</artifactId>
+				<version>${freemarker.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>javax.servlet.jsp.jstl</groupId>
+				<artifactId>jstl-api</artifactId>
+				<version>${jstl.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.taglibs</groupId>
+				<artifactId>taglibs-standard-impl</artifactId>
+				<version>${taglibs.version}</version>
+			</dependency>
+
+
+			<!--log start -->
+			<dependency>
+				<groupId>org.slf4j</groupId>
+				<artifactId>slf4j-log4j12</artifactId>
+				<version>${slf4j.version}</version>
+				<scope>test</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.slf4j</groupId>
+				<artifactId>slf4j-api</artifactId>
+				<version>${slf4j.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>log4j</groupId>
+				<artifactId>log4j</artifactId>
+				<version>${log4j.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.logging.log4j</groupId>
+				<artifactId>log4j-core</artifactId>
+				<version>${log4j2.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.logging.log4j</groupId>
+				<artifactId>log4j-api</artifactId>
+				<version>${log4j2.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.logging.log4j</groupId>
+				<artifactId>log4j-web</artifactId>
+				<version>${log4j2.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-test</artifactId>
+				<version>${spring.version}</version>
+				<scope>test</scope>
+			</dependency>
+			<dependency>
+				<groupId>junit</groupId>
+				<artifactId>junit</artifactId>
+				<version>${junit.version}</version>
+				<scope>test</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+	<!-- <distributionManagement> <repository> <id>mY-repo-access</id> <name>Nexus 
+		Release Repository</name> <url>http://localhost:8020/repository/maven-releases/</url> 
+		</repository> <snapshotRepository> <id>mY-repo-access</id> <name>Nexus Snapshot 
+		Repository</name> <url>http://localhost:8020/repository/maven-snapshots/</url> 
+		</snapshotRepository> </distributionManagement> -->
+
+	<distributionManagement>
+		<repository>
+			<id>maven-center-access</id>
+			<name>mavenCenter Release Repository</name>
+			<url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+		</repository>
+		<snapshotRepository>
+			<id>maven-center-access</id>
+			<name>mavenCenter Snapshot Repository</name>
+			<url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+		</snapshotRepository>
+	</distributionManagement>
+
+	<build>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<configuration>
+						<source>${maven.compiler.source}</source>
+						<target>${maven.compiler.target}</target>
+					</configuration>
+				</plugin>
+				<!-- <plugin> <groupId>org.apache.maven.plugins</groupId> <artifactId>maven-surefire-plugin</artifactId> 
+					<version>2.9</version> <configuration> <skip>true</skip> </configuration> 
+					</plugin> -->
+				<!-- <plugin> <groupId>org.apache.maven.plugins</groupId> <artifactId>maven-plugin-plugin</artifactId> 
+					<version>3.3</version> <configuration> <skipErrorNoDescriptorsFound>true</skipErrorNoDescriptorsFound> 
+					</configuration> <executions> <execution> <id>mojo-descriptor</id> <goals> 
+					<goal>descriptor</goal> </goals> </execution> </executions> </plugin> -->
+				<!-- Source -->
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-source-plugin</artifactId>
+					<version>3.0.1</version>
+					<executions>
+						<execution>
+							<id>attach-sources</id>
+							<goals>
+								<goal>jar</goal>
+							</goals>
+						</execution>
+					</executions>
+				</plugin>
+				<!-- Javadoc -->
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-javadoc-plugin</artifactId>
+					<configuration>
+						<quiet>true</quiet>
+						<nonavbar>true</nonavbar>
+						<notree>true</notree>
+						<nocomment>true</nocomment>
+						<show>private</show>
+						<nohelp>true</nohelp>
+						<charset>UTF-8</charset>
+						<encoding>UTF-8</encoding>
+						<docencoding>UTF-8</docencoding>
+						<additionalparam>-Xdoclint:none</additionalparam>  <!-- TODO 临时解决不规范的javadoc生成报错,后面要规范化后把这行去掉 -->
+
+					</configuration>
+					<executions>
+						<execution>
+							<id>attach-javadocs</id>
+							<goals>
+								<goal>jar</goal>
+							</goals>
+						</execution>
+					</executions>
+				</plugin>
+				<!-- GPG -->
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-gpg-plugin</artifactId>
+					<version>1.5</version>
+					<executions>
+						<execution>
+							<phase>verify</phase>
+							<goals>
+								<goal>sign</goal>
+							</goals>
+						</execution>
+					</executions>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
+
+	<licenses>
+		<license>
+			<name>The Apache Software License, Version 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+		</license>
+	</licenses>
+	<developers>
+		<developer>
+			<name>dyaoming</name>
+			<email>270307872@qq.com</email>
+		</developer>
+	</developers>
+	<scm>
+		<connection>scm:git:git@github.com:dym270307872/common-parent.git</connection>
+		<developerConnection>scm:git:git@github.com:dym270307872/common-parent.git</developerConnection>
+		<url>https://github.com/dym270307872/common-parent</url>
+	</scm>
 
 </project>
