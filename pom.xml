@@ -7,17 +7,18 @@
 	<groupId>cn.dyaoming.common</groupId>
 	<artifactId>common-parent</artifactId>
 	<packaging>pom</packaging>
-	<version>1.0.0-SNAPSHOT</version>
+	<version>${this.version}</version>
 	<modules>
 		<module>common-core</module>
 		<module>common-util</module>
-		<module>common-log</module>
+		<!-- <module>common-log</module> -->
 		<module>common-cache</module>
 	</modules>
 
 
 
 	<properties>
+		<this.version>0.0.1</this.version>
 
 		<!-- spring begin -->
 		<spring.version>4.3.19.RELEASE</spring.version>
@@ -78,6 +79,28 @@
 
 	<dependencyManagement>
 		<dependencies>
+		<dependency>
+			<groupId>cn.dyaoming.common</groupId>
+			<artifactId>common-core</artifactId>
+			<version>${this.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>cn.dyaoming.common</groupId>
+			<artifactId>common-util</artifactId>
+			<version>${this.version}</version>
+		</dependency>
+		<!-- <dependency>
+			<groupId>cn.dyaoming.common</groupId>
+			<artifactId>common-log</artifactId>
+			<version>${this.version}</version>
+		</dependency> -->
+		<dependency>
+			<groupId>cn.dyaoming.common</groupId>
+			<artifactId>common-cache</artifactId>
+			<version>${this.version}</version>
+		</dependency>
+		
+		
 <!-- druid begin -->
 
 			<dependency>

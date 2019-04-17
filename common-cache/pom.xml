@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>cn.dyaoming.common</groupId>
 		<artifactId>common-parent</artifactId>
-		<version>1.0.0-SNAPSHOT</version>
+		<version>0.0.1</version>
 	</parent>
 	<artifactId>common-cache</artifactId>
 
@@ -13,12 +13,10 @@
 		<dependency>
 			<groupId>cn.dyaoming.common</groupId>
 			<artifactId>common-core</artifactId>
-			<version>1.0.0-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>cn.dyaoming.common</groupId>
 			<artifactId>common-util</artifactId>
-			<version>1.0.0-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
 
