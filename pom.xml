@@ -7,7 +7,7 @@
 	<groupId>cn.dyaoming.common</groupId>
 	<artifactId>common-parent</artifactId>
 	<packaging>pom</packaging>
-	<version>${this.version}</version>
+	<version>1.0.0-SNAPSHOT</version>
 	<modules>
 		<module>common-core</module>
 		<module>common-util</module>
@@ -18,7 +18,7 @@
 
 
 	<properties>
-		<this.version>0.0.1</this.version>
+		<this.version>1.0.0-SNAPSHOT</this.version>
 
 		<!-- spring begin -->
 		<spring.version>4.3.19.RELEASE</spring.version>
