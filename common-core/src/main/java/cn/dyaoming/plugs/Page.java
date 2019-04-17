@@ -321,16 +321,16 @@ public class Page<E> extends ArrayList<E> {
 
     @Override
     public String toString() {
-        return "Page{" +
-                "count=" + count +
-                ", pageNum=" + pageNum +
-                ", pageSize=" + pageSize +
-                ", startRow=" + startRow +
-                ", endRow=" + endRow +
-                ", total=" + total +
-                ", pages=" + pages +
-                ", reasonable=" + reasonable +
-                ", pageSizeZero=" + pageSizeZero +
-                '}';
+        return "Page{" 
+		    + "count=" + count 
+		    + ", pageNum=" + pageNum 
+		    + ", pageSize=" + pageSize 
+		    + ", startRow=" + startRow 
+            + ", endRow=" + endRow 
+            + ", total=" + total 
+            + ", pages=" + pages 
+            + ", reasonable=" + reasonable 
+            + ", pageSizeZero=" + pageSizeZero 
+            + '}';
     }
 }
