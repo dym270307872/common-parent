@@ -292,13 +292,22 @@
 		</dependencies>
 	</dependencyManagement>
 
-	<!-- <distributionManagement> <repository> <id>mY-repo-access</id> <name>Nexus 
-		Release Repository</name> <url>http://localhost:8020/repository/maven-releases/</url> 
-		</repository> <snapshotRepository> <id>mY-repo-access</id> <name>Nexus Snapshot 
-		Repository</name> <url>http://localhost:8020/repository/maven-snapshots/</url> 
-		</snapshotRepository> </distributionManagement> -->
-
 	<distributionManagement>
+	<repository>
+		<id>mY-repo-access</id>
+		<name>Nexus 
+		Release Repository</name>
+		<url>http://localhost:8020/repository/maven-releases/</url>
+	</repository>
+	<snapshotRepository>
+		<id>mY-repo-access</id>
+		<name>Nexus Snapshot 
+		Repository</name>
+		<url>http://localhost:8020/repository/maven-snapshots/</url>
+	</snapshotRepository>
+</distributionManagement>
+
+	<!-- <distributionManagement>
 		<repository>
 			<id>maven-center-access</id>
 			<name>mavenCenter Release Repository</name>
@@ -309,7 +318,7 @@
 			<name>mavenCenter Snapshot Repository</name>
 			<url>https://oss.sonatype.org/content/repositories/snapshots/</url>
 		</snapshotRepository>
-	</distributionManagement>
+	</distributionManagement> -->
 
 	<build>
 		<pluginManagement>
