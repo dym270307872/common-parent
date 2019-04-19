@@ -389,6 +389,7 @@
 					<version>1.6</version>
 					<executions>
 						<execution>
+						<id>default</id>
 							<phase>verify</phase>
 							<goals>
 								<goal>sign</goal>
