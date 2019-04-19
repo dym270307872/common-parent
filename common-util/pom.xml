@@ -16,6 +16,7 @@
 		<dependency>
 			<groupId>cn.dyaoming.common</groupId>
 			<artifactId>common-core</artifactId>
+			<version>0.0.1</version>
 		</dependency>
 		<dependency>
 			<groupId>com.alibaba</groupId>
