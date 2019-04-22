@@ -8,11 +8,14 @@
 	<artifactId>common-parent</artifactId>
 	<packaging>pom</packaging>
 	<version>0.0.1</version>
+<<<<<<< HEAD
 
 	<name>common-parent</name>
 	<url>https://github.com/dym270307872/common-parent</url>
 	<description>通用配置包，此项目是本人根据日常使用时碰到的问题，对一些常用信息进行了封装，目的是简化开发时配置项目信息。此项目包含了core，util，log等多个子项目，并且后续还会继续扩展。</description>
 
+=======
+>>>>>>> eb1d6c2b1e1cb79dcf1750cc9427acc56f0dda88
 	<modules>
 		<module>common-core</module>
 		<module>common-util</module>
