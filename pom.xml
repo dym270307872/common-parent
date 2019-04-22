@@ -15,7 +15,9 @@
 
 	<modules>
 		<module>common-core</module>
-		<!-- <module>common-util</module> <module>common-log</module> <module>common-cache</module> -->
+		<module>common-util</module>
+		<module>common-log</module>
+		<module>common-cache</module>
 	</modules>
 
 
@@ -403,7 +405,6 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-gpg-plugin</artifactId>
-				<version>1.6</version>
 				<executions>
 					<execution>
 						<id>default</id>

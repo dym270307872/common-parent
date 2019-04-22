@@ -95,18 +95,13 @@ public interface CacheBatchInterface {
 	 * 功能描述：获取缓存内容。
 	 * <p/>
 	 * 创建时间：2018-07-13
-	 * <p/>
-	 * 创建人： DYM
-	 * <p/>
-	 * 修改人：无
-	 * <p/>
-	 * 修改时间：无
-	 * <p/>
-	 * 修改备注：无
+	 *
+	 *@param <T> bean类型
 	 *
 	 * @param key String类型 键
 	 * @param type Class<T>类型 内容类型
 	 * @return T类型 返回结果
+	 * @throws AppDaoException 数据层异常类
 	 */
 	public <T> T getCacheTData(String key, Class<T> type) throws AppDaoException;
 
@@ -116,16 +111,8 @@ public interface CacheBatchInterface {
 	 * 描述： redis设置Map
 	 * <p/>
 	 * 创建时间：2017-03-23
-	 * <p/>
-	 * 创建人： 董耀明
-	 * <p/>
-	 * 修改人：无
-	 * <p/>
-	 * 修改时间：无
-	 * <p/>
-	 * 修改备注：无
-	 * <p/>
-	 * 版本：V1.0
+	 * 
+	 * @version 0.0.1
 	 */
 	public boolean setMap(String redisKey, final Map<String, String> args) throws AppDaoException;
 
@@ -144,7 +131,7 @@ public interface CacheBatchInterface {
 	 * <p/>
 	 * 修改备注：无
 	 * <p/>
-	 * 版本：V1.0
+	 * @version 0.0.1
 	 */
 	public Map<String, String> getMap(String redisKey) throws AppDaoException;
 
@@ -175,7 +162,7 @@ public interface CacheBatchInterface {
 	 * <p/>
 	 * 修改备注：无
 	 * <p/>
-	 * 版本：V1.0
+	 * @version 0.0.1
 	 */
 	public void putToMap(String redisKey, String key, String value) throws AppDaoException;
 

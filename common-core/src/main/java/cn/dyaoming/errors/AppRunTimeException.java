@@ -9,7 +9,7 @@ import java.io.PrintWriter;
  * <p>系统业务层异常</p>
  *
  * @author DYAOMING
- * @version V1.0
+ * @version 0.0.1
  * @since 2019-3-13
  */
 public class AppRunTimeException extends RuntimeException {

@@ -7,7 +7,7 @@ package cn.dyaoming.models;
  * @param <E> 实体类型 
  * @author DYAOMING
  * @since 2019-04-17
- * @version V1.0
+ * @version 0.0.1
  */
 public class ModelResult<E> extends ApiResult {
 

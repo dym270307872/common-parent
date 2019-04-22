@@ -15,7 +15,7 @@ import java.util.Collections;
  * 
  * @author DYAOMING
  * @since 2019-04-09
- * @version V1.0
+ * @version 0.0.1
  */
 public class CacheManager extends AbstractCacheManager {
 

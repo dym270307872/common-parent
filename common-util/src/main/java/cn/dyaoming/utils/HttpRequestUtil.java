@@ -12,32 +12,18 @@ import java.util.Map;
 
 /**
  * 类名称：HttpRequestUtil
- * <p/>
- * 类描述：
- * <p/>
- * 创建时间：2017年4月15日
- * <p/>
- * 创建人： 董耀明
- * <p/>
- * 修改人：无
- * <p/>
- * 修改时间：无
- * <p/>
- * 修改备注：无
- * <p/>
- * 版本：v1.0
+ *@author DYAOMING
+ *@serial 2019-04-21
+ * @version 0.0.1
  */
 public class HttpRequestUtil {
 
 	/**
 	 * * 功能描述：向指定URL发送GET方法的请求。
-	 * <p/>
-	 * 创建时间：2016-03-17
-	 * <p/>
-	 * 创建人： 董耀明
+	 *
 	 *
 	 * @param url   String类型 发送请求的URL
-	 * @param param String类型 请求参数应该是 name1=value1&name2=value2 的形式。
+	 * @param param String类型 请求参数。
 	 * @return String类型   URL所代表远程资源的响应结果
 	 */
 	public static String sendGet(String url, String param) {
@@ -95,7 +81,7 @@ public class HttpRequestUtil {
 	 * 向指定 URL 发送POST方法的请求
 	 *
 	 * @param url   发送请求的 URL
-	 * @param param 请求参数，请求参数应该是 name1=value1&name2=value2 的形式。
+	 * @param param 请求参数，。
 	 * @return 所代表远程资源的响应结果
 	 */
 	public static String sendPost(String url, String param) {
@@ -149,13 +135,10 @@ public class HttpRequestUtil {
 
 	/**
 	 * 功能描述：向指定URL发送GET方法的请求。
-	 * <p/>
-	 * 创建时间：2016-03-17
-	 * <p/>
-	 * 创建人： 董耀明
+	 * 
 	 *
 	 * @param url   String类型 发送请求的URL
-	 * @param param Map类型 请求参数应该是 name1=value1&name2=value2 的形式。
+	 * @param param Map类型 请求参数。
 	 * @return String类型   URL所代表远程资源的响应结果
 	 */
 	public static String sendGet(String url, Map<String, Object> param) {
@@ -207,13 +190,10 @@ public class HttpRequestUtil {
 
 	/**
 	 * 功能描述：向指定URL发送POST方法的请求。
-	 * <p/>
-	 * 创建时间：2016-03-17
-	 * <p/>
-	 * 创建人： 董耀明
+	 * 
 	 *
 	 * @param url   String类型 发送请求的URL
-	 * @param param Map类型 请求参数应该是 name1=value1&name2=value2 的形式。
+	 * @param param Map类型 请求参数。
 	 * @return String类型   URL所代表远程资源的响应结果
 	 */
 	public static String sendPost(String url, Map<String, Object> param) {

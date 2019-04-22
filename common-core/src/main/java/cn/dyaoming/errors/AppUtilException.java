@@ -7,7 +7,7 @@ import java.io.PrintWriter;
  * <p> 通用工具运行异常类。 </p>
  *
  * @author DYAOMING
- * @version V1.0
+ * @version 0.0.1
  * @since 2019.3.13
  */
 public class AppUtilException extends RuntimeException {

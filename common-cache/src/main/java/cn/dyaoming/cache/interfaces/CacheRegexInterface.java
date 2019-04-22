@@ -274,7 +274,7 @@ public interface CacheRegexInterface {
 	 * <P/>
 	 * 修改备注：无
 	 * <P/>
-	 * 版本：V1.0
+	 * @version 0.0.1
 	 */
 	public boolean setMap(String redisKey, final Map<String, String> args) throws AppDaoException;
 
@@ -293,7 +293,7 @@ public interface CacheRegexInterface {
 	 * <P/>
 	 * 修改备注：无
 	 * <P/>
-	 * 版本：V1.0
+	 * @version 0.0.1
 	 */
 	public Map<String, String> getMap(String redisKey) throws AppDaoException;
 
@@ -312,7 +312,7 @@ public interface CacheRegexInterface {
 	 * <P/>
 	 * 修改备注：无
 	 * <P/>
-	 * 版本：V1.0
+	 * @version 0.0.1
 	 */
 	public String getFromMap(String redisKey, String mapKey) throws AppDaoException;
 
@@ -331,7 +331,7 @@ public interface CacheRegexInterface {
 	 * <P/>
 	 * 修改备注：无
 	 * <P/>
-	 * 版本：V1.0
+	 * @version 0.0.1
 	 */
 	public void putToMap(String redisKey, String key, String value) throws AppDaoException;
 
@@ -350,7 +350,7 @@ public interface CacheRegexInterface {
 	 * <P/>
 	 * 修改备注：无
 	 * <P/>
-	 * 版本：V1.0
+	 * @version 0.0.1
 	 */
 	public void clear() throws AppDaoException;
 

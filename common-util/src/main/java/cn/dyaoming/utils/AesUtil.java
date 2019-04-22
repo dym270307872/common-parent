@@ -19,7 +19,7 @@ import javax.crypto.spec.SecretKeySpec;
  * 
  * @author DYAOMING
  * @since 2019-04-09
- * @version V1.0
+ * @version 0.0.1
  */
 public class AesUtil {
 
@@ -139,49 +139,6 @@ public class AesUtil {
 
 
 
-	/**
-	 * 功能描述：AES加密 方法。
-	 * 
-	 * 创建时间：2016-03-17
-	 * 
-	 * 创建人： 于昌亮
-	 * 
-	 * @param encryptString String类型 要加密的数据
-	 * @param encryptKey String类型 加密时使用的KEY
-	 * @return byte[]类型 加密后结果
-	 */
-	public static byte[] encrypt_ECB模式(String encryptString, String encryptKey) {
-		try {
-			if (encryptKey == null) {
-				System.out.print("Key为空null");
-				return null;
-			}
-
-			// 判断Key是否为16位
-			if (encryptKey.length() != 16) {
-				System.out.print("Key长度不是16位");
-				return null;
-			}
-
-			byte[] raw = encryptKey.getBytes("UTF-8");
-			SecretKeySpec skeySpec = new SecretKeySpec(raw, "AES");
-			// "算法/模式/补码方式"
-			Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
-
-			cipher.init(Cipher.ENCRYPT_MODE, skeySpec);
-			byte[] encrypted = cipher.doFinal(encryptString.getBytes("UTF-8"));
-
-			// 此处不使用BASE64做转码功能。
-			return encrypted;
-
-		} catch(Exception e) {
-			System.out.println(e.toString());
-			e.printStackTrace();
-
-			return null;
-		}
-
-	}
 
 
 
@@ -231,53 +188,6 @@ public class AesUtil {
 	}
 
 
-
-	/**
-	 * 功能描述：AES解密 方法。
-	 * 
-	 * 创建时间：2016-03-17
-	 * 
-	 * 创建人： 于昌亮
-	 * 
-	 * @param decryptString byte[]类型 要解密的数据（需要使用Base64将字符串转换成byte[]）
-	 * @param decryptKey String类型 解密时使用的KEY
-	 * @return String类型 解密后结果
-	 */
-	public static byte[] decrypt_ECB模式(byte[] decryptString, String decryptKey) {
-		try {
-			// 判断Key是否正确
-			if (decryptKey == null) {
-				System.out.print("Key为空null");
-				return null;
-			}
-
-			// 判断Key是否为16位
-			if (decryptKey.length() != 16) {
-				System.out.print("Key长度不是16位");
-				return null;
-			}
-
-			byte[] raw = decryptKey.getBytes("UTF-8");
-
-			SecretKeySpec skeySpec = new SecretKeySpec(raw, "AES");
-			Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
-			cipher.init(Cipher.DECRYPT_MODE, skeySpec);
-
-			try {
-				byte[] original = cipher.doFinal(decryptString);
-				return original;
-
-			} catch(Exception e) {
-				System.out.println(e.toString());
-				return null;
-			}
-		} catch(Exception e) {
-			System.out.println(e.toString());
-			e.printStackTrace();
-
-			return null;
-		}
-	}
 
 
 

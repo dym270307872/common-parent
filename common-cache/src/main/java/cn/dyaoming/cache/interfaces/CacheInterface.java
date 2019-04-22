@@ -230,7 +230,7 @@ public interface CacheInterface {
 	 * <p/>
 	 * 修改备注：无
 	 * <p/>
-	 * 版本：V1.0
+	 * @version 0.0.1
 	 * 
 	 * @throws AppDaoException dao层异常类
 	 */
