@@ -110,7 +110,7 @@ public class SystemCache implements Cache {
 	/** (non-Javadoc)
 	 * @param <T> 泛型类型
 	 * @param key Object类型 缓存对象的键对象
-	 * @param valueLoader Callable<T>类型 序列化类
+	 * @param valueLoader Callable类型 序列化类
 	 * @return 返还对象
 	 */
 	public <T> T get(Object key, Callable<T> valueLoader) {

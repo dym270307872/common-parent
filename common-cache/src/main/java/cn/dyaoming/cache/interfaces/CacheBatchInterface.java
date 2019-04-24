@@ -24,7 +24,7 @@ public interface CacheBatchInterface {
 	 * 功能描述：获取 keys。
 	 * 
 	 * @param pattern String类型 key的表达式，也可以使用通配符(*)
-	 * @return Collection<String>类型 返回结果
+	 * @return Collection类型 返回结果
 	 * @throws AppDaoException 异常内容
 	 */
 	public Collection<String> getKeys(String pattern) throws AppDaoException;
@@ -46,7 +46,7 @@ public interface CacheBatchInterface {
 	/**
 	 * 功能描述：批量删除缓存内容。
 	 *
-	 * @param key List<String>类型 键
+	 * @param key List类型 键
 	 * @return boolean类型 返回结果
 	 * @throws AppDaoException 异常内容
 	 */
@@ -59,7 +59,7 @@ public interface CacheBatchInterface {
 	 * 
 	 * @param <T> bean类型
 	 * @param key String类型 键
-	 * @param type Class<T>类型 内容类型
+	 * @param type Class类型 内容类型
 	 * @return T类型 返回结果
 	 * @throws AppDaoException 数据层异常类
 	 */
