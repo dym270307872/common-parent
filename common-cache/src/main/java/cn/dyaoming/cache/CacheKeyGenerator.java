@@ -15,7 +15,7 @@ import org.springframework.util.ClassUtils;
  * 
  * @author DYAOMING
  * @since 2019-04-09
- * @version V1.0
+ * @version 0.0.1
  */
 public class CacheKeyGenerator implements KeyGenerator {
 
@@ -27,7 +27,6 @@ public class CacheKeyGenerator implements KeyGenerator {
 	 * 空参时key规则
 	 */
 	public static final int	NULL_PARAM_KEY	= 53;
-
 
 
 	@Override

@@ -6,16 +6,6 @@ import cn.dyaoming.errors.AppDaoException;
 
 /**
  * 功能描述：缓存接口类。
- * <p/>
- * 创建时间：2018-07-13
- * <p/>
- * 创建人： DYM
- * <p/>
- * 修改人：无
- * <p/>
- * 修改时间：无
- * <p/>
- * 修改备注：无
  */
 public interface CacheInterface {
 
@@ -37,17 +27,7 @@ public interface CacheInterface {
 
 	/**
 	 * 功能描述：判断是否存在键值。
-	 * <p/>
-	 * 创建时间：2018-07-13
-	 * <p/>
-	 * 创建人： DYM
-	 * <p/>
-	 * 修改人：无
-	 * <p/>
-	 * 修改时间：无
-	 * <p/>
-	 * 修改备注：无
-	 *
+	 * 
 	 * @param key String类型 键
 	 * @return boolean类型 返回结果
 	 * @throws AppDaoException dao层异常类
@@ -58,17 +38,7 @@ public interface CacheInterface {
 
 	/**
 	 * 功能描述：设置缓存对象类型内容。
-	 * <p/>
-	 * 创建时间：2018-07-13
-	 * <p/>
-	 * 创建人： DYM
-	 * <p/>
-	 * 修改人：无
-	 * <p/>
-	 * 修改时间：无
-	 * <p/>
-	 * 修改备注：无
-	 *
+	 * 
 	 * @param key Object类型 键
 	 * @param value Object类型 内容
 	 * @return boolean类型 返回结果
@@ -80,17 +50,7 @@ public interface CacheInterface {
 
 	/**
 	 * 功能描述：设置缓存对象类型内容。
-	 * <p/>
-	 * 创建时间：2018-07-13
-	 * <p/>
-	 * 创建人： DYM
-	 * <p/>
-	 * 修改人：无
-	 * <p/>
-	 * 修改时间：无
-	 * <p/>
-	 * 修改备注：无
-	 *
+	 * 
 	 * @param key String类型 键
 	 * @param value Object类型 内容
 	 * @param validTime long类型 有效时间（单位：秒）
@@ -104,17 +64,7 @@ public interface CacheInterface {
 
 	/**
 	 * 功能描述：设置缓存对象类型内容。
-	 * <p/>
-	 * 创建时间：2018-07-13
-	 * <p/>
-	 * 创建人： DYM
-	 * <p/>
-	 * 修改人：无
-	 * <p/>
-	 * 修改时间：无
-	 * <p/>
-	 * 修改备注：无
-	 *
+	 * 
 	 * @param key Object类型 键
 	 * @param value Object类型 内容
 	 * @param secret boolean类型 加密标识
@@ -128,17 +78,7 @@ public interface CacheInterface {
 
 	/**
 	 * 功能描述：设置缓存对象类型内容。
-	 * <p/>
-	 * 创建时间：2018-07-13
-	 * <p/>
-	 * 创建人： DYM
-	 * <p/>
-	 * 修改人：无
-	 * <p/>
-	 * 修改时间：无
-	 * <p/>
-	 * 修改备注：无
-	 *
+	 * 
 	 * @param key String类型 键
 	 * @param value Object类型 内容
 	 * @param validTime long类型 有效时间（单位：秒）
@@ -154,17 +94,7 @@ public interface CacheInterface {
 
 	/**
 	 * 功能描述：删除缓存内容。
-	 * <p/>
-	 * 创建时间：2018-07-13
-	 * <p/>
-	 * 创建人： DYM
-	 * <p/>
-	 * 修改人：无
-	 * <p/>
-	 * 修改时间：无
-	 * <p/>
-	 * 修改备注：无
-	 *
+	 * 
 	 * @param key String类型 键
 	 * @return boolean类型 返回结果
 	 * @throws AppDaoException dao层异常类
@@ -175,17 +105,7 @@ public interface CacheInterface {
 
 	/**
 	 * 功能描述：获取缓存内容。
-	 * <p/>
-	 * 创建时间：2018-07-13
-	 * <p/>
-	 * 创建人： DYM
-	 * <p/>
-	 * 修改人：无
-	 * <p/>
-	 * 修改时间：无
-	 * <p/>
-	 * 修改备注：无
-	 *
+	 * 
 	 * @param key String类型 键
 	 * @return Object类型 返回结果
 	 * @throws AppDaoException dao层异常类
@@ -196,20 +116,10 @@ public interface CacheInterface {
 
 	/**
 	 * 功能描述：获取缓存内容。
-	 * <p/>
-	 * 创建时间：2018-07-13
-	 * <p/>
-	 * 创建人： DYM
-	 * <p/>
-	 * 修改人：无
-	 * <p/>
-	 * 修改时间：无
-	 * <p/>
-	 * 修改备注：无
-	 *
+	 * 
 	 * @param <T> 泛型对象，标明返回值泛型
 	 * @param key String类型 键
-	 * @param type Class<T>类型 内容类型
+	 * @param type Class类型 内容类型
 	 * @return T类型 返回结果
 	 * @throws AppDaoException dao层异常类
 	 */
@@ -219,19 +129,8 @@ public interface CacheInterface {
 
 	/**
 	 * 描述：清空缓存
-	 * <p/>
-	 * 创建时间：2017-03-23
-	 * <p/>
-	 * 创建人： 董耀明
-	 * <p/>
-	 * 修改人：无
-	 * <p/>
-	 * 修改时间：无
-	 * <p/>
-	 * 修改备注：无
-	 * <p/>
-	 * 版本：V1.0
 	 * 
+	 * @version 0.0.1
 	 * @throws AppDaoException dao层异常类
 	 */
 	public void clear() throws AppDaoException;

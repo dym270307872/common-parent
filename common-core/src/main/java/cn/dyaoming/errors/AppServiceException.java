@@ -10,7 +10,7 @@ import java.io.PrintWriter;
  *
  * @author DYAOMING
  * @since 2019-3-13
- * @version  V1.0
+ * @version  0.0.1
  */
 public class AppServiceException extends RuntimeException {
 	private static final long serialVersionUID = 1L;

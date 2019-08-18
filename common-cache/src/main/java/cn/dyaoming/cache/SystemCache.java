@@ -107,6 +107,12 @@ public class SystemCache implements Cache {
 
 
 
+	/** (non-Javadoc)
+	 * @param <T> 泛型类型
+	 * @param key Object类型 缓存对象的键对象
+	 * @param valueLoader Callable类型 序列化类
+	 * @return 返还对象
+	 */
 	public <T> T get(Object key, Callable<T> valueLoader) {
 		return null;
 	}
@@ -173,9 +179,12 @@ public class SystemCache implements Cache {
 
 
 
+	/**
+	 * @param secret 加密标识
+	 */
 	public void setSecret(String secret) {
 
-		if (secret.equalsIgnoreCase("true")) {
+		if ("true".equalsIgnoreCase(secret)) {
 			this.secret = true;
 		} else {
 			this.secret = false;
