@@ -39,6 +39,6 @@ public interface CacheRegexInterface {
 	 * @return boolean类型 返回结果
 	 * @throws AppDaoException Dao层异常
 	 */
-	public boolean deleteCacheData(String pattern) throws AppDaoException;
+	public boolean deleteRegexCacheData(String pattern) throws AppDaoException;
 
 }

@@ -136,7 +136,7 @@ public class SystemCache implements Cache {
 	@Override
 	public void evict(Object key) {
 		if (!StringUtils.isEmpty(key)) {
-			cacheDao.deleteCacheData("cache:" + getName() + ":" + key);
+			cacheDao.deleteRegexCacheData("cache:" + getName() + ":" + key);
 		}
 	}
 
