@@ -36,6 +36,11 @@ public class SystemCache implements Cache {
 	 */
 	private boolean			secret;
 
+	/**
+	 * 数据库下标
+	 */
+	private String			database;
+
 
 
 	/**
@@ -63,8 +68,26 @@ public class SystemCache implements Cache {
 
 
 
+	/**
+	 * 快速构造函数
+	 * 
+	 * @param name String类型 缓存名称
+	 * @param timeout long类型 缓存时长
+	 * @param secret boolean类型 加密标识
+	 */
+	public SystemCache(String name, long timeout, boolean secret, String database) {
+		setName(name);
+		setTimeout(timeout);
+		this.secret = secret;
+		setDatabase(database);
+		setCacheDao((CacheInterface) SpringUtil.getBean("cacheDao"));
+	}
+
+
+
 	@Override
 	public Object getNativeCache() {
+		this.cacheDao.init(database);
 		return this.cacheDao;
 	}
 
@@ -81,7 +104,8 @@ public class SystemCache implements Cache {
 			} else {
 				finalKey = key.toString();
 			}
-			Object object = cacheDao.getCacheData("cache:" + getName() + ":" + finalKey);
+			this.cacheDao.init(database);
+			Object object = this.cacheDao.getCacheData("cache:" + getName() + ":" + finalKey);
 
 			return(object != null ? new SimpleValueWrapper(object) : null);
 		}
@@ -95,8 +119,8 @@ public class SystemCache implements Cache {
 		if (StringUtils.isEmpty(key) || null == type) {
 			return null;
 		} else {
-
-			Object object = cacheDao.getCacheData("cache:" + getName() + ":" + key);
+			this.cacheDao.init(database);
+			Object object = this.cacheDao.getCacheData("cache:" + getName() + ":" + key);
 			if (type != null && type.isInstance(object) && null != object) {
 				return (T) object;
 			} else {
@@ -107,14 +131,18 @@ public class SystemCache implements Cache {
 
 
 
-	/** (non-Javadoc)
+	/**
+	 * (non-Javadoc)
+	 * 
 	 * @param <T> 泛型类型
 	 * @param key Object类型 缓存对象的键对象
 	 * @param valueLoader Callable类型 序列化类
 	 * @return 返还对象
 	 */
 	public <T> T get(Object key, Callable<T> valueLoader) {
-		return null;
+		ValueWrapper vw = get(key);
+		if (vw == null) { return null; }
+		return (T) vw.get();
 	}
 
 
@@ -124,7 +152,9 @@ public class SystemCache implements Cache {
 		if (StringUtils.isEmpty(key) || StringUtils.isEmpty(value) || timeout == 0L) {
 			return;
 		} else {
-			cacheDao.setCacheObjectData("cache:" + getName() + ":" + key, value, timeout, secret);
+			this.cacheDao.init(database);
+			this.cacheDao.setCacheObjectData("cache:" + getName() + ":" + key, value, timeout,
+					secret);
 		}
 	}
 
@@ -136,7 +166,8 @@ public class SystemCache implements Cache {
 	@Override
 	public void evict(Object key) {
 		if (!StringUtils.isEmpty(key)) {
-			cacheDao.deleteRegexCacheData("cache:" + getName() + ":" + key);
+			this.cacheDao.init(database);
+			this.cacheDao.deleteRegexCacheData("cache:" + getName() + ":" + key);
 		}
 	}
 
@@ -147,15 +178,25 @@ public class SystemCache implements Cache {
 	 */
 	@Override
 	public void clear() {
-		cacheDao.clear();
+		this.cacheDao.init(database);
+		this.cacheDao.clear();
 	}
 
 
 
 	@Override
-	public ValueWrapper putIfAbsent(Object arg0, Object arg1) {
-		// TODO Auto-generated method stub
-		return null;
+	public ValueWrapper putIfAbsent(Object key, Object value) {
+		if (StringUtils.isEmpty(key) || StringUtils.isEmpty(value) || timeout == 0L) {
+			return null;
+		}
+		this.cacheDao.init(database);
+		if (this.cacheDao.exists(key)) {
+			return get(key);
+		} else {
+			this.cacheDao.setCacheObjectData("cache:" + getName() + ":" + key, value, timeout,
+					secret);
+			return new SimpleValueWrapper(value);
+		}
 	}
 
 
@@ -189,6 +230,12 @@ public class SystemCache implements Cache {
 		} else {
 			this.secret = false;
 		}
+	}
+
+
+
+	public void setDatabase(String database) {
+		this.database = database;
 	}
 
 
