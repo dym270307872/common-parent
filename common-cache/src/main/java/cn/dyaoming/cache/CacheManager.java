@@ -57,6 +57,7 @@ public class CacheManager extends AbstractCacheManager {
 		this.caches = caches;
 	}
 
+	@Override
 	protected Collection<? extends Cache> loadCaches() {
 		return this.caches;
 	}

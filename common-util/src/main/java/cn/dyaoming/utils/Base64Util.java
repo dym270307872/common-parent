@@ -155,9 +155,10 @@ public class Base64Util {
 		System.out.println("生成图片" + imgFilePath);
 		System.out.println("生成图片" + imgFilePath);
 		System.out.println("生成图片" + imgFilePath);
-
-		if (imgStr == null) // 图像数据为空
-			return false;
+		
+		// 图像数据为空
+		if (imgStr == null) { 
+			return false;}
 		BASE64Decoder decoder = new BASE64Decoder();
 		try {
 			if (imgStr.indexOf(";base64,") >= 0) {
