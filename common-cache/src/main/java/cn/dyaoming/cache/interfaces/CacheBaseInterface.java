@@ -38,7 +38,6 @@ public interface CacheBaseInterface {
 	public void init(String dbIndex);
 
 
-
 	/**
 	 * 功能描述：判断是否存在键值。
 	 * 

@@ -74,10 +74,7 @@ public class SystemCache implements Cache {
 	 * @param name String类型 缓存名称
 	 * @param timeout long类型 缓存时长
 	 * @param secret boolean类型 加密标识
-<<<<<<< HEAD
-=======
 	 * @param database String类型 数据库下标
->>>>>>> 0.0.2-RELEASE
 	 */
 	public SystemCache(String name, long timeout, boolean secret, String database) {
 		setName(name);

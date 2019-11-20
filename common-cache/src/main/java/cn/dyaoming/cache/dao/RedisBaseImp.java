@@ -290,6 +290,4 @@ public class RedisBaseImp implements CacheBaseInterface {
 		redisTemplate.discard();
 	}
 
-
-
 }

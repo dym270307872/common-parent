@@ -23,6 +23,7 @@ public class CacheManager extends AbstractCacheManager {
 	private long	timeout		= 300L;
 
 	private boolean	secret;
+
 	private String	database	= null;
 
 
