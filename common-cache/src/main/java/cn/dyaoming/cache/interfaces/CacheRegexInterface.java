@@ -15,7 +15,7 @@ import java.util.Collection;
  * @since 2019-08-18
  * @version V1.0
  */
-public interface CacheRegexInterface {
+public interface CacheRegexInterface{
 
 	/**
 	 * <p>
@@ -23,8 +23,9 @@ public interface CacheRegexInterface {
 	 * </p>
 	 * 
 	 * @param pattern String类型 key的表达式，也可以使用通配符(*)
-	 * @return Collection<String>类型 返回结果
+	 * @return Collection 类型 返回结果
 	 * @throws AppDaoException Dao层异常
+	 * @version 0.0.2
 	 */
 	public Collection<String> getKeys(String pattern) throws AppDaoException;
 
@@ -38,6 +39,7 @@ public interface CacheRegexInterface {
 	 * @param pattern String类型 key的表达式，也可以使用通配符(*)
 	 * @return boolean类型 返回结果
 	 * @throws AppDaoException Dao层异常
+	 * @version 0.0.2
 	 */
 	public boolean deleteRegexCacheData(String pattern) throws AppDaoException;
 

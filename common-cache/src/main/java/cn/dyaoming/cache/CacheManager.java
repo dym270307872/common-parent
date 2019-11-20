@@ -1,10 +1,12 @@
 package cn.dyaoming.cache;
 
+
 import org.springframework.cache.Cache;
 import org.springframework.cache.support.AbstractCacheManager;
 
 import java.util.Collection;
 import java.util.Collections;
+
 
 /**
  * <p>
@@ -17,19 +19,25 @@ import java.util.Collections;
  */
 public class CacheManager extends AbstractCacheManager {
 
-	private String name = "default";
-	private long timeout = 300L;
+	private String	name		= "default";
+	private long	timeout		= 300L;
 
-	private boolean secret;
-	private String database = null;
+	private boolean	secret;
+	private String	database	= null;
+
+
 
 	public void setName(String name) {
 		this.name = name;
 	}
 
+
+
 	public void setTimeout(long timeout) {
 		this.timeout = timeout;
 	}
+
+
 
 	/**
 	 * <p>
@@ -47,24 +55,38 @@ public class CacheManager extends AbstractCacheManager {
 		}
 	}
 
+
+
 	public void setDatabase(String database) {
 		this.database = database;
 	}
 
 	private Collection<? extends Cache> caches = Collections.emptySet();
 
+
+
 	public void setCaches(Collection<? extends Cache> caches) {
 		this.caches = caches;
 	}
+
+
 
 	@Override
 	protected Collection<? extends Cache> loadCaches() {
 		return this.caches;
 	}
 
+
+
 	// @Nullable
 	@Override
 	protected Cache getMissingCache(String name) {
-		return new SystemCache(this.name, this.timeout, this.secret,this.database);
+
+		if (name.indexOf("#") > 0) {
+
+		}
+
+		return new SystemCache(name, this.timeout, this.secret, this.database);
+
 	}
 }

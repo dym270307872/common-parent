@@ -29,11 +29,18 @@ public class CacheKeyGenerator implements KeyGenerator {
 	public static final int	NULL_PARAM_KEY	= 53;
 
 
+	/**
+	 * 默认key生成规则
+	 * @param target 类对象
+	 * @param method 方法对象
+	 * @param params 参数组
+	 * @return 组合后的key值
+	 */
 	@Override
 	public Object generate(Object target, Method method, Object... params) {
 
 		StringBuilder key = new StringBuilder();
-		key.append(target.getClass().getName()).append(".").append(method.getName()).append("[");
+		key.append(target.getClass().getName()).append(".").append(method.getName()).append("(");
 		if (params.length == 0) {
 			return key.append(NO_PARAM_KEY).toString(); 
 		}
@@ -57,7 +64,7 @@ public class CacheKeyGenerator implements KeyGenerator {
 		if (key.lastIndexOf("-") == key.length() - 1) {
 			key.deleteCharAt(key.length() - 1);
 		}
-		key.append(']');
+		key.append(')');
 		return key.toString();
 	}
 }

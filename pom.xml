@@ -7,24 +7,24 @@
 	<groupId>cn.dyaoming.common</groupId>
 	<artifactId>common-parent</artifactId>
 	<packaging>pom</packaging>
-	<version>1.0.0-SNAPSHOT</version>
+	<version>0.0.2</version>
 	
 
 	<name>common-parent</name>
 	<url>https://github.com/dym270307872/common-parent</url>
-	<description>通用配置包，此项目是本人根据日常使用时碰到的问题，对一些常用信息进行了封装，目的是简化开发时配置项目信息。此项目包含了core，util，log等多个子项目，并且后续还会继续扩展。</description>
+	<description>通用配置包，此项目是本人根据日常使用时碰到的问题，对一些常用信息进行了封装，目的是简化开发时配置项目信息。此项目包含了core，util，log，cache等多个子项目，并且后续还会继续扩展。</description>
 
 	<modules>
 		<module>common-core</module>
 		<module>common-util</module>
-		<module>common-log</module>
+		<!-- <module>common-log</module> -->
 		<module>common-cache</module>
 	</modules>
 
 
 
 	<properties>
-		<this.version>1.0.0-SNAPSHOT</this.version>
+		<this.version>0.0.2</this.version>
 		
 		<!-- spring begin -->
 		<spring.version>4.3.19.RELEASE</spring.version>
