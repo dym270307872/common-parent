@@ -7,7 +7,7 @@ import cn.dyaoming.errors.AppDaoException;
 /**
  * 功能描述：缓存接口类。
  * 
- * @Version 0.0.1
+ * @version 0.0.1
  */
 public interface CacheBaseInterface {
 
@@ -23,7 +23,6 @@ public interface CacheBaseInterface {
 	/**
 	 * 默认缓存时长（秒）
 	 */
-
 	public final static long	DEFALUTTIME		= -1L;
 
 
@@ -31,9 +30,9 @@ public interface CacheBaseInterface {
 	/**
 	 * 功能描述：初始化数据库下标。
 	 * 
-	 * @param dbIndex
+	 * @param dbIndex 数据库下标
 	 * @since 2019-11-22
-	 * @Version 0.0.3
+	 * @version 0.0.3
 	 */
 	public void init(String dbIndex);
 

@@ -14,7 +14,7 @@ import java.util.Map;
  * 
  * @author DYAOMING
  * @since 2019-08-18
- * @Version 0.0.1
+ * @version 0.0.1
  */
 public interface CacheBatchInterface {
 
