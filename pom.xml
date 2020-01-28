@@ -7,7 +7,7 @@
 	<groupId>cn.dyaoming.common</groupId>
 	<artifactId>common-parent</artifactId>
 	<packaging>pom</packaging>
-	<version>0.0.2</version>
+	<version>0.0.3</version>
 	
 
 	<name>common-parent</name>
@@ -24,8 +24,6 @@
 
 
 	<properties>
-		<this.version>0.0.2</this.version>
-		
 		<!-- spring begin -->
 		<spring.version>4.3.19.RELEASE</spring.version>
 		<spring-data.version>1.13.15.RELEASE</spring-data.version>
@@ -88,12 +86,12 @@
 		<dependency>
 			<groupId>cn.dyaoming.common</groupId>
 			<artifactId>common-core</artifactId>
-			<version>${this.version}</version>
+			<version>${project.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>cn.dyaoming.common</groupId>
 			<artifactId>common-util</artifactId>			
-			<version>${this.version}</version>
+			<version>${project.version}</version>
 		</dependency>
 		
 			<!-- druid begin -->
