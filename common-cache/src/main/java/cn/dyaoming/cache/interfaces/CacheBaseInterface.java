@@ -31,6 +31,7 @@ public interface CacheBaseInterface {
 	 * @param key String类型 键
 	 * @return boolean类型 返回结果
 	 * @throws AppDaoException dao层异常类
+	 * @version 0.0.1
 	 */
 	public boolean exists(Object key) throws AppDaoException;
 
@@ -43,6 +44,7 @@ public interface CacheBaseInterface {
 	 * @param value Object类型 内容
 	 * @return boolean类型 返回结果
 	 * @throws AppDaoException dao层异常类
+	 * @version 0.0.1
 	 */
 	public boolean setCacheObjectData(Object key, Object value) throws AppDaoException;
 
@@ -56,6 +58,7 @@ public interface CacheBaseInterface {
 	 * @param validTime long类型 有效时间（单位：秒）
 	 * @return boolean类型 返回结果
 	 * @throws AppDaoException dao层异常类
+	 * @version 0.0.1
 	 */
 	public boolean setCacheObjectData(Object key, Object value, final long validTime)
 			throws AppDaoException;
@@ -70,6 +73,7 @@ public interface CacheBaseInterface {
 	 * @param secret boolean类型 加密标识
 	 * @return boolean类型 返回结果
 	 * @throws AppDaoException dao层异常类
+	 * @version 0.0.1
 	 */
 	public boolean setCacheObjectData(Object key, Object value, boolean secret)
 			throws AppDaoException;
@@ -85,6 +89,7 @@ public interface CacheBaseInterface {
 	 * @param secret boolean类型 加密标识
 	 * @return boolean类型 返回结果
 	 * @throws AppDaoException dao层异常类
+	 * @version 0.0.1
 	 */
 	public boolean setCacheObjectData(Object key, Object value, final long validTime,
 			boolean secret)
@@ -98,6 +103,7 @@ public interface CacheBaseInterface {
 	 * @param key String类型 键
 	 * @return boolean类型 返回结果
 	 * @throws AppDaoException dao层异常类
+	 * @version 0.0.1
 	 */
 	public boolean deleteCacheData(Object key) throws AppDaoException;
 
@@ -109,6 +115,7 @@ public interface CacheBaseInterface {
 	 * @param key String类型 键
 	 * @return Object类型 返回结果
 	 * @throws AppDaoException dao层异常类
+	 * @version 0.0.1
 	 */
 	public Object getCacheData(Object key) throws AppDaoException;
 
@@ -122,6 +129,7 @@ public interface CacheBaseInterface {
 	 * @param type Class类型 内容类型
 	 * @return T类型 返回结果
 	 * @throws AppDaoException dao层异常类
+	 * @version 0.0.1
 	 */
 	public <T> T getCacheTData(String key, Class<T> type) throws AppDaoException;
 
@@ -132,6 +140,7 @@ public interface CacheBaseInterface {
 	 * 
 	 * @version 0.0.1
 	 * @throws AppDaoException dao层异常类
+	 * @version 0.0.1
 	 */
 	public void clear() throws AppDaoException;
 
