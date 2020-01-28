@@ -24,12 +24,32 @@ public class CacheManager extends AbstractCacheManager {
 
 	private boolean	secret;
 
-	private String	database	= null;
+	private String	database;
 
-
-
+	/**
+	 * 分隔符
+    */
+    private final static String SEPARATOR = "#";
+	
+	/**
+	 * <p>设置缓存名</p>
+	 * @param name 缓存名称
+	 */
 	public void setName(String name) {
-		this.name = name;
+		
+		String[] arg = name.split(SEPARATOR);
+		
+		this.name = arg[0];
+
+		if(arg.length>1) {
+			setTimeout(Long.valueOf(arg[1]));	
+		}
+		if(arg.length>2) {
+			setSecret(arg[2]);		
+		}
+		if(arg.length>3) {
+			setDatabase(arg[3]);		
+		}		
 	}
 
 
