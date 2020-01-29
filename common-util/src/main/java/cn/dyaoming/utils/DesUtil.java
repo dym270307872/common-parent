@@ -7,8 +7,8 @@
 package cn.dyaoming.utils;
 
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.crypto.Cipher;
 import javax.crypto.SecretKey;
@@ -28,7 +28,8 @@ import javax.crypto.spec.IvParameterSpec;
  */
 public class DesUtil {
 
-	private static Logger	logger	= LogManager.getLogger(DesUtil.class);
+    private final static Logger logger = LoggerFactory.getLogger(DesUtil.class);
+
 
 	private static byte[]	iv		= { (byte) 0x26, (byte) 0x39, (byte) 0x15,
 			(byte) 0x20, (byte) 0x41, (byte) 0xAC, (byte) 0x6D, (byte) 0xEF };

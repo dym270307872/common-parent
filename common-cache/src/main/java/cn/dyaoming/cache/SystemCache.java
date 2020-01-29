@@ -2,11 +2,11 @@ package cn.dyaoming.cache;
 
 
 import cn.dyaoming.cache.interfaces.CacheInterface;
-import cn.dyaoming.utils.SpringUtil;
+import cn.dyaoming.utils.StringUtil;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.Cache;
 import org.springframework.cache.support.SimpleValueWrapper;
-import org.springframework.util.StringUtils;
 
 import java.util.concurrent.Callable;
 
@@ -96,7 +96,7 @@ public class SystemCache implements Cache {
 
 	@Override
 	public ValueWrapper get(Object key) {
-		if (StringUtils.isEmpty(key)) {
+		if (StringUtil.isEmpty(key)) {
 			return null;
 		} else {
 			final String finalKey;
@@ -117,7 +117,7 @@ public class SystemCache implements Cache {
 	@SuppressWarnings("unchecked")
 	@Override
 	public <T> T get(Object key, Class<T> type) {
-		if (StringUtils.isEmpty(key) || null == type) {
+		if (StringUtil.isEmpty(key) || null == type) {
 			return null;
 		} else {
 			this.cacheDao.init(database);
@@ -151,7 +151,7 @@ public class SystemCache implements Cache {
 
 	@Override
 	public void put(final Object key, final Object value) {
-		if (StringUtils.isEmpty(key) || StringUtils.isEmpty(value) || timeout == 0L) {
+		if (StringUtil.isEmpty(key) || StringUtil.isEmpty(value) || timeout == 0L) {
 			return;
 		} else {
 			this.cacheDao.init(database);
@@ -167,7 +167,7 @@ public class SystemCache implements Cache {
 	 */
 	@Override
 	public void evict(Object key) {
-		if (!StringUtils.isEmpty(key)) {
+		if (!StringUtil.isEmpty(key)) {
 			this.cacheDao.init(database);
 			this.cacheDao.deleteRegexCacheData("cache:" + getName() + ":" + key);
 		}
@@ -188,7 +188,7 @@ public class SystemCache implements Cache {
 
 	@Override
 	public ValueWrapper putIfAbsent(Object key, Object value) {
-		if (StringUtils.isEmpty(key) || StringUtils.isEmpty(value) || timeout == 0L) {
+		if (StringUtil.isEmpty(key) || StringUtil.isEmpty(value) || timeout == 0L) {
 			return null;
 		}
 		this.cacheDao.init(database);

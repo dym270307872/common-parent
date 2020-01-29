@@ -11,9 +11,9 @@ import java.io.Serializable;
  * 
  * @author DYAOMING
  * @since 2019-04-17
- * @version 0.0.1
+ * @version 0.0.3
  */
-public class ApiResult implements Serializable {
+public class BaseResult implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -26,7 +26,7 @@ public class ApiResult implements Serializable {
     /**
      * 默认构造函数
      */
-    public ApiResult() {
+    public BaseResult() {
         setFlag(true);
         setCode("0000");
         setMessage("业务执行成功");
@@ -40,7 +40,7 @@ public class ApiResult implements Serializable {
      * @param cFlag boolean类型 结果标志
      * @param cCode String类型 结果编码
      */
-    public ApiResult(boolean cFlag, String cCode) {
+    public BaseResult(boolean cFlag, String cCode) {
 
         setFlag(cFlag);
         setCode(cCode);
@@ -57,11 +57,39 @@ public class ApiResult implements Serializable {
      * @param cCode String类型 结果编码
      * @param cMsg String类型 结果说明
      */
-    public ApiResult(boolean cFlag, String cCode, String cMsg) {
+    public BaseResult(boolean cFlag, String cCode, String cMsg) {
 
         setFlag(cFlag);
         setCode(cCode);
         setMessage(cMsg);
+    }
+
+
+
+    /**
+     * <p>
+     * 成功
+     * </p>
+     * 
+     * @return BaseResult
+     */
+    public static BaseResult success() {
+        return new BaseResult();
+    }
+
+
+
+    /**
+     * <p>
+     * 失败
+     * </p>
+     * 
+     * @param cCode String类型 失败标识
+     * @param cMsg String类型 失败说明
+     * @return BaseResult
+     */
+    public static BaseResult fail(String cCode, String cMsg) {
+        return new BaseResult(false, cCode, cMsg);
     }
 
 

@@ -4,8 +4,6 @@ package cn.dyaoming.cache;
 import java.lang.reflect.Array;
 import java.lang.reflect.Method;
 
-import org.springframework.cache.interceptor.KeyGenerator;
-import org.springframework.util.ClassUtils;
 
 
 /**

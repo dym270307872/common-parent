@@ -8,7 +8,6 @@
 	<artifactId>common-parent</artifactId>
 	<packaging>pom</packaging>
 	<version>0.0.3</version>
-	
 
 	<name>common-parent</name>
 	<url>https://github.com/dym270307872/common-parent</url>
@@ -17,48 +16,17 @@
 	<modules>
 		<module>common-core</module>
 		<module>common-util</module>
-		<!-- <module>common-log</module> -->
 		<module>common-cache</module>
 	</modules>
 
-
-
 	<properties>
-		<!-- spring begin -->
-		<spring.version>4.3.19.RELEASE</spring.version>
-		<spring-data.version>1.13.15.RELEASE</spring-data.version>
-		<!-- spring end -->
-
-		<!-- druid begin -->
-		<druid.version>1.1.10</druid.version>
-		<mysql.version>5.1.38</mysql.version>
-		<oracle.version></oracle.version>
-		<!-- druid end -->
-
 		<!-- json begin -->
 		<jackson.version>2.8.1</jackson.version>
 		<fastjson.version>1.2.47</fastjson.version>
 		<!-- json end -->
 
-		<!-- servlet jsp jstl begin -->
-		<servlet-api.version>3.1.0</servlet-api.version>
-		<jsp-api.version>2.0</jsp-api.version>
-		<freemarker.version>2.3.28</freemarker.version>
-		<jstl.version>1.2</jstl.version>
-		<taglibs.version>1.2.5</taglibs.version>
-		<!-- servlet jsp jstl end -->
-
-		<!-- mybatis begin -->
-		<mybatis.version>3.3.0</mybatis.version>
-		<mybatis.spring.version>1.2.3</mybatis.spring.version>
-		<mybatis.mapper.version>3.3.9</mybatis.mapper.version>
-		<mybatis.paginator.version>5.0.0</mybatis.paginator.version>
-		<!-- mybatis end -->
-
 		<!-- log begin -->
 		<slf4j.version>1.7.25</slf4j.version>
-		<log4j.version>1.2.17</log4j.version>
-		<log4j2.version>2.2</log4j2.version>
 		<!-- log end -->
 
 		<!--文件组件 start -->
@@ -83,83 +51,21 @@
 
 	<dependencyManagement>
 		<dependencies>
-		<dependency>
-			<groupId>cn.dyaoming.common</groupId>
-			<artifactId>common-core</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>cn.dyaoming.common</groupId>
-			<artifactId>common-util</artifactId>			
-			<version>${project.version}</version>
-		</dependency>
-		
-			<!-- druid begin -->
-
 			<dependency>
-				<groupId>com.alibaba</groupId>
-				<artifactId>druid</artifactId>
-				<version>${druid.version}</version>
+				<groupId>cn.dyaoming.common</groupId>
+				<artifactId>common-core</artifactId>
+				<version>${project.version}</version>
 			</dependency>
 			<dependency>
-				<groupId>mysql</groupId>
-				<artifactId>mysql-connector-java</artifactId>
-				<version>${mysql.version}</version>
+				<groupId>cn.dyaoming.common</groupId>
+				<artifactId>common-util</artifactId>
+				<version>${project.version}</version>
 			</dependency>
-
-			<!-- druid end -->
-
 
 			<dependency>
 				<groupId>com.alibaba</groupId>
 				<artifactId>fastjson</artifactId>
 				<version>${fastjson.version}</version>
-			</dependency>
-
-
-
-			<dependency>
-				<groupId>org.mybatis</groupId>
-				<artifactId>mybatis</artifactId>
-				<version>${mybatis.version}</version>
-			</dependency>
-
-			<dependency>
-				<groupId>org.mybatis</groupId>
-				<artifactId>mybatis-spring</artifactId>
-				<version>${mybatis.spring.version}</version>
-			</dependency>
-
-			<!-- mybatis plugins begin -->
-			<dependency>
-				<groupId>tk.mybatis</groupId>
-				<artifactId>mapper</artifactId>
-				<version>${mybatis.mapper.version}</version>
-			</dependency>
-			<!-- mybatis plugins end -->
-
-			<!--pagehelep start -->
-			<dependency>
-				<groupId>com.github.pagehelper</groupId>
-				<artifactId>pagehelper</artifactId>
-				<version>${mybatis.paginator.version}</version>
-			</dependency>
-			<!--pagehelp end -->
-
-
-			<!-- Spring dependencies -->
-			<dependency>
-				<groupId>org.springframework.data</groupId>
-				<artifactId>spring-data-commons</artifactId>
-				<version>${spring-data.version}</version>
-			</dependency>
-
-
-			<!-- https://mvnrepository.com/artifact/org.springframework/spring-orm -->
-			<dependency>
-				<groupId>org.springframework</groupId>
-				<artifactId>spring-orm</artifactId>
-				<version>${spring.version}</version>
 			</dependency>
 
 			<!--spring start -->
@@ -211,76 +117,11 @@
 			</dependency>
 			<!--spring end -->
 
-
-			<dependency>
-				<groupId>javax.servlet</groupId>
-				<artifactId>javax.servlet-api</artifactId>
-				<version>${servlet-api.version}</version>
-				<scope>provided</scope>
-			</dependency>
-
-			<dependency>
-				<groupId>org.freemarker</groupId>
-				<artifactId>freemarker</artifactId>
-				<version>${freemarker.version}</version>
-			</dependency>
-
-			<dependency>
-				<groupId>javax.servlet.jsp.jstl</groupId>
-				<artifactId>jstl-api</artifactId>
-				<version>${jstl.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.apache.taglibs</groupId>
-				<artifactId>taglibs-standard-impl</artifactId>
-				<version>${taglibs.version}</version>
-			</dependency>
-
-
 			<!--log start -->
-			<dependency>
-				<groupId>org.slf4j</groupId>
-				<artifactId>slf4j-log4j12</artifactId>
-				<version>${slf4j.version}</version>
-				<scope>test</scope>
-			</dependency>
 			<dependency>
 				<groupId>org.slf4j</groupId>
 				<artifactId>slf4j-api</artifactId>
 				<version>${slf4j.version}</version>
-			</dependency>
-
-			<dependency>
-				<groupId>log4j</groupId>
-				<artifactId>log4j</artifactId>
-				<version>${log4j.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.apache.logging.log4j</groupId>
-				<artifactId>log4j-core</artifactId>
-				<version>${log4j2.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.apache.logging.log4j</groupId>
-				<artifactId>log4j-api</artifactId>
-				<version>${log4j2.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.apache.logging.log4j</groupId>
-				<artifactId>log4j-web</artifactId>
-				<version>${log4j2.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.springframework</groupId>
-				<artifactId>spring-test</artifactId>
-				<version>${spring.version}</version>
-				<scope>test</scope>
-			</dependency>
-			<dependency>
-				<groupId>junit</groupId>
-				<artifactId>junit</artifactId>
-				<version>${junit.version}</version>
-				<scope>test</scope>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>

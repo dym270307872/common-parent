@@ -7,9 +7,9 @@ package cn.dyaoming.models;
  * @param <E> 实体类型 
  * @author DYAOMING
  * @since 2019-04-17
- * @version 0.0.1
+ * @version 0.0.3
  */
-public class ModelResult<E> extends ApiResult {
+public class ModelResult<E> extends BaseResult {
 
 	private static final long	serialVersionUID	= 1L;
 
