@@ -2,6 +2,7 @@ package cn.dyaoming.cache;
 
 
 import cn.dyaoming.cache.interfaces.CacheInterface;
+import cn.dyaoming.utils.SpringUtil;
 import cn.dyaoming.utils.StringUtil;
 
 import org.springframework.beans.factory.annotation.Autowired;
