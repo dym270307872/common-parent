@@ -6,6 +6,7 @@
  */
 package cn.dyaoming.utils;
 
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,15 +22,21 @@ public class StringUtil {
 
     private final static Logger logger = LoggerFactory.getLogger(StringUtil.class);
 
-    public static boolean isEmpty(Object cs) {
-        return (cs == null);
+
+
+    public static boolean isEmpty(Object obj) {
+        return(obj == null || "".equals(obj));
     }
+
+
 
     public static boolean isEmpty(CharSequence cs) {
         return (cs == null) || (cs.length() == 0);
     }
 
-
+    public static boolean isNotEmpty(Object obj) {
+        return !isEmpty(obj);
+    }
 
     public static boolean isNotEmpty(final CharSequence cs) {
         return !isEmpty(cs);
@@ -47,14 +54,12 @@ public class StringUtil {
 
 
 
-    
     public static boolean isNoneEmpty(CharSequence... css) {
         return !isAnyEmpty(css);
     }
 
 
 
-    
     public static boolean isBlank(final CharSequence cs) {
         int strLen;
         if (cs == null || (strLen = cs.length()) == 0) { return true; }
@@ -66,14 +71,12 @@ public class StringUtil {
 
 
 
-    
     public static boolean isNotBlank(final CharSequence cs) {
         return !isBlank(cs);
     }
 
 
 
-    
     public static boolean isAnyBlank(CharSequence... css) {
         if (ArrayUtil.isEmpty(css)) { return true; }
         for(CharSequence cs : css) {
@@ -84,21 +87,18 @@ public class StringUtil {
 
 
 
-   
     public static boolean isNoneBlank(CharSequence... css) {
         return !isAnyBlank(css);
     }
 
 
 
-    
     public static String trim(final String str) {
         return str == null ? null : str.trim();
     }
 
 
 
-    
     public static String trimToNull(final String str) {
         final String ts = trim(str);
         return isEmpty(ts) ? null : ts;

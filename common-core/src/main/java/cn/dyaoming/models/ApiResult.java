@@ -72,8 +72,8 @@ public class ApiResult implements Serializable {
 
 
 
-    public void setFlag(boolean flag) {
-        this.flag = flag;
+    public void setFlag(boolean cFlag) {
+        this.flag = cFlag;
     }
 
 
