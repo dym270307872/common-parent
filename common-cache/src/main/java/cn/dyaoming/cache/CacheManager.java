@@ -19,95 +19,108 @@ import java.util.Collections;
  */
 public class CacheManager extends AbstractCacheManager {
 
-	private String	name		= "default";
-	private long	timeout		= 300L;
+    private String name = "default";
+    private long timeout = 300L;
 
-	private boolean	secret;
+    private boolean secret;
 
-	private String	database;
+    private String database;
 
-	/**
-	 * 分隔符
-    */
+    /**
+     * 分隔符
+     */
     private final static String SEPARATOR = "#";
-	
-	/**
-	 * <p>设置缓存名</p>
-	 * @param name 缓存名称
-	 */
-	public void setName(String name) {
-		
-		String[] arg = name.split(SEPARATOR);
-		
-		this.name = arg[0];
-
-		if(arg.length>1) {
-			setTimeout(Long.valueOf(arg[1]));	
-		}
-		if(arg.length>2) {
-			setSecret(arg[2]);		
-		}
-		if(arg.length>3) {
-			setDatabase(arg[3]);		
-		}		
-	}
 
 
 
-	public void setTimeout(long timeout) {
-		this.timeout = timeout;
-	}
+    /**
+     * <p>
+     * 设置缓存名
+     * </p>
+     * 
+     * @param name 缓存名称
+     */
+    public void setName(String name) {
+        this.name = name;
+    }
 
 
 
-	/**
-	 * <p>
-	 * 加密标识设置
-	 * </p>
-	 * 
-	 * @param secret String类型 加密标识
-	 */
-	public void setSecret(String secret) {
-
-		if ("true".equalsIgnoreCase(secret)) {
-			this.secret = true;
-		} else {
-			this.secret = false;
-		}
-	}
+    public void setTimeout(long timeout) {
+        this.timeout = timeout;
+    }
 
 
 
-	public void setDatabase(String database) {
-		this.database = database;
-	}
+    /**
+     * <p>
+     * 加密标识设置
+     * </p>
+     * 
+     * @param secret String类型 加密标识
+     */
+    public void setSecret(String secret) {
 
-	private Collection<? extends Cache> caches = Collections.emptySet();
-
-
-
-	public void setCaches(Collection<? extends Cache> caches) {
-		this.caches = caches;
-	}
-
-
-
-	@Override
-	protected Collection<? extends Cache> loadCaches() {
-		return this.caches;
-	}
+        if ("true".equalsIgnoreCase(secret)) {
+            this.secret = true;
+        } else {
+            this.secret = false;
+        }
+    }
 
 
 
-	// @Nullable
-	@Override
-	protected Cache getMissingCache(String name) {
+    public void setDatabase(String database) {
+        this.database = database;
+    }
 
-		if (name.indexOf("#") > 0) {
+    private Collection<? extends Cache> caches = Collections.emptySet();
 
-		}
 
-		return new SystemCache(name, this.timeout, this.secret, this.database);
 
-	}
+    public void setCaches(Collection<? extends Cache> caches) {
+        this.caches = caches;
+    }
+
+
+
+    @Override
+    protected Collection<? extends Cache> loadCaches() {
+        return this.caches;
+    }
+
+
+
+    // @Nullable
+    @Override
+    protected Cache getMissingCache(String name) {
+
+        String thisName = name;
+        long thisTimeout = this.timeout;
+        boolean thisSecret = this.secret;
+        String thisDatabase = this.database;
+        if (name.indexOf("#") > 0) {
+
+            String[] arg = name.split(SEPARATOR);
+            int thisLength = arg.length;
+            
+            thisName = arg[0];
+            if (thisLength > 1) {
+                thisTimeout = Long.valueOf(arg[1]);
+            }
+            if (thisLength > 2) {
+                if ("true".equalsIgnoreCase(arg[2])) {
+                    thisSecret = true;
+                } else {
+                    thisSecret = false;
+                }
+            }
+            if (thisLength > 3) {
+                thisDatabase = arg[3];
+            }
+        }
+
+        return new SystemCache(thisName, thisTimeout, thisSecret, thisDatabase);
+
+    }
 }
