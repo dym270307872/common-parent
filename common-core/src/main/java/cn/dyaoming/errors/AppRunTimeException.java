@@ -9,16 +9,16 @@ import java.io.PrintWriter;
  * <p>系统业务层异常</p>
  *
  * @author DYAOMING
- * @version 0.0.1
+ * @version 0.0.3
  * @since 2019-3-13
  */
+@Deprecated
 public class AppRunTimeException extends RuntimeException {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = -5996860581412314248L;
 
 
-
-	/**
+    /**
 	 * <p>构造函数</p>
 	 *
 	 * @param message 异常信息

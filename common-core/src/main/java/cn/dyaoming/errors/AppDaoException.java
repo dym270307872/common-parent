@@ -1,87 +1,88 @@
 package cn.dyaoming.errors;
 
 
-import java.io.PrintStream;
-import java.io.PrintWriter;
-
-
 /**
- * <p>系统数据访问层异常</p>
+ * <p>
+ * 系统数据访问层异常
+ * </p>
  *
  * @author DYAOMING
- * @version 0.0.1
- * @since 2019-3-13
+ * @version 0.0.3
+ * @since 2020-01-29
  */
-public class AppDaoException extends RuntimeException {
+public class AppDaoException extends BaseException {
 
-	private static final long serialVersionUID = 1L;
-
-
-
-	/**
-	 * <p>构造函数</p>
-	 *
-	 * @param message 异常信息
-	 */
-	public AppDaoException(String message) {
-		super(message);
-	}
+    private static final long serialVersionUID = 4077571693836525234L;
 
 
 
-	/**
-	 * <p>构造函数</p>
-	 *
-	 * @param message 异常信息
-	 * @param cause   异常
-	 */
-	public AppDaoException(String message, Throwable cause) {
-		super(message, cause);
-	}
+    /**
+     * <p>
+     * 构造函数
+     * </p>
+     *
+     * @param message String类型 异常信息
+     */
+    public AppDaoException(String message) {
+        super(message);
+    }
 
 
 
-	/**
-	 * <p>构造函数</p>
-	 *
-	 * @param cause 异常
-	 */
-	public AppDaoException(Throwable cause) {
-		super(cause);
-	}
+    /**
+     * <p>
+     * 构造函数
+     * </p>
+     *
+     * @param code String类型 异常标识
+     * @param message String类型 异常信息
+     */
+    public AppDaoException(String code, String message) {
+        super(message);
+        setCode(code);
+    }
 
 
 
-	@Override
-	public String getMessage() {
-		return super.getMessage();
-	}
+    /**
+     * <p>
+     * 构造函数
+     * </p>
+     *
+     * @param message String类型 异常信息
+     * @param cause 异常
+     */
+    public AppDaoException(String message, Throwable cause) {
+        super(message, cause);
+    }
 
 
 
-	public Throwable getRootCause() {
-		return super.getCause();
-	}
+    /**
+     * <p>
+     * 构造函数
+     * </p>
+     *
+     * @param code String类型 异常标识
+     * @param message String类型 异常信息
+     * @param cause Throwable类型 异常
+     */
+    public AppDaoException(String code, String message, Throwable cause) {
+        super(message, cause);
+        setCode(code);
+    }
 
 
 
-	@Override
-	public void printStackTrace() {
-		super.printStackTrace();
-	}
-
-
-
-	@Override
-	public void printStackTrace(PrintStream s) {
-		super.printStackTrace(s);
-	}
-
-
-
-	@Override
-	public void printStackTrace(PrintWriter s) {
-		super.printStackTrace(s);
-	}
+    /**
+     * <p>
+     * 构造函数
+     * </p>
+     *
+     * @param cause String类型 异常
+     */
+    public AppDaoException(Throwable cause) {
+        super(cause);
+    }
 
 }

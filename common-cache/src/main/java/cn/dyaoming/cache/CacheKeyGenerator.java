@@ -8,6 +8,7 @@ import org.springframework.cache.interceptor.KeyGenerator;
 import org.springframework.util.ClassUtils;
 
 
+
 /**
  * <p>
  * 自定义缓存key序列化类
