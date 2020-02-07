@@ -21,10 +21,10 @@
 	</modules>
 
 	<properties>
-	    <!-- spring begin -->
-        <spring.version>4.3.19.RELEASE</spring.version>
-        <!-- spring end -->
-        
+		<!-- spring begin -->
+		<spring.version>4.3.19.RELEASE</spring.version>
+		<!-- spring end -->
+
 		<!-- json begin -->
 		<jackson.version>2.8.1</jackson.version>
 		<fastjson.version>1.2.47</fastjson.version>
@@ -66,11 +66,11 @@
 				<artifactId>common-util</artifactId>
 				<version>${project.version}</version>
 			</dependency>
-            <dependency>
-                <groupId>cn.dyaoming.common</groupId>
-                <artifactId>common-cache</artifactId>
-                <version>${project.version}</version>
-            </dependency>
+			<dependency>
+				<groupId>cn.dyaoming.common</groupId>
+				<artifactId>common-cache</artifactId>
+				<version>${project.version}</version>
+			</dependency>
 			<dependency>
 				<groupId>com.alibaba</groupId>
 				<artifactId>fastjson</artifactId>
@@ -134,6 +134,166 @@
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
+	<profiles>
+		<profile>
+			<id>default</id>
+			<distributionManagement>
+				<repository>
+					<id>mY-repo-access</id>
+					<name>Nexus 
+		Release Repository</name>
+					<url>http://localhost:8020/repository/maven-releases/</url>
+				</repository>
+				<snapshotRepository>
+					<id>mY-repo-access</id>
+					<name>Nexus Snapshot 
+		Repository</name>
+					<url>http://localhost:8020/repository/maven-snapshots/</url>
+				</snapshotRepository>
+			</distributionManagement>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+		</profile>
+		<profile>
+			<id>maven-center</id>
+			<distributionManagement>
+				<repository>
+					<id>maven-center-access</id>
+					<name>mavenCenter Release Repository</name>
+					<url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+				</repository>
+				<snapshotRepository>
+					<id>maven-center-access</id>
+					<name>mavenCenter 
+		Snapshot Repository</name>
+					<url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+				</snapshotRepository>
+			</distributionManagement>
+
+		</profile>
+	</profiles>
 
 
+	<build>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<configuration>
+						<source>${maven.compiler.source}</source>
+						<target>${maven.compiler.target}</target>
+					</configuration>
+				</plugin>
+				<!-- <plugin> <groupId>org.apache.maven.plugins</groupId> <artifactId>maven-surefire-plugin</artifactId> 
+					<version>2.9</version> <configuration> <skip>true</skip> </configuration> 
+					</plugin> -->
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-plugin-plugin</artifactId>
+					<version>3.3</version>
+					<configuration>
+						<skipErrorNoDescriptorsFound>true</skipErrorNoDescriptorsFound>
+					</configuration>
+					<executions>
+						<execution>
+							<id>mojo-descriptor</id>
+							<goals>
+								<goal>descriptor</goal>
+							</goals>
+						</execution>
+					</executions>
+				</plugin>
+				<!-- Source -->
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-source-plugin</artifactId>
+					<version>3.0.1</version>
+					<executions>
+						<execution>
+							<id>attach-sources</id>
+							<goals>
+								<goal>jar</goal>
+							</goals>
+						</execution>
+					</executions>
+				</plugin>
+				<!-- Javadoc -->
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-javadoc-plugin</artifactId>
+					<configuration>
+						<quiet>true</quiet>
+						<nonavbar>true</nonavbar>
+						<notree>true</notree>
+						<nocomment>true</nocomment>
+						<show>private</show>
+						<nohelp>true</nohelp>
+						<charset>UTF-8</charset>
+						<encoding>UTF-8</encoding>
+						<docencoding>UTF-8</docencoding>
+						<!--<additionalparam>-Xdoclint:none</additionalparam> TODO 临时解决不规范的javadoc生成报错,后面要规范化后把这行去掉 -->
+
+					</configuration>
+					<executions>
+						<execution>
+							<id>attach-javadocs</id>
+							<goals>
+								<goal>jar</goal>
+							</goals>
+						</execution>
+					</executions>
+				</plugin>
+				<!-- GPG -->
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-gpg-plugin</artifactId>
+					<version>1.6</version>
+					<executions>
+						<execution>
+							<id>default</id>
+							<phase>verify</phase>
+							<goals>
+								<goal>sign</goal>
+							</goals>
+						</execution>
+					</executions>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-gpg-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>default</id>
+						<phase>verify</phase>
+						<goals>
+							<goal>sign</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+
+	<licenses>
+		<license>
+			<name>The Apache Software License, Version 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+		</license>
+	</licenses>
+	<developers>
+		<developer>
+			<name>dyaoming</name>
+			<email>270307872@qq.com</email>
+		</developer>
+	</developers>
+	<scm>
+		<connection>scm:git:git@github.com:dym270307872/common-parent.git</connection>
+		<developerConnection>scm:git:git@github.com:dym270307872/common-parent.git</developerConnection>
+		<url>https://github.com/dym270307872/common-parent</url>
+	</scm>
 </project>
