@@ -9,6 +9,7 @@ import cn.dyaoming.utils.StringUtil;
 import java.util.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
@@ -39,6 +40,7 @@ public abstract class RedisBaseImp implements CacheBaseInterface {
 
 
 
+    @Autowired
     public void setJedisPool(JedisPool jedisPool) {
         this.jedisPool = jedisPool;
     }
@@ -49,8 +51,9 @@ public abstract class RedisBaseImp implements CacheBaseInterface {
     public void init(String dbIndex) {
         if (StringUtil.isNotEmpty(dbIndex)) {
             this.dbIndex = Integer.valueOf(dbIndex);
+        }else {
+            this.dbIndex = null;
         }
-        this.dbIndex = null;
     }
 
 

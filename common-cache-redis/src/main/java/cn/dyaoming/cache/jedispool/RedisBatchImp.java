@@ -1,4 +1,3 @@
-package cn.dyaoming.cache.jedispool;
 //package cn.dyaoming.cache.jedispool;
 //
 //
@@ -37,17 +36,7 @@ package cn.dyaoming.cache.jedispool;
 //
 //    private static final Logger LOGGER = LoggerFactory.getLogger(RedisBatchImp.class);
 //
-//    /**
-//     * Jedis连接池
-//     */
-//    private JedisPool jedisPool;
-//
-//
-//
-//    public void setJedisPool(JedisPool jedisPool) {
-//        this.jedisPool = jedisPool;
-//    }
-//
+//   
 //
 //    @Override
 //    public boolean deleteCacheData(List<String> key) throws AppDaoException {

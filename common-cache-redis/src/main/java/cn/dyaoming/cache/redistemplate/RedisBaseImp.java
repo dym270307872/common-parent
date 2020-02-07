@@ -38,11 +38,10 @@ public abstract class RedisBaseImp implements CacheBaseInterface {
 
     protected Integer dbIndex = null;
 
-    @Autowired
     protected RedisTemplate redisTemplate;
 
 
-
+    @Autowired
     public RedisTemplate getRedisTemplate() {
         return redisTemplate;
     }
@@ -59,8 +58,9 @@ public abstract class RedisBaseImp implements CacheBaseInterface {
     public void init(String dbIndex) {
         if (StringUtil.isNotEmpty(dbIndex)) {
             this.dbIndex = Integer.valueOf(dbIndex);
+        }else {
+            this.dbIndex = null;
         }
-        this.dbIndex = null;
     }
 
 
