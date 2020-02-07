@@ -1,4 +1,4 @@
-package cn.dyaoming.cache.redistemplate;
+package cn.dyaoming.cache.jedissentinel;
 
 
 import cn.dyaoming.cache.interfaces.CacheBaseInterface;
@@ -6,17 +6,12 @@ import cn.dyaoming.errors.AppDaoException;
 import cn.dyaoming.utils.AesUtil;
 import cn.dyaoming.utils.SerializeUtil;
 import cn.dyaoming.utils.StringUtil;
-
 import java.util.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessException;
-import org.springframework.data.redis.connection.RedisConnection;
-import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
-import org.springframework.data.redis.core.RedisCallback;
-import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.util.StringUtils;
+
+import redis.clients.jedis.Jedis;
+import redis.clients.jedis.JedisSentinelPool;
 
 
 /**
@@ -28,7 +23,6 @@ import org.springframework.util.StringUtils;
  * @since 2019-05-15
  * @version V1.0
  */
-@SuppressWarnings({ "rawtypes", "unchecked" })
 public abstract class RedisBaseImp implements CacheBaseInterface {
 
     /**
@@ -38,19 +32,15 @@ public abstract class RedisBaseImp implements CacheBaseInterface {
 
     protected Integer dbIndex = null;
 
-    @Autowired
-    protected RedisTemplate redisTemplate;
+    /**
+     * Jedis连接池
+     */
+    private JedisSentinelPool jedisPool;
 
 
 
-    public RedisTemplate getRedisTemplate() {
-        return redisTemplate;
-    }
-
-
-
-    public void setRedisTemplate(RedisTemplate redisTemplate) {
-        this.redisTemplate = redisTemplate;
+    public void setJedisPool(JedisSentinelPool jedisPool) {
+        this.jedisPool = jedisPool;
     }
 
 
@@ -65,51 +55,80 @@ public abstract class RedisBaseImp implements CacheBaseInterface {
 
 
 
-    protected void selectDb(RedisConnection connection) {
+    /**
+     * jedis连接获取方法
+     * 
+     * @return jedis连接
+     */
+    protected Jedis getResource() {
+        return jedisPool.getResource();
+    }
+
+
+
+    /**
+     * <p>
+     * jedis链接切换数据库下标
+     * </p>
+     * 
+     * @param jedis jedis连接
+     */
+    protected void selectDb(Jedis jedis) {
         if (this.dbIndex != null) {
-            connection.select(dbIndex);
+            jedis.select(dbIndex);
         }
     }
 
 
 
     /**
+     * jedis连接关闭方法
+     * 
+     * @param jedis jedis连接
+     */
+    protected void closeResource(Jedis jedis) {
+        try {
+            if (jedis != null) {
+                jedis.close();
+            }
+        } catch (Exception e) {
+            // e.printStackTrace();
+            LOGGER.warn("关闭jedis连接池异常", e);
+        }
+    }
+
+
+
+    /**
+     * <p>
      * 功能描述：判断是否存在键值。
+     * </p>
      * 
      * @param key String类型 键
      * @return boolean类型 返回结果
      */
     @Override
     public boolean exists(Object key) throws AppDaoException {
+        Jedis jedis = null;
         boolean rv = false;
-
         try {
             if (StringUtil.isNotEmpty(key)) {
-                final byte[] finalKey = key.toString().getBytes("utf-8");
-
-                Object obj = redisTemplate.execute(new RedisCallback<Boolean>() {
-                    @Override
-                    public Boolean doInRedis(RedisConnection connection)
-                            throws DataAccessException {
-                        selectDb(connection);
-                        return connection.exists(finalKey);
-                    }
-                });
-                rv = (Boolean) obj;
+                jedis = getResource();
+                selectDb(jedis);
+                rv = jedis.exists(key.toString());
             }
-
-        } catch (Exception e) {
-            LOGGER.warn("异常：exists()方法出现异常，异常详细信息：" + e.getMessage() + "。");
-//            throw new AppDaoException("判断缓存内容是否存在异常！", e);
+        } finally {
+            closeResource(jedis);
         }
-
         return rv;
     }
 
 
 
     /**
+     * <p>
      * 功能描述：设置缓存对象类型内容。
+     * </p>
      * 
      * @param key String类型 键
      * @param value Object类型 内容
@@ -123,7 +142,9 @@ public abstract class RedisBaseImp implements CacheBaseInterface {
 
 
     /**
+     * <p>
      * 功能描述：设置缓存对象类型内容。
+     * </p>
      *
      * @param key String类型 键
      * @param value Object类型 内容
@@ -150,39 +171,40 @@ public abstract class RedisBaseImp implements CacheBaseInterface {
     public boolean setCacheObjectData(Object key, Object value, long validTime,
             boolean secret) throws AppDaoException {
         boolean rv = false;
+        Jedis jedis = null;
         try {
             if (StringUtil.isNotEmpty(key)) {
                 final byte[] finalKey = key.toString().getBytes("utf-8");
                 byte[] valueByte = SerializeUtil.serialize(value);
                 if (secret) {
                     valueByte = AesUtil.encrypt(valueByte);
-                    int length_byte = DEFALUTHEAD.length + valueByte.length;
-                    byte[] all_byte = new byte[length_byte];
+                    int lengthByte = DEFALUTHEAD.length + valueByte.length;
+                    byte[] allByte = new byte[lengthByte];
 
-                    System.arraycopy(DEFALUTHEAD, 0, all_byte, 0,
+                    System.arraycopy(DEFALUTHEAD, 0, allByte, 0,
                             DEFALUTHEAD.length);
-                    System.arraycopy(valueByte, 0, all_byte, DEFALUTHEAD.length,
+                    System.arraycopy(valueByte, 0, allByte, DEFALUTHEAD.length,
                             valueByte.length);
-                    valueByte = all_byte;
+                    valueByte = allByte;
                 }
                 final byte[] finalValue = valueByte;
-                Object obj = redisTemplate.execute(new RedisCallback<Boolean>() {
-                    @Override
-                    public Boolean doInRedis(RedisConnection connection) {
-                        selectDb(connection);
-                        connection.set(finalKey, finalValue);
-                        // 设置超时间
-                        if (validTime > 0L) {
-                            connection.expire(finalKey, validTime);
-                        }
-                        return true;
-                    }
-                });
-                rv = (Boolean) obj;
+                jedis = getResource();
+                selectDb(jedis);
+                if (validTime > 0L) {
+                    int expireTime = new Long(validTime).intValue();
+                    jedis.setex(finalKey, expireTime, finalValue);
+                } else {
+                    jedis.set(finalKey, finalValue);
+
+                }
+                rv = true;
             }
         } catch (Exception e) {
-            LOGGER.warn("异常：setCacheObjectData()方法出现异常，异常详细信息：" + e.getMessage() + "。");
-//            throw new AppDaoException("设置缓存内容出现异常！", e);
+            LOGGER.warn("保存缓存信息出现异常 ", e);
+            // throw new AppDaoException("缓存对象类型内容出现异常！", e);
+            rv = false;
+        } finally {
+            closeResource(jedis);
         }
 
         return rv;
@@ -191,7 +213,9 @@ public abstract class RedisBaseImp implements CacheBaseInterface {
 
 
     /**
+     * <p>
      * 功能描述：删除缓存内容。
+     * </p>
      * 
      * @param key String类型 键
      * @return boolean类型 返回结果
@@ -199,24 +223,20 @@ public abstract class RedisBaseImp implements CacheBaseInterface {
     @Override
     public boolean deleteCacheData(Object key) throws AppDaoException {
         boolean rv = false;
-
+        Jedis jedis = null;
         try {
             if (StringUtil.isNotEmpty(key)) {
                 final byte[] finalKey = key.toString().getBytes("utf-8");
-                redisTemplate.execute(new RedisCallback<Long>() {
-                    @Override
-                    public Long doInRedis(RedisConnection connection)
-                            throws DataAccessException {
-                        selectDb(connection);
-                        return connection.del(finalKey);
-                    }
-                });
-
+                jedis = getResource();
+                selectDb(jedis);
+                jedis.del(finalKey);
                 rv = true;
             }
         } catch (Exception e) {
-            LOGGER.warn("异常：deleteCacheData()方法出现异常，异常详细信息：" + e.getMessage() + "。");
-//            throw new AppDaoException("删除缓存内容出现异常！", e);
+            LOGGER.warn("删除缓存内容出现异常", e);
+            // throw new AppDaoException("删除缓存内容出现异常！", e);
+        } finally {
+            closeResource(jedis);
         }
 
         return rv;
@@ -225,7 +245,9 @@ public abstract class RedisBaseImp implements CacheBaseInterface {
 
 
     /**
+     * <p>
      * 功能描述：获取缓存内容。
+     * </p>
      * 
      * @param key String类型 键
      * @return Object类型 返回结果
@@ -233,18 +255,14 @@ public abstract class RedisBaseImp implements CacheBaseInterface {
     @Override
     public Object getCacheData(Object key) throws AppDaoException {
         Object rv = null;
-
+        Jedis jedis = null;
         try {
-
             if (StringUtil.isNotEmpty(key)) {
                 final byte[] finalKey = key.toString().getBytes("utf-8");
-                final byte[] value = (byte[]) redisTemplate.execute(new RedisCallback<byte[]>() {
-                    @Override
-                    public byte[] doInRedis(RedisConnection connection) throws DataAccessException {
-                        selectDb(connection);
-                        return connection.get(finalKey);
-                    }
-                });
+                jedis = getResource();
+                selectDb(jedis);
+                byte[] value = jedis.get(finalKey);
+
                 if (StringUtil.isNotEmpty(value)) {
                     byte[] head = new byte[DEFALUTHEAD.length];
                     System.arraycopy(value, 0, head, 0, DEFALUTHEAD.length);
@@ -258,36 +276,38 @@ public abstract class RedisBaseImp implements CacheBaseInterface {
                     rv = SerializeUtil.unSerialize(value);
                 }
             }
-        } catch (Exception e) {
-            LOGGER.warn("异常：getCacheData()方法出现异常，异常详细信息：" + e.getMessage() + "。");
-//            throw new AppDaoException("获取缓存内容出现异常！", e);
-        }
 
+        } catch (Exception e) {
+            LOGGER.warn("获取缓存内容出现异常！", e);
+//            throw new AppDaoException("获取缓存内容出现异常！", e);
+        } finally {
+            closeResource(jedis);
+        }
         return rv;
     }
 
 
 
     /**
+     * <p>
      * 功能描述：获取缓存内容。
+     * </p>
      * 
      * @param key String类型 键
      * @param type Class类型 内容类型
      * @return T类型 返回结果
      */
+    @SuppressWarnings("unchecked")
     @Override
     public <T> T getCacheTData(String key, Class<T> type) throws AppDaoException {
         T rv = null;
+        Jedis jedis = null;
         try {
             if (StringUtil.isNotEmpty(key) && type != null) {
-                final byte[] finalKey = key.toString().getBytes("utf-8");
-                final byte[] value = (byte[]) redisTemplate.execute(new RedisCallback<byte[]>() {
-                    @Override
-                    public byte[] doInRedis(RedisConnection connection) throws DataAccessException {
-                        selectDb(connection);
-                        return connection.get(finalKey);
-                    }
-                });
+                final byte[] finalKey = key.getBytes("utf-8");
+                jedis = getResource();
+                selectDb(jedis);
+                byte[] value = jedis.get(finalKey);
                 if (StringUtil.isNotEmpty(value)) {
                     byte[] head = new byte[DEFALUTHEAD.length];
                     System.arraycopy(value, 0, head, 0, DEFALUTHEAD.length);
@@ -310,6 +330,8 @@ public abstract class RedisBaseImp implements CacheBaseInterface {
         } catch (Exception e) {
             LOGGER.warn("获取缓存内容出现异常！", e);
 //            throw new AppDaoException("获取缓存内容出现异常！", e);
+        } finally {
+            closeResource(jedis);
         }
         return rv;
     }
@@ -317,22 +339,19 @@ public abstract class RedisBaseImp implements CacheBaseInterface {
 
 
     /**
+     * <p>
      * 描述：清空缓存
+     * </p>
      */
     @Override
     public void clear() throws AppDaoException {
+        Jedis jedis = null;
         try {
-            redisTemplate.execute(new RedisCallback<Object>() {
-                @Override
-                public Object doInRedis(RedisConnection connection) throws DataAccessException {
-                    selectDb(connection);
-                    connection.flushDb();
-                    return 0L;
-                }
-            });
-        } catch (Exception e) {
-            LOGGER.warn("清空缓存出现异常！", e);
-//            throw new AppDaoException("清空缓存出现异常！", e);
+            jedis = getResource();
+            selectDb(jedis);
+            jedis.flushDB();
+        } finally {
+            closeResource(jedis);
         }
     }
 

@@ -1,4 +1,4 @@
-package cn.dyaoming.cache.jediscluster;
+package cn.dyaoming.cache.jedissentinel;
 
 import java.util.*;
 
@@ -35,15 +35,20 @@ public abstract class RedisRegexImp extends RedisBaseImp implements CacheRegexIn
     @Override
     public Collection<String> getKeys(String pattern) throws AppDaoException {
         Set<String> rv = new HashSet<String>();
-        
+        Jedis jedis = null;
         try {
-            if (StringUtil.isNotEmpty(pattern)) {                
-                rv = jedisCluster.hkeys(pattern);
+            if (StringUtil.isNotEmpty(pattern)) {
+                jedis = getResource();
+                selectDb(jedis);
+                rv = jedis.keys(pattern);
             }
         } catch(Exception e) {
             LOGGER.warn("异常：getKeys()方法出现异常，异常详细信息：" + e.getMessage() + "。");
             throw new AppDaoException("模糊查询keys出现异常！", e);
+        }finally {
+            closeResource(jedis);
         }
+
         return rv;
     }
 
@@ -59,22 +64,25 @@ public abstract class RedisRegexImp extends RedisBaseImp implements CacheRegexIn
     @Override
     public boolean deleteRegexCacheData(String pattern) throws AppDaoException {
         boolean rv = false;
-        
+        Jedis jedis = null;
         try {
             if (StringUtil.isNotEmpty(pattern)) {
-               
+                jedis = getResource();
+                selectDb(jedis);
                 Collection<String> keys = getKeys(pattern);
                 String[] stringKeys = new String[keys.size()];
                 int i = 0;
                 for(String key : keys) {
                     stringKeys[i++] = key;
                 }
-                jedisCluster.del(stringKeys);
+                jedis.del(stringKeys);
                 rv = true;
             }
         } catch(Exception e) {
             LOGGER.warn("异常：deleteRegexCacheData()方法出现异常，异常详细信息：" + e.getMessage() + "。");
             throw new AppDaoException("删除缓存内容出现异常！", e);
+        }finally {
+            closeResource(jedis);
         }
 
         return rv;

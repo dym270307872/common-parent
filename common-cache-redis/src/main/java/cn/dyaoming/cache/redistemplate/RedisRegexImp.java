@@ -6,14 +6,13 @@ import java.util.*;
 
 import cn.dyaoming.cache.interfaces.CacheRegexInterface;
 import cn.dyaoming.errors.AppDaoException;
+import cn.dyaoming.utils.StringUtil;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.redis.connection.RedisConnection;
 import org.springframework.data.redis.core.RedisCallback;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.util.StringUtils;
 
 
@@ -26,24 +25,10 @@ import org.springframework.util.StringUtils;
  * @since 2019-05-15
  * @version V1.0
  */
+@SuppressWarnings("unchecked")
 public abstract class RedisRegexImp extends RedisBaseImp implements CacheRegexInterface {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(RedisRegexImp.class);
-
-    @Autowired
-    private RedisTemplate redisTemplate;
-
-
-
-    public RedisTemplate getRedisTemplate() {
-        return redisTemplate;
-    }
-
-
-
-    public void setRedisTemplate(RedisTemplate redisTemplate) {
-        this.redisTemplate = redisTemplate;
-    }
 
 
 
@@ -55,7 +40,6 @@ public abstract class RedisRegexImp extends RedisBaseImp implements CacheRegexIn
      * @throws AppDaoException dao层异常
      */
     @Override
-    @SuppressWarnings("unchecked")
     public Collection<String> getKeys(String pattern) throws AppDaoException {
         Set<String> rv = new HashSet<String>();
 
@@ -63,26 +47,25 @@ public abstract class RedisRegexImp extends RedisBaseImp implements CacheRegexIn
             if (!StringUtils.isEmpty(pattern)) {
                 final byte[] finalKey = pattern.toString().getBytes("utf-8");
 
-                rv = (Set<String>) redisTemplate.execute(new RedisCallback<Set<String>>(){
+                final Set<byte[]> keys = (Set<byte[]>) redisTemplate.execute(new RedisCallback<Set<byte[]>>() {
                     @Override
-                    public Set<String> doInRedis(RedisConnection connection)
+                    public Set<byte[]> doInRedis(RedisConnection connection)
                             throws DataAccessException {
-                        Set<String> rawKeys = new HashSet<String>();
-
-                        connection.keys(finalKey).stream().forEach(f -> {
-                            try {
-                                rawKeys.add(new String(f, "utf-8"));
-                            } catch(UnsupportedEncodingException e) {
-                                // e.printStackTrace();
-                            }
-                        });
-                        return rawKeys;
+                        selectDb(connection);
+                        return connection.keys(finalKey);
+                    }
+                });
+                keys.stream().forEach(f -> {
+                    try {
+                        rv.add(new String(f, "utf-8"));
+                    } catch (UnsupportedEncodingException e) {
+                        // e.printStackTrace();
                     }
                 });
             }
-        } catch(Exception e) {
-            LOGGER.error("异常：deleteCacheData()方法出现异常，异常详细信息：" + e.getMessage() + "。");
-            throw new AppDaoException("删除缓存内容出现异常！", e);
+        } catch (Exception e) {
+            LOGGER.warn("异常：getKeys()方法出现异常，异常详细信息：" + e.getMessage() + "。");
+            throw new AppDaoException("模糊查询keys方法出现异常！", e);
         }
 
         return rv;
@@ -102,23 +85,28 @@ public abstract class RedisRegexImp extends RedisBaseImp implements CacheRegexIn
         boolean rv = false;
 
         try {
-            if (!StringUtils.isEmpty(pattern)) {
+            if (StringUtil.isNotEmpty(pattern)) {
                 final byte[] finalKey = pattern.toString().getBytes("utf-8");
-                redisTemplate.execute(new RedisCallback<Long>(){
+                redisTemplate.execute(new RedisCallback<Long>() {
                     @Override
                     public Long doInRedis(RedisConnection connection)
                             throws DataAccessException {
-                        connection.keys(finalKey).stream().forEach(f -> {
-                            connection.del(f);
-                        });
+                        selectDb(connection);
+                        Set<byte[]> keys = connection.keys(finalKey);
+                        final byte[][] rawKeys = new byte[keys.size()][];
+                        int i = 0;
+                        for(byte[] key : keys) {
+                            rawKeys[i++] = key;
+                        }
+                        connection.del(rawKeys);
                         return 0L;
                     }
                 });
 
                 rv = true;
             }
-        } catch(Exception e) {
-            LOGGER.error("异常：deleteCacheData()方法出现异常，异常详细信息：" + e.getMessage() + "。");
+        } catch (Exception e) {
+            LOGGER.warn("异常：deleteCacheData()方法出现异常，异常详细信息：" + e.getMessage() + "。");
             throw new AppDaoException("删除缓存内容出现异常！", e);
         }
 

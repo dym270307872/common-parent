@@ -1,5 +1,6 @@
 package cn.dyaoming.cache.jedispool;
 
+
 import cn.dyaoming.cache.interfaces.CacheBaseInterface;
 import cn.dyaoming.errors.AppDaoException;
 import cn.dyaoming.utils.AesUtil;
@@ -8,7 +9,7 @@ import cn.dyaoming.utils.StringUtil;
 import java.util.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 
@@ -29,24 +30,34 @@ public abstract class RedisBaseImp implements CacheBaseInterface {
      */
     private static final Logger LOGGER = LoggerFactory.getLogger(RedisBaseImp.class);
 
-    
+    protected Integer dbIndex = null;
+
     /**
-     * 注入连接池
+     * Jedis连接池
      */
-    @Autowired
-    protected JedisPool jedisPool;
+    private JedisPool jedisPool;
+
+
+
+    public void setJedisPool(JedisPool jedisPool) {
+        this.jedisPool = jedisPool;
+    }
 
 
 
     @Override
     public void init(String dbIndex) {
-        // TODO Auto-generated method stub
-
+        if (StringUtil.isNotEmpty(dbIndex)) {
+            this.dbIndex = Integer.valueOf(dbIndex);
+        }
+        this.dbIndex = null;
     }
+
 
 
     /**
      * jedis连接获取方法
+     * 
      * @return jedis连接
      */
     protected Jedis getResource() {
@@ -54,8 +65,25 @@ public abstract class RedisBaseImp implements CacheBaseInterface {
     }
 
 
+
+    /**
+     * <p>
+     * jedis链接切换数据库下标
+     * </p>
+     * 
+     * @param jedis jedis连接
+     */
+    protected void selectDb(Jedis jedis) {
+        if (this.dbIndex != null) {
+            jedis.select(dbIndex);
+        }
+    }
+
+
+
     /**
      * jedis连接关闭方法
+     * 
      * @param jedis jedis连接
      */
     protected void closeResource(Jedis jedis) {
@@ -86,6 +114,7 @@ public abstract class RedisBaseImp implements CacheBaseInterface {
         try {
             if (StringUtil.isNotEmpty(key)) {
                 jedis = getResource();
+                selectDb(jedis);
                 rv = jedis.exists(key.toString());
             }
         } finally {
@@ -160,7 +189,7 @@ public abstract class RedisBaseImp implements CacheBaseInterface {
                 }
                 final byte[] finalValue = valueByte;
                 jedis = getResource();
-
+                selectDb(jedis);
                 if (validTime > 0L) {
                     int expireTime = new Long(validTime).intValue();
                     jedis.setex(finalKey, expireTime, finalValue);
@@ -199,6 +228,7 @@ public abstract class RedisBaseImp implements CacheBaseInterface {
             if (StringUtil.isNotEmpty(key)) {
                 final byte[] finalKey = key.toString().getBytes("utf-8");
                 jedis = getResource();
+                selectDb(jedis);
                 jedis.del(finalKey);
                 rv = true;
             }
@@ -230,6 +260,7 @@ public abstract class RedisBaseImp implements CacheBaseInterface {
             if (StringUtil.isNotEmpty(key)) {
                 final byte[] finalKey = key.toString().getBytes("utf-8");
                 jedis = getResource();
+                selectDb(jedis);
                 byte[] value = jedis.get(finalKey);
 
                 if (StringUtil.isNotEmpty(value)) {
@@ -272,9 +303,10 @@ public abstract class RedisBaseImp implements CacheBaseInterface {
         T rv = null;
         Jedis jedis = null;
         try {
-            if (StringUtil.isNotEmpty(key)) {
+            if (StringUtil.isNotEmpty(key) && type != null) {
                 final byte[] finalKey = key.getBytes("utf-8");
                 jedis = getResource();
+                selectDb(jedis);
                 byte[] value = jedis.get(finalKey);
                 if (StringUtil.isNotEmpty(value)) {
                     byte[] head = new byte[DEFALUTHEAD.length];
@@ -290,7 +322,7 @@ public abstract class RedisBaseImp implements CacheBaseInterface {
                         rb = SerializeUtil.unSerialize(value);
                     }
 
-                    if (type != null && type.isInstance(rb) && null != rb) {
+                    if (type.isInstance(rb) && null != rb) {
                         rv = (T) rb;
                     }
                 }
@@ -316,6 +348,7 @@ public abstract class RedisBaseImp implements CacheBaseInterface {
         Jedis jedis = null;
         try {
             jedis = getResource();
+            selectDb(jedis);
             jedis.flushDB();
         } finally {
             closeResource(jedis);

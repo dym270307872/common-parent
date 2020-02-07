@@ -1,20 +1,14 @@
 package cn.dyaoming.cache.jedispool;
 
-
-import java.io.UnsupportedEncodingException;
 import java.util.*;
 
 import cn.dyaoming.cache.interfaces.CacheRegexInterface;
 import cn.dyaoming.errors.AppDaoException;
+import cn.dyaoming.utils.StringUtil;
+import redis.clients.jedis.Jedis;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessException;
-import org.springframework.data.redis.connection.RedisConnection;
-import org.springframework.data.redis.core.RedisCallback;
-import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.util.StringUtils;
 
 
 /**
@@ -30,22 +24,6 @@ public abstract class RedisRegexImp extends RedisBaseImp implements CacheRegexIn
 
     private static final Logger LOGGER = LoggerFactory.getLogger(RedisRegexImp.class);
 
-    @Autowired
-    private RedisTemplate redisTemplate;
-
-
-
-    public RedisTemplate getRedisTemplate() {
-        return redisTemplate;
-    }
-
-
-
-    public void setRedisTemplate(RedisTemplate redisTemplate) {
-        this.redisTemplate = redisTemplate;
-    }
-
-
 
     /**
      * 模糊查询仅支持通配符*、?、[]三种，其中*表示匹配任意数量字符，?表示匹配一个任意字符，[abc]表示匹配a、b、c中一个字符
@@ -55,34 +33,20 @@ public abstract class RedisRegexImp extends RedisBaseImp implements CacheRegexIn
      * @throws AppDaoException dao层异常
      */
     @Override
-    @SuppressWarnings("unchecked")
     public Collection<String> getKeys(String pattern) throws AppDaoException {
         Set<String> rv = new HashSet<String>();
-
+        Jedis jedis = null;
         try {
-            if (!StringUtils.isEmpty(pattern)) {
-                final byte[] finalKey = pattern.toString().getBytes("utf-8");
-
-                rv = (Set<String>) redisTemplate.execute(new RedisCallback<Set<String>>(){
-                    @Override
-                    public Set<String> doInRedis(RedisConnection connection)
-                            throws DataAccessException {
-                        Set<String> rawKeys = new HashSet<String>();
-
-                        connection.keys(finalKey).stream().forEach(f -> {
-                            try {
-                                rawKeys.add(new String(f, "utf-8"));
-                            } catch(UnsupportedEncodingException e) {
-                                // e.printStackTrace();
-                            }
-                        });
-                        return rawKeys;
-                    }
-                });
+            if (StringUtil.isNotEmpty(pattern)) {
+                jedis = getResource();
+                selectDb(jedis);
+                rv = jedis.keys(pattern);
             }
         } catch(Exception e) {
-            LOGGER.error("异常：deleteCacheData()方法出现异常，异常详细信息：" + e.getMessage() + "。");
-            throw new AppDaoException("删除缓存内容出现异常！", e);
+            LOGGER.warn("异常：getKeys()方法出现异常，异常详细信息：" + e.getMessage() + "。");
+            throw new AppDaoException("模糊查询keys出现异常！", e);
+        }finally {
+            closeResource(jedis);
         }
 
         return rv;
@@ -100,26 +64,25 @@ public abstract class RedisRegexImp extends RedisBaseImp implements CacheRegexIn
     @Override
     public boolean deleteRegexCacheData(String pattern) throws AppDaoException {
         boolean rv = false;
-
+        Jedis jedis = null;
         try {
-            if (!StringUtils.isEmpty(pattern)) {
-                final byte[] finalKey = pattern.toString().getBytes("utf-8");
-                redisTemplate.execute(new RedisCallback<Long>(){
-                    @Override
-                    public Long doInRedis(RedisConnection connection)
-                            throws DataAccessException {
-                        connection.keys(finalKey).stream().forEach(f -> {
-                            connection.del(f);
-                        });
-                        return 0L;
-                    }
-                });
-
+            if (StringUtil.isNotEmpty(pattern)) {
+                jedis = getResource();
+                selectDb(jedis);
+                Collection<String> keys = getKeys(pattern);
+                String[] stringKeys = new String[keys.size()];
+                int i = 0;
+                for(String key : keys) {
+                    stringKeys[i++] = key;
+                }
+                jedis.del(stringKeys);
                 rv = true;
             }
         } catch(Exception e) {
-            LOGGER.error("异常：deleteCacheData()方法出现异常，异常详细信息：" + e.getMessage() + "。");
+            LOGGER.warn("异常：deleteRegexCacheData()方法出现异常，异常详细信息：" + e.getMessage() + "。");
             throw new AppDaoException("删除缓存内容出现异常！", e);
+        }finally {
+            closeResource(jedis);
         }
 
         return rv;

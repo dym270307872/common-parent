@@ -5,15 +5,12 @@ import cn.dyaoming.cache.interfaces.CacheBaseInterface;
 import cn.dyaoming.errors.AppDaoException;
 import cn.dyaoming.utils.AesUtil;
 import cn.dyaoming.utils.SerializeUtil;
+import cn.dyaoming.utils.StringUtil;
 import java.util.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessException;
-import org.springframework.data.redis.connection.RedisConnection;
-import org.springframework.data.redis.core.RedisCallback;
-import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.util.StringUtils;
+
+import redis.clients.jedis.JedisCluster;
 
 
 /**
@@ -32,51 +29,48 @@ public abstract class RedisBaseImp implements CacheBaseInterface {
      */
     private static final Logger LOGGER = LoggerFactory.getLogger(RedisBaseImp.class);
 
-    
+    /**
+     * jedisCluster连接池
+     */
+    protected JedisCluster jedisCluster;
 
-    @Override
-    public void init(String dbIndex) {
-        // TODO Auto-generated method stub
 
+
+    public void setJedisCluster(JedisCluster jedisCluster) {
+        this.jedisCluster = jedisCluster;
     }
 
 
 
+    @Override
+    public void init(String dbIndex) {
+    }
+
+
     /**
+     * <p>
      * 功能描述：判断是否存在键值。
+     * </p>
      * 
      * @param key String类型 键
      * @return boolean类型 返回结果
      */
     @Override
     public boolean exists(Object key) throws AppDaoException {
+
         boolean rv = false;
-
-        try {
-            if (!StringUtils.isEmpty(key)) {
-                final byte[] finalKey = key.toString().getBytes("utf-8");
-                Object obj = redisTemplate.execute(new RedisCallback<Boolean>() {
-                    @Override
-                    public Boolean doInRedis(RedisConnection connection)
-                            throws DataAccessException {
-                        return connection.exists(finalKey);
-                    }
-                });
-                rv = (Boolean) obj;
-            }
-
-        } catch (Exception e) {
-            LOGGER.error("异常：exists()方法出现异常，异常详细信息：" + e.getMessage() + "。");
-            throw new AppDaoException("判断缓存内容是否存在异常！", e);
+        if (StringUtil.isNotEmpty(key)) {
+            rv = jedisCluster.exists(key.toString());
         }
-
         return rv;
     }
 
 
 
     /**
+     * <p>
      * 功能描述：设置缓存对象类型内容。
+     * </p>
      * 
      * @param key String类型 键
      * @param value Object类型 内容
@@ -90,7 +84,9 @@ public abstract class RedisBaseImp implements CacheBaseInterface {
 
 
     /**
+     * <p>
      * 功能描述：设置缓存对象类型内容。
+     * </p>
      *
      * @param key String类型 键
      * @param value Object类型 内容
@@ -117,38 +113,35 @@ public abstract class RedisBaseImp implements CacheBaseInterface {
     public boolean setCacheObjectData(Object key, Object value, long validTime,
             boolean secret) throws AppDaoException {
         boolean rv = false;
+        
         try {
-            if (!StringUtils.isEmpty(key)) {
+            if (StringUtil.isNotEmpty(key)) {
                 final byte[] finalKey = key.toString().getBytes("utf-8");
                 byte[] valueByte = SerializeUtil.serialize(value);
                 if (secret) {
                     valueByte = AesUtil.encrypt(valueByte);
-                    int length_byte = DEFALUTHEAD.length + valueByte.length;
-                    byte[] all_byte = new byte[length_byte];
+                    int lengthByte = DEFALUTHEAD.length + valueByte.length;
+                    byte[] allByte = new byte[lengthByte];
 
-                    System.arraycopy(DEFALUTHEAD, 0, all_byte, 0,
+                    System.arraycopy(DEFALUTHEAD, 0, allByte, 0,
                             DEFALUTHEAD.length);
-                    System.arraycopy(valueByte, 0, all_byte, DEFALUTHEAD.length,
+                    System.arraycopy(valueByte, 0, allByte, DEFALUTHEAD.length,
                             valueByte.length);
-                    valueByte = all_byte;
+                    valueByte = allByte;
                 }
                 final byte[] finalValue = valueByte;
-                Object obj = redisTemplate.execute(new RedisCallback<Boolean>() {
-                    @Override
-                    public Boolean doInRedis(RedisConnection connection) {
-                        connection.set(finalKey, finalValue);
-                        // 设置超时间
-                        if (validTime > 0L) {
-                            connection.expire(finalKey, validTime);
-                        }
-                        return true;
-                    }
-                });
-                rv = (Boolean) obj;
+                if (validTime > 0L) {
+                    int expireTime = new Long(validTime).intValue();
+                    jedisCluster.setex(finalKey, expireTime, finalValue);
+                } else {
+                    jedisCluster.set(finalKey, finalValue);
+                }
+                rv = true;
             }
         } catch (Exception e) {
-            LOGGER.error("异常：setCacheObjectData()方法出现异常，异常详细信息：" + e.getMessage() + "。");
-            throw new AppDaoException("设置缓存内容出现异常！", e);
+            LOGGER.warn("保存缓存信息出现异常 ", e);
+//             throw new AppDaoException("缓存对象类型内容出现异常！", e);
+            rv = false;
         }
 
         return rv;
@@ -157,7 +150,9 @@ public abstract class RedisBaseImp implements CacheBaseInterface {
 
 
     /**
+     * <p>
      * 功能描述：删除缓存内容。
+     * </p>
      * 
      * @param key String类型 键
      * @return boolean类型 返回结果
@@ -165,23 +160,16 @@ public abstract class RedisBaseImp implements CacheBaseInterface {
     @Override
     public boolean deleteCacheData(Object key) throws AppDaoException {
         boolean rv = false;
-
+        
         try {
-            if (!StringUtils.isEmpty(key)) {
+            if (StringUtil.isNotEmpty(key)) {
                 final byte[] finalKey = key.toString().getBytes("utf-8");
-                redisTemplate.execute(new RedisCallback<Long>() {
-                    @Override
-                    public Long doInRedis(RedisConnection connection)
-                            throws DataAccessException {
-                        return connection.del(finalKey);
-                    }
-                });
-
+                jedisCluster.del(finalKey);
                 rv = true;
             }
         } catch (Exception e) {
-            LOGGER.error("异常：deleteCacheData()方法出现异常，异常详细信息：" + e.getMessage() + "。");
-            throw new AppDaoException("删除缓存内容出现异常！", e);
+            LOGGER.warn("删除缓存内容出现异常", e);
+            // throw new AppDaoException("删除缓存内容出现异常！", e);
         }
 
         return rv;
@@ -190,7 +178,9 @@ public abstract class RedisBaseImp implements CacheBaseInterface {
 
 
     /**
+     * <p>
      * 功能描述：获取缓存内容。
+     * </p>
      * 
      * @param key String类型 键
      * @return Object类型 返回结果
@@ -198,85 +188,90 @@ public abstract class RedisBaseImp implements CacheBaseInterface {
     @Override
     public Object getCacheData(Object key) throws AppDaoException {
         Object rv = null;
-
+        
         try {
-
-            if (!StringUtils.isEmpty(key)) {
+            if (StringUtil.isNotEmpty(key)) {
                 final byte[] finalKey = key.toString().getBytes("utf-8");
-                final Object object = redisTemplate.execute(new RedisCallback<Object>() {
-                    @Override
-                    public Object doInRedis(RedisConnection connection) throws DataAccessException {
-                        byte[] value = connection.get(finalKey);
-                        if (value == null) { return null; }
-                        byte[] head = new byte[DEFALUTHEAD.length];
-                        System.arraycopy(value, 0, head, 0, DEFALUTHEAD.length);
-                        if (Arrays.equals(head, DEFALUTHEAD)) {
-                            byte[] body = new byte[value.length - DEFALUTHEAD.length];
-                            System.arraycopy(value, DEFALUTHEAD.length, body, 0,
-                                    value.length - DEFALUTHEAD.length);
-                            body = AesUtil.decrypt(body);
-                            return SerializeUtil.unSerialize(body);
-                        }
+                byte[] value = jedisCluster.get(finalKey);
 
-                        return SerializeUtil.unSerialize(value);
+                if (StringUtil.isNotEmpty(value)) {
+                    byte[] head = new byte[DEFALUTHEAD.length];
+                    System.arraycopy(value, 0, head, 0, DEFALUTHEAD.length);
+                    if (Arrays.equals(head, DEFALUTHEAD)) {
+                        byte[] body = new byte[value.length - DEFALUTHEAD.length];
+                        System.arraycopy(value, DEFALUTHEAD.length, body, 0,
+                                value.length - DEFALUTHEAD.length);
+                        body = AesUtil.decrypt(body);
+                        rv = SerializeUtil.unSerialize(body);
                     }
-                });
-                rv = object;
+                    rv = SerializeUtil.unSerialize(value);
+                }
             }
-        } catch (Exception e) {
-            LOGGER.error("异常：getCacheData()方法出现异常，异常详细信息：" + e.getMessage() + "。");
-            throw new AppDaoException("获取缓存内容出现异常！", e);
-        }
 
+        } catch (Exception e) {
+            LOGGER.warn("获取缓存内容出现异常！", e);
+//            throw new AppDaoException("获取缓存内容出现异常！", e);
+        }
         return rv;
     }
 
 
 
     /**
+     * <p>
      * 功能描述：获取缓存内容。
+     * </p>
      * 
      * @param key String类型 键
      * @param type Class类型 内容类型
      * @return T类型 返回结果
      */
+    @SuppressWarnings("unchecked")
     @Override
     public <T> T getCacheTData(String key, Class<T> type) throws AppDaoException {
-        if (StringUtils.isEmpty(key) || null == type) {
-            return null;
-        } else {
-            final String finalKey;
-            final Class<T> finalType = type;
-            if (key instanceof String) {
-                finalKey = key;
-            } else {
-                finalKey = key.toString();
-            }
-            final Object object = redisTemplate.execute(new RedisCallback<Object>() {
-                @Override
-                public Object doInRedis(RedisConnection connection) throws DataAccessException {
-                    byte[] key = (finalKey).getBytes();
-                    byte[] value = connection.get(key);
-                    if (value == null) { return null; }
-                    return SerializeUtil.unSerialize(value);
+        T rv = null;
+        
+        try {
+            if (StringUtil.isNotEmpty(key) && type != null) {
+                final byte[] finalKey = key.getBytes("utf-8");
+                
+                byte[] value = jedisCluster.get(finalKey);
+                if (StringUtil.isNotEmpty(value)) {
+                    byte[] head = new byte[DEFALUTHEAD.length];
+                    System.arraycopy(value, 0, head, 0, DEFALUTHEAD.length);
+                    Object rb = null;
+                    if (Arrays.equals(head, DEFALUTHEAD)) {
+                        byte[] body = new byte[value.length - DEFALUTHEAD.length];
+                        System.arraycopy(value, DEFALUTHEAD.length, body, 0,
+                                value.length - DEFALUTHEAD.length);
+                        body = AesUtil.decrypt(body);
+                        rb = SerializeUtil.unSerialize(body);
+                    } else {
+                        rb = SerializeUtil.unSerialize(value);
+                    }
+
+                    if (type.isInstance(rb) && null != rb) {
+                        rv = (T) rb;
+                    }
                 }
-            });
-            if (finalType != null && finalType.isInstance(object) && null != object) {
-                return (T) object;
-            } else {
-                return null;
             }
+        } catch (Exception e) {
+            LOGGER.warn("获取缓存内容出现异常！", e);
+//            throw new AppDaoException("获取缓存内容出现异常！", e);
         }
+        return rv;
     }
 
 
 
     /**
+     * <p>
      * 描述：清空缓存
+     * </p>
      */
     @Override
     public void clear() throws AppDaoException {
-        redisTemplate.discard();
+        jedisCluster.flushAll();        
     }
 
 }
