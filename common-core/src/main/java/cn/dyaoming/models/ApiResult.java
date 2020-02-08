@@ -37,15 +37,15 @@ public class ApiResult implements Serializable {
     /**
      * 基础构造函数
      * 
-     * @param cFlag boolean类型 结果标志
-     * @param cCode String类型 结果编码
+     * @param flag boolean类型 结果标志
+     * @param code String类型 结果编码
      */
-    public ApiResult(boolean cFlag, String cCode) {
+    public ApiResult(boolean flag, String code) {
 
-        setFlag(cFlag);
-        setCode(cCode);
+        setFlag(flag);
+        setCode(code);
         /* TODO message 未转换 */
-        setMessage(cCode);
+        setMessage(code);
     }
 
 
@@ -53,15 +53,15 @@ public class ApiResult implements Serializable {
     /**
      * 带结果说明的构造函数
      * 
-     * @param cFlag boolean类型 结果标志
-     * @param cCode String类型 结果编码
-     * @param cMsg String类型 结果说明
+     * @param flag boolean类型 结果标志
+     * @param code String类型 结果编码
+     * @param message String类型 结果说明
      */
-    public ApiResult(boolean cFlag, String cCode, String cMsg) {
+    public ApiResult(boolean flag, String code, String message) {
 
-        setFlag(cFlag);
-        setCode(cCode);
-        setMessage(cMsg);
+        setFlag(flag);
+        setCode(code);
+        setMessage(message);
     }
 
 
@@ -72,8 +72,8 @@ public class ApiResult implements Serializable {
 
 
 
-    public void setFlag(boolean cFlag) {
-        this.flag = cFlag;
+    public void setFlag(boolean flag) {
+        this.flag = flag;
     }
 
 

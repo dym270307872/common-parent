@@ -37,15 +37,15 @@ public class BaseResult implements Serializable {
     /**
      * 基础构造函数
      * 
-     * @param cFlag boolean类型 结果标志
-     * @param cCode String类型 结果编码
+     * @param flag boolean类型 结果标志
+     * @param code String类型 结果编码
      */
-    public BaseResult(boolean cFlag, String cCode) {
+    public BaseResult(boolean flag, String code) {
 
-        setFlag(cFlag);
-        setCode(cCode);
+        setFlag(flag);
+        setCode(code);
         /* TODO message 未转换 */
-        setMessage(cCode);
+        setMessage(code);
     }
 
 
@@ -53,15 +53,15 @@ public class BaseResult implements Serializable {
     /**
      * 带结果说明的构造函数
      * 
-     * @param cFlag boolean类型 结果标志
-     * @param cCode String类型 结果编码
-     * @param cMsg String类型 结果说明
+     * @param flag boolean类型 结果标志
+     * @param code String类型 结果编码
+     * @param message String类型 结果说明
      */
-    public BaseResult(boolean cFlag, String cCode, String cMsg) {
+    public BaseResult(boolean flag, String code, String message) {
 
-        setFlag(cFlag);
-        setCode(cCode);
-        setMessage(cMsg);
+        setFlag(flag);
+        setCode(code);
+        setMessage(message);
     }
 
 
@@ -84,12 +84,12 @@ public class BaseResult implements Serializable {
      * 失败
      * </p>
      * 
-     * @param cCode String类型 失败标识
-     * @param cMsg String类型 失败说明
+     * @param code String类型 失败标识
+     * @param message String类型 失败说明
      * @return BaseResult
      */
-    public static BaseResult fail(String cCode, String cMsg) {
-        return new BaseResult(false, cCode, cMsg);
+    public static BaseResult fail(String code, String message) {
+        return new BaseResult(false, code, message);
     }
 
 

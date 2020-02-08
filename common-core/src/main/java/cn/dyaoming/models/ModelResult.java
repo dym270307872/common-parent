@@ -2,74 +2,76 @@ package cn.dyaoming.models;
 
 
 /**
- * <p>带结果的返回集合</p>
+ * <p>
+ * 带结果的返回集合
+ * </p>
  * 
- * @param <E> 实体类型 
+ * @param <E> 实体类型
  * @author DYAOMING
  * @since 2019-04-17
  * @version 0.0.3
  */
 public class ModelResult<E> extends BaseResult {
 
-	private static final long	serialVersionUID	= 1L;
+    private static final long serialVersionUID = 1L;
 
-	private E					entity;
-
-
-
-	/**
-	 * 	默认构造函数
-	 */
-	public ModelResult() {
-		super();
-	}
+    private E entity;
 
 
 
-	/**
-	 * 	基础构造函数
-	 * 
-	 * @param cFlag boolean类型 结果标志
-	 * @param cCode String类型 结果编码
-	 */
-	public ModelResult(boolean cFlag, String cCode) {
-		super(cFlag, cCode);
-	}
+    /**
+     * 默认构造函数
+     */
+    public ModelResult() {
+        super();
+    }
 
 
 
-	/**
-	 * 	带结果说明的构造函数
-	 * 
-	 * @param cFlag boolean类型 结果标志
-	 * @param cCode String类型 结果编码
-	 * @param cMsg String类型 结果说明
-	 */
-	public ModelResult(boolean cFlag, String cCode, String cMsg) {
-		super(cFlag, cCode, cMsg);
-	}
+    /**
+     * 基础构造函数
+     * 
+     * @param flag boolean类型 结果标志
+     * @param code String类型 结果编码
+     */
+    public ModelResult(boolean flag, String code) {
+        super(flag, code);
+    }
 
 
 
-	/**
-	 * 结果初始化的构造函数
-	 * 
-	 * @param entity 实体内容类
-	 */
-	public ModelResult(E entity) {
-		super();
-		setEntity(entity);
-	}
+    /**
+     * 带结果说明的构造函数
+     * 
+     * @param flag boolean类型 结果标志
+     * @param code String类型 结果编码
+     * @param message String类型 结果说明
+     */
+    public ModelResult(boolean flag, String code, String message) {
+        super(flag, code, message);
+    }
 
 
 
-	public E getEntity() {
-		return entity;
-	}
+    /**
+     * 结果初始化的构造函数
+     * 
+     * @param entity 结果内容实体
+     */
+    public ModelResult(E entity) {
+        super();
+        setEntity(entity);
+    }
 
 
 
-	public void setEntity(E entity) {
-		this.entity = entity;
-	}
+    public E getEntity() {
+        return entity;
+    }
+
+
+
+    public void setEntity(E entity) {
+        this.entity = entity;
+    }
 }
