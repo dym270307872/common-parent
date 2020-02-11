@@ -42,12 +42,6 @@ public abstract class RedisBaseImp implements CacheBaseInterface {
 
 
     @Autowired
-    public RedisTemplate getRedisTemplate() {
-        return redisTemplate;
-    }
-
-
-
     public void setRedisTemplate(RedisTemplate redisTemplate) {
         this.redisTemplate = redisTemplate;
     }
