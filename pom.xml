@@ -7,7 +7,7 @@
 	<groupId>cn.dyaoming.common</groupId>
 	<artifactId>common-parent</artifactId>
 	<packaging>pom</packaging>
-	<version>0.0.3</version>
+	<version>0.0.4</version>
 
 	<name>common-parent</name>
 	<url>https://github.com/dym270307872/common-parent</url>
@@ -60,17 +60,17 @@
 			<dependency>
 				<groupId>cn.dyaoming.common</groupId>
 				<artifactId>common-core</artifactId>
-				<version>${project.version}</version>
+				<version>0.0.3</version>
 			</dependency>
 			<dependency>
 				<groupId>cn.dyaoming.common</groupId>
 				<artifactId>common-util</artifactId>
-				<version>${project.version}</version>
+				<version>0.0.3</version>
 			</dependency>
             <dependency>
                 <groupId>cn.dyaoming.common</groupId>
                 <artifactId>common-cache</artifactId>
-                <version>${project.version}</version>
+                <version>0.0.3</version>
             </dependency>
             <dependency>
                 <groupId>cn.dyaoming.common</groupId>
