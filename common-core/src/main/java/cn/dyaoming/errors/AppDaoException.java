@@ -12,7 +12,8 @@ package cn.dyaoming.errors;
  */
 public class AppDaoException extends BaseException {
 
-    private static final long serialVersionUID = 4077571693836525234L;
+
+    private static final long serialVersionUID = 1774990961999200277L;
 
 
 

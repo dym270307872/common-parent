@@ -134,18 +134,11 @@ public class SystemCache implements Cache, InitializingBean {
 
 
 
-    /**
-     * (non-Javadoc)
-     * 
-     * @param <T> 泛型类型
-     * @param key Object类型 缓存对象的键对象
-     * @param valueLoader Callable类型 序列化类
-     * @return 返还对象
-     */
     @SuppressWarnings("unchecked")
     @Override
     public <T> T get(Object key, Callable<T> valueLoader) {
         ValueWrapper vw = get(key);
+        valueLoader.call();
         if (vw == null) { return null; }
         return (T) vw.get();
     }
