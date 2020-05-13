@@ -14,11 +14,10 @@ import java.util.Collections;
  * </p>
  * 
  * @author DYAOMING
- * @since 2019-04-09
- * @version 0.0.1
+ * @since 2020-04-25
+ * @version 0.0.4
  */
-@Deprecated
-public class CacheManager extends AbstractCacheManager {
+public class DefaultCacheManager extends AbstractCacheManager {
 
     private String name = "default";
     private long timeout = 300L;
@@ -92,7 +91,7 @@ public class CacheManager extends AbstractCacheManager {
 
 
 
-    // @Nullable
+     
     @Override
     protected Cache getMissingCache(String name) {
 

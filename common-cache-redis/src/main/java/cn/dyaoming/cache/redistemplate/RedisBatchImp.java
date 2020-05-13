@@ -3,20 +3,12 @@ package cn.dyaoming.cache.redistemplate;
 
 import java.util.*;
 
-import cn.dyaoming.cache.interfaces.CacheBaseInterface;
 import cn.dyaoming.cache.interfaces.CacheBatchInterface;
 import cn.dyaoming.errors.AppDaoException;
-import cn.dyaoming.utils.AesUtil;
-import cn.dyaoming.utils.SerializeUtil;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessException;
-import org.springframework.data.redis.connection.RedisConnection;
 import org.springframework.data.redis.core.HashOperations;
-import org.springframework.data.redis.core.RedisCallback;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.util.StringUtils;
 
 

@@ -1,4 +1,5 @@
-package cn.dyaoming.cache;
+package cn.dyaoming.sync;
+
 
 
 import org.springframework.cache.Cache;
@@ -14,11 +15,10 @@ import java.util.Collections;
  * </p>
  * 
  * @author DYAOMING
- * @since 2019-04-09
- * @version 0.0.1
+ * @since 2020-04-25
+ * @version 0.0.4
  */
-@Deprecated
-public class CacheManager extends AbstractCacheManager {
+public class DefaultSyncManager extends AbstractCacheManager {
 
     private String name = "default";
     private long timeout = 300L;
@@ -90,38 +90,4 @@ public class CacheManager extends AbstractCacheManager {
         return this.caches;
     }
 
-
-
-    // @Nullable
-    @Override
-    protected Cache getMissingCache(String name) {
-
-        String thisName = name;
-        long thisTimeout = this.timeout;
-        boolean thisSecret = this.secret;
-        String thisDatabase = this.database;
-        if (name.indexOf("#") > 0) {
-
-            String[] arg = name.split(SEPARATOR);
-            int thisLength = arg.length;
-            
-            thisName = arg[0];
-            if (thisLength > 1) {
-                thisTimeout = Long.valueOf(arg[1]);
-            }
-            if (thisLength > 2) {
-                if ("true".equalsIgnoreCase(arg[2])) {
-                    thisSecret = true;
-                } else {
-                    thisSecret = false;
-                }
-            }
-            if (thisLength > 3) {
-                thisDatabase = arg[3];
-            }
-        }
-
-        return new SystemCache(thisName, thisTimeout, thisSecret, thisDatabase);
-
-    }
 }

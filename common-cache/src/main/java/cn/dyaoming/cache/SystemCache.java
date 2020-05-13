@@ -138,9 +138,35 @@ public class SystemCache implements Cache, InitializingBean {
     @Override
     public <T> T get(Object key, Callable<T> valueLoader) {
         ValueWrapper vw = get(key);
-        valueLoader.call();
-        if (vw == null) { return null; }
-        return (T) vw.get();
+        if(vw != null) {
+         return (T) vw;
+        }
+        //TODO 分布式锁使用
+         //使用分布式锁锁住线程-获取返回值，存入缓存。
+//        ReentrantLock lock = new ReentrantLock();
+        try {
+//         lock.lock();
+         vw = get(key);
+         if(vw != null) {
+         return (T) vw;
+         }
+         Object value = valueLoader.call();
+         put(key, value);
+         return (T) vw;
+        } catch (Exception e) {
+//         try {
+//               Class<?> c = Class.forName("org.springframework.cache.Cache$ValueRetrievalException");
+//               Constructor<?> constructor = c.getConstructor(Object.class, Callable.class, Throwable.class);
+//               RuntimeException exception = (RuntimeException) constructor.newInstance(key, valueLoader, e.getCause());
+//               throw exception;        
+//             } catch (Exception e1) {
+//               throw new IllegalStateException(e1);
+//             }
+        } finally {
+//         lock.unlock();
+        }
+        
+        return null;
     }
 
 

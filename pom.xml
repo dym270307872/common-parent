@@ -60,17 +60,17 @@
 			<dependency>
 				<groupId>cn.dyaoming.common</groupId>
 				<artifactId>common-core</artifactId>
-				<version>0.0.3</version>
+				<version>${project.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>cn.dyaoming.common</groupId>
 				<artifactId>common-util</artifactId>
-				<version>0.0.3</version>
+				<version>${project.version}</version>
 			</dependency>
             <dependency>
                 <groupId>cn.dyaoming.common</groupId>
                 <artifactId>common-cache</artifactId>
-                <version>0.0.3</version>
+                <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>cn.dyaoming.common</groupId>

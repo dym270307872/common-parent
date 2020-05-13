@@ -8,9 +8,12 @@ package cn.dyaoming.sync.aspects;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import cn.dyaoming.errors.AppBusyException;
 import cn.dyaoming.sync.annotations.SyncLock;
 import cn.dyaoming.sync.interfaces.SyncLockInterface;
 
@@ -22,29 +25,39 @@ import cn.dyaoming.sync.interfaces.SyncLockInterface;
 @Component
 public class SyncLockAspect {
 
+    /**
+     * 日志常量声明
+     */
+    private static final Logger LOGGER = LoggerFactory.getLogger(SyncLockAspect.class);
+    
     @Autowired
     private SyncLockInterface syncLockInterface;
     
 	@Around("@annotation(syncLock)")
-	public Object around(ProceedingJoinPoint point, SyncLock syncLock) {
-		String strClassName = point.getTarget().getClass().getName();
-		String strMethodName = point.getSignature().getName();
-		String key = "";
-		// 发送异步日志事件
-		Long startTime = System.currentTimeMillis();
-		Object obj;
+    public Object around(ProceedingJoinPoint point, SyncLock syncLock) {
+        String strClassName = point.getTarget().getClass().getName();
+        String strMethodName = point.getSignature().getName();
+        String key = strClassName + strMethodName;
+        // 发送异步日志事件
+        Long startTime = System.currentTimeMillis();
+        Object obj;
         try {
-            syncLockInterface.getLock(key,String.valueOf(startTime));
-            System.out.println("已获得锁，进行操作："+startTime);
-            return point.proceed();
-            
-        } catch (Throwable e) {
-            // TODO Auto-generated catch block
-//            e.printStackTrace();
-        }finally {
-            syncLockInterface.releaseLock(key,String.valueOf(startTime));
+            if (syncLockInterface.getLock(key, String.valueOf(startTime), 2L, 2L)) {
+                LOGGER.debug("已获得锁，进行操作！");
+                try {
+                    return point.proceed();
+                } catch (Throwable e) {
+                    // e.printStackTrace();
+                }
+            } else {
+                LOGGER.debug("未获得锁，抛出异常！");
+                throw new AppBusyException();
+            }
+
+        } finally {
+            syncLockInterface.releaseLock(key, String.valueOf(startTime));
         }
-		return null;
-	}
+        return null;
+    }
 
 }

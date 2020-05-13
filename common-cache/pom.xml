@@ -16,7 +16,11 @@
 		<dependency>
 			<groupId>cn.dyaoming.common</groupId>
 			<artifactId>common-util</artifactId>
-		</dependency>
+		</dependency>		
+		<dependency>
+            <groupId>cn.dyaoming.common</groupId>
+            <artifactId>common-sync</artifactId>
+        </dependency>
 	</dependencies>
 
 
