@@ -2,6 +2,7 @@ package cn.dyaoming.cache;
 
 
 import cn.dyaoming.cache.interfaces.CacheInterface;
+import cn.dyaoming.utils.GeneratorKeyUtil;
 import cn.dyaoming.utils.SpringUtil;
 import cn.dyaoming.utils.StringUtil;
 
@@ -141,11 +142,10 @@ public class SystemCache implements Cache, InitializingBean {
         if(vw != null) {
          return (T) vw;
         }
-        //TODO 分布式锁使用
          //使用分布式锁锁住线程-获取返回值，存入缓存。
-//        ReentrantLock lock = new ReentrantLock();
+        String serial = GeneratorKeyUtil.getSeral();
         try {
-//         lock.lock();
+            cacheDao.getLock("lock:"+ key, serial, 2L, 2L);
          vw = get(key);
          if(vw != null) {
          return (T) vw;
@@ -154,16 +154,9 @@ public class SystemCache implements Cache, InitializingBean {
          put(key, value);
          return (T) vw;
         } catch (Exception e) {
-//         try {
-//               Class<?> c = Class.forName("org.springframework.cache.Cache$ValueRetrievalException");
-//               Constructor<?> constructor = c.getConstructor(Object.class, Callable.class, Throwable.class);
-//               RuntimeException exception = (RuntimeException) constructor.newInstance(key, valueLoader, e.getCause());
-//               throw exception;        
-//             } catch (Exception e1) {
-//               throw new IllegalStateException(e1);
-//             }
+//            e.printStackTrace();
         } finally {
-//         lock.unlock();
+            cacheDao.releaseLock("lock:"+ key,serial);
         }
         
         return null;

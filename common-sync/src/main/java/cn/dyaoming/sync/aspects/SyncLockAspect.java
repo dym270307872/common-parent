@@ -5,6 +5,8 @@
 package cn.dyaoming.sync.aspects;
 
 
+import java.util.UUID;
+
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -16,6 +18,7 @@ import org.springframework.stereotype.Component;
 import cn.dyaoming.errors.AppBusyException;
 import cn.dyaoming.sync.annotations.SyncLock;
 import cn.dyaoming.sync.interfaces.SyncLockInterface;
+import cn.dyaoming.utils.GeneratorKeyUtil;
 
 /**
  * 围绕切片创建悲观锁
@@ -30,6 +33,8 @@ public class SyncLockAspect {
      */
     private static final Logger LOGGER = LoggerFactory.getLogger(SyncLockAspect.class);
     
+    
+    
     @Autowired
     private SyncLockInterface syncLockInterface;
     
@@ -39,10 +44,10 @@ public class SyncLockAspect {
         String strMethodName = point.getSignature().getName();
         String key = strClassName + strMethodName;
         // 发送异步日志事件
-        Long startTime = System.currentTimeMillis();
+        String serial = GeneratorKeyUtil.getSeral();
         Object obj;
         try {
-            if (syncLockInterface.getLock(key, String.valueOf(startTime), 2L, 2L)) {
+            if (syncLockInterface.getLock(key, serial, 2L, 2L)) {
                 LOGGER.debug("已获得锁，进行操作！");
                 try {
                     return point.proceed();
@@ -55,7 +60,7 @@ public class SyncLockAspect {
             }
 
         } finally {
-            syncLockInterface.releaseLock(key, String.valueOf(startTime));
+            syncLockInterface.releaseLock(key, serial);
         }
         return null;
     }
