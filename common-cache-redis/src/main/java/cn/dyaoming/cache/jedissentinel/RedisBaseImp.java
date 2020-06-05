@@ -10,6 +10,7 @@ import java.util.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.StringUtils;
 
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisSentinelPool;
@@ -358,4 +359,62 @@ public abstract class RedisBaseImp implements CacheBaseInterface {
         }
     }
 
+    
+    @Override
+    public boolean tryLock(String key, String serial, long expire) {
+        Jedis jedis = null;
+        try {
+            jedis = getResource();
+            selectDb(jedis);
+            Object rv = jedis.set(key, serial, "NX", "EX", expire);
+            if ("OK".equals(rv)) {
+                return true;
+            } else {
+                String value = jedis.get(key);
+                if (!StringUtils.isEmpty(value)) { return value.equals(serial); }
+                return false;
+            }
+        } finally {
+            closeResource(jedis);
+        }
+    }
+
+
+
+    @Override
+    public boolean getLock(String key, String serial, long expire, long waittime) {
+        long startTime = System.currentTimeMillis();
+        while (System.currentTimeMillis() <= startTime + waittime*1000) {
+            if (tryLock(key, serial, expire)) {
+                return true;
+            } else {
+                try {
+                    Thread.sleep(50);
+                } catch (InterruptedException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+            }
+        }
+        return false;
+    }
+
+
+
+    @Override
+    public boolean releaseLock(String key, String serial) {
+        Jedis jedis = null;
+        try {
+            jedis = getResource();
+            selectDb(jedis);
+            
+            String script = "if redis.call('get', KEYS[1]) == ARGV[1] then return redis.call('del', KEYS[1]) else return 0 end";
+            Object rv = jedis.eval(script, Collections.singletonList(key), Collections.singletonList(serial));
+
+            return "OK".equals(rv);
+        } finally {
+            closeResource(jedis);
+        }
+    }
+    
 }

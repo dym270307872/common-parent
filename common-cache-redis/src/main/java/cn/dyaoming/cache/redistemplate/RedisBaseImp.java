@@ -329,5 +329,60 @@ public abstract class RedisBaseImp implements CacheBaseInterface {
 //            throw new AppDaoException("清空缓存出现异常！", e);
         }
     }
+    
+    
+    @Override
+    public boolean tryLock(String key, String serial, long expire) {
+        return (Boolean) redisTemplate.execute((RedisCallback) connection -> {
+
+            Boolean acquire = connection.setNX(key.getBytes(), serial.getBytes());
+
+            if (acquire) {
+                connection.expire(key.getBytes(), expire);
+                return true;
+            } else {
+                byte[] value = connection.get(key.getBytes());
+
+                if (Objects.nonNull(value) && value.length > 0) { return Arrays.equals(value,serial.getBytes()); }
+            }
+            return false;
+        });
+    }
+
+
+
+    @Override
+    public boolean getLock(String key, String serial, long expire, long waittime) {
+        long startTime = System.currentTimeMillis();
+        while (System.currentTimeMillis() <= startTime + waittime*1000) {
+            if (tryLock(key, serial, expire)) {
+                return true;
+            } else {
+                try {
+                    Thread.sleep(50);
+                } catch (InterruptedException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+            }
+        }
+        return false;
+    }
+
+
+
+    @Override
+    public boolean releaseLock(String key, String serial) {
+        return (Boolean) redisTemplate.execute((RedisCallback) connection -> {
+            byte[] value = connection.get(key.getBytes());
+            if (Objects.nonNull(value) && value.length > 0) {
+                if (Arrays.equals(value,serial.getBytes())) {
+                    connection.del(key.getBytes());
+                    return true;
+                }
+            }
+            return false;
+        });
+    }
 
 }

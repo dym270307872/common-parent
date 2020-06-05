@@ -2,6 +2,7 @@ package cn.dyaoming.cache;
 
 
 import cn.dyaoming.cache.interfaces.CacheInterface;
+import cn.dyaoming.utils.GeneratorKeyUtil;
 import cn.dyaoming.utils.SpringUtil;
 import cn.dyaoming.utils.StringUtil;
 
@@ -134,20 +135,31 @@ public class SystemCache implements Cache, InitializingBean {
 
 
 
-    /**
-     * (non-Javadoc)
-     * 
-     * @param <T> 泛型类型
-     * @param key Object类型 缓存对象的键对象
-     * @param valueLoader Callable类型 序列化类
-     * @return 返还对象
-     */
     @SuppressWarnings("unchecked")
     @Override
     public <T> T get(Object key, Callable<T> valueLoader) {
         ValueWrapper vw = get(key);
-        if (vw == null) { return null; }
-        return (T) vw.get();
+        if(vw != null) {
+         return (T) vw;
+        }
+         //使用分布式锁锁住线程-获取返回值，存入缓存。
+        String serial = GeneratorKeyUtil.getSeral();
+        try {
+            cacheDao.getLock("lock:"+ key, serial, 2L, 2L);
+         vw = get(key);
+         if(vw != null) {
+         return (T) vw;
+         }
+         Object value = valueLoader.call();
+         put(key, value);
+         return (T) vw;
+        } catch (Exception e) {
+//            e.printStackTrace();
+        } finally {
+            cacheDao.releaseLock("lock:"+ key,serial);
+        }
+        
+        return null;
     }
 
 

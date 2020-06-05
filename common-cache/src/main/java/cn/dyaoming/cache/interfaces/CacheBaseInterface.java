@@ -2,6 +2,7 @@ package cn.dyaoming.cache.interfaces;
 
 
 import cn.dyaoming.errors.AppDaoException;
+import cn.dyaoming.sync.interfaces.SyncLockInterface;
 
 
 /**
@@ -9,7 +10,7 @@ import cn.dyaoming.errors.AppDaoException;
  * 
  * @version 0.0.1
  */
-public interface CacheBaseInterface {
+public interface CacheBaseInterface extends SyncLockInterface{
 
 	/**
 	 * 加密标识头

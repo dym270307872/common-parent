@@ -11,7 +11,7 @@
 	<bean id="cacheKeyGenerator" class="cn.dyaoming.cache.CacheKeyGenerator"/>
 
     <!-- 缓存管理器 -->
-    <bean id="cacheManager" class="cn.dyaoming.cache.CacheManager">
+    <bean id="cacheManager" class="cn.dyaoming.cache.DefaultCacheManager">
         <property name="timeout" value="60" />
         <property name="caches">
             <set>                
