@@ -68,23 +68,6 @@ public class SpringUtil implements ApplicationContextAware {
     }
 
 
-
-    /**
-     * 注册bean
-     * 
-     * @param <T> bean对应类型
-     * @param name bean名称
-     * @return bean实例
-     * @throws BeansException 异常类
-     */
-    @SuppressWarnings("unchecked")
-    public static void setBean(String name) throws BeansException {
-        ConfigurableApplicationContext cac = (ConfigurableApplicationContext) applicationContext;
-//TODO 注册bean方法未实现。
-        //        applicationContext.getBean(name);
-    }
-
-
     /**
      *<p>查询系统变量</p>
      * 
