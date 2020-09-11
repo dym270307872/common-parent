@@ -19,6 +19,7 @@
 		<module>common-cache</module>
 		<module>common-cache-redis</module>
 		<module>common-sync</module>
+		<module>common-annotation</module>
 	</modules>
 
 	<properties>

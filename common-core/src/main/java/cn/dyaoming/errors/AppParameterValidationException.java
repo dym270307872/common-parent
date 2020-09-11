@@ -3,27 +3,18 @@ package cn.dyaoming.errors;
 
 /**
  * <p>
- * 系统超时异常
+ * 请求参数验证异常
  * </p>
  *
  * @author DYAOMING
- * @version 0.0.5
- * @since 2020-09-11
+ * @version 0.0.3
+ * @since 2020-01-29
  */
-public class AppRunTimeOutException extends AppRunTimeException {
+public class AppParameterValidationException extends AppRunTimeException {
+
+    private static final long serialVersionUID = 4077571693836525234L;
 
 
-    private static final long serialVersionUID = 7899356287467829429L;
-
-    /**
-	 * <p>
-	 * 构造函数
-	 * </p>
-	 *
-	 */
-	public AppRunTimeOutException() {
-		super("Your request has timed out");
-	}
 
     /**
      * <p>
@@ -32,7 +23,7 @@ public class AppRunTimeOutException extends AppRunTimeException {
      *
      * @param message String类型 异常信息
      */
-    public AppRunTimeOutException(String message) {
+    public AppParameterValidationException(String message) {
         super(message);
     }
 
@@ -46,7 +37,7 @@ public class AppRunTimeOutException extends AppRunTimeException {
      * @param code String类型 异常标识
      * @param message String类型 异常信息
      */
-    public AppRunTimeOutException(String code, String message) {
+    public AppParameterValidationException(String code, String message) {
         super(message);
         setCode(code);
     }
@@ -61,7 +52,7 @@ public class AppRunTimeOutException extends AppRunTimeException {
      * @param message String类型 异常信息
      * @param cause 异常
      */
-    public AppRunTimeOutException(String message, Throwable cause) {
+    public AppParameterValidationException(String message, Throwable cause) {
         super(message, cause);
     }
 
@@ -76,7 +67,7 @@ public class AppRunTimeOutException extends AppRunTimeException {
      * @param message String类型 异常信息
      * @param cause Throwable类型 异常
      */
-    public AppRunTimeOutException(String code, String message, Throwable cause) {
+    public AppParameterValidationException(String code, String message, Throwable cause) {
         super(message, cause);
         setCode(code);
     }
@@ -90,7 +81,7 @@ public class AppRunTimeOutException extends AppRunTimeException {
      *
      * @param cause String类型 异常
      */
-    public AppRunTimeOutException(Throwable cause) {
+    public AppParameterValidationException(Throwable cause) {
         super(cause);
     }
 

@@ -3,27 +3,34 @@ package cn.dyaoming.errors;
 
 /**
  * <p>
- * 系统超时异常
+ * 应用基础异常类
  * </p>
- *
+ * 
  * @author DYAOMING
+ * @since 2020-9-11
  * @version 0.0.5
- * @since 2020-09-11
  */
-public class AppRunTimeOutException extends AppRunTimeException {
+public abstract class AppBaseException extends Exception {
 
-
-    private static final long serialVersionUID = 7899356287467829429L;
+    private static final long serialVersionUID = -20021811335698269L;
 
     /**
-	 * <p>
-	 * 构造函数
-	 * </p>
-	 *
-	 */
-	public AppRunTimeOutException() {
-		super("Your request has timed out");
-	}
+     * 异常错误码
+     */
+    private String code;
+
+
+
+    /**
+     * <p>
+     * 构造函数
+     * </p>
+     */
+    public AppBaseException() {
+        super();
+    }
+
+
 
     /**
      * <p>
@@ -32,7 +39,7 @@ public class AppRunTimeOutException extends AppRunTimeException {
      *
      * @param message String类型 异常信息
      */
-    public AppRunTimeOutException(String message) {
+    public AppBaseException(String message) {
         super(message);
     }
 
@@ -46,7 +53,7 @@ public class AppRunTimeOutException extends AppRunTimeException {
      * @param code String类型 异常标识
      * @param message String类型 异常信息
      */
-    public AppRunTimeOutException(String code, String message) {
+    public AppBaseException(String code, String message) {
         super(message);
         setCode(code);
     }
@@ -59,9 +66,9 @@ public class AppRunTimeOutException extends AppRunTimeException {
      * </p>
      *
      * @param message String类型 异常信息
-     * @param cause 异常
+     * @param cause Throwable类型 异常
      */
-    public AppRunTimeOutException(String message, Throwable cause) {
+    public AppBaseException(String message, Throwable cause) {
         super(message, cause);
     }
 
@@ -76,7 +83,7 @@ public class AppRunTimeOutException extends AppRunTimeException {
      * @param message String类型 异常信息
      * @param cause Throwable类型 异常
      */
-    public AppRunTimeOutException(String code, String message, Throwable cause) {
+    public AppBaseException(String code, String message, Throwable cause) {
         super(message, cause);
         setCode(code);
     }
@@ -88,10 +95,21 @@ public class AppRunTimeOutException extends AppRunTimeException {
      * 构造函数
      * </p>
      *
-     * @param cause String类型 异常
+     * @param cause Throwable类型 异常
      */
-    public AppRunTimeOutException(Throwable cause) {
+    public AppBaseException(Throwable cause) {
         super(cause);
     }
 
+
+
+    public String getCode() {
+        return code;
+    }
+
+
+
+    public void setCode(String code) {
+        this.code = code;
+    }
 }

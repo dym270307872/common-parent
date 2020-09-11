@@ -2,6 +2,7 @@ package cn.dyaoming.cache;
 
 
 import cn.dyaoming.cache.interfaces.CacheInterface;
+import cn.dyaoming.errors.AppDaoException;
 import cn.dyaoming.utils.GeneratorKeyUtil;
 import cn.dyaoming.utils.SpringUtil;
 import cn.dyaoming.utils.StringUtil;
@@ -111,7 +112,7 @@ public class SystemCache implements Cache, InitializingBean {
 
             Object object = this.cacheDao.getCacheData("cache:" + getName() + ":" + finalKey);
 
-            return(object != null ? new SimpleValueWrapper(object) : null);
+            return (object != null ? new SimpleValueWrapper(object) : null);
         }
     }
 
@@ -196,7 +197,12 @@ public class SystemCache implements Cache, InitializingBean {
     @Override
     public void clear() {
 
-        this.cacheDao.clear();
+        try {
+			this.cacheDao.clear();
+		} catch (AppDaoException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     }
 
 
