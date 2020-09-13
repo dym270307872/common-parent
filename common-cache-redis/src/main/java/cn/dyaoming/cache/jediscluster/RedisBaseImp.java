@@ -12,7 +12,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 
-import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisCluster;
 
 
@@ -30,7 +29,7 @@ public abstract class RedisBaseImp implements CacheBaseInterface {
     /**
      * 日志常量声明
      */
-    private static final Logger LOGGER = LoggerFactory.getLogger(RedisBaseImp.class);
+    private static final Logger log = LoggerFactory.getLogger(RedisBaseImp.class);
 
     /**
      * jedisCluster连接池
@@ -51,6 +50,7 @@ public abstract class RedisBaseImp implements CacheBaseInterface {
     }
 
 
+
     /**
      * <p>
      * 功能描述：判断是否存在键值。
@@ -60,11 +60,15 @@ public abstract class RedisBaseImp implements CacheBaseInterface {
      * @return boolean类型 返回结果
      */
     @Override
-    public boolean exists(Object key) throws AppDaoException {
+    public boolean exists(Object key) {
 
         boolean rv = false;
         if (StringUtil.isNotEmpty(key)) {
-            rv = jedisCluster.exists(key.toString());
+            try {
+                rv = jedisCluster.exists(key.toString());
+            } catch (Exception e) {
+                log.warn("判断是否存在键值异常", e);
+            }
         }
         return rv;
     }
@@ -81,7 +85,7 @@ public abstract class RedisBaseImp implements CacheBaseInterface {
      * @return boolean类型 返回结果
      */
     @Override
-    public boolean setCacheObjectData(Object key, Object value) throws AppDaoException {
+    public boolean setCacheObjectData(Object key, Object value) {
         return this.setCacheObjectData(key, value, DEFALUTTIME, DEFALUTSECRET);
     }
 
@@ -98,16 +102,14 @@ public abstract class RedisBaseImp implements CacheBaseInterface {
      * @return boolean类型 返回结果
      */
     @Override
-    public boolean setCacheObjectData(Object key, Object value, final long validTime)
-            throws AppDaoException {
+    public boolean setCacheObjectData(Object key, Object value, final long validTime) {
         return this.setCacheObjectData(key, value, validTime, DEFALUTSECRET);
     }
 
 
 
     @Override
-    public boolean setCacheObjectData(Object key, Object value, boolean secret)
-            throws AppDaoException {
+    public boolean setCacheObjectData(Object key, Object value, boolean secret) {
         return this.setCacheObjectData(key, value, DEFALUTTIME, secret);
     }
 
@@ -115,9 +117,9 @@ public abstract class RedisBaseImp implements CacheBaseInterface {
 
     @Override
     public boolean setCacheObjectData(Object key, Object value, long validTime,
-            boolean secret) throws AppDaoException {
+            boolean secret) {
         boolean rv = false;
-        
+
         try {
             if (StringUtil.isNotEmpty(key)) {
                 final byte[] finalKey = key.toString().getBytes("utf-8");
@@ -143,8 +145,7 @@ public abstract class RedisBaseImp implements CacheBaseInterface {
                 rv = true;
             }
         } catch (Exception e) {
-            LOGGER.warn("保存缓存信息出现异常 ", e);
-//             throw new AppDaoException("缓存对象类型内容出现异常！", e);
+            log.warn("保存缓存信息出现异常 ", e);
             rv = false;
         }
 
@@ -162,9 +163,9 @@ public abstract class RedisBaseImp implements CacheBaseInterface {
      * @return boolean类型 返回结果
      */
     @Override
-    public boolean deleteCacheData(Object key) throws AppDaoException {
+    public boolean deleteCacheData(Object key) {
         boolean rv = false;
-        
+
         try {
             if (StringUtil.isNotEmpty(key)) {
                 final byte[] finalKey = key.toString().getBytes("utf-8");
@@ -172,8 +173,7 @@ public abstract class RedisBaseImp implements CacheBaseInterface {
                 rv = true;
             }
         } catch (Exception e) {
-            LOGGER.warn("删除缓存内容出现异常", e);
-            // throw new AppDaoException("删除缓存内容出现异常！", e);
+            log.warn("删除缓存内容出现异常", e);
         }
 
         return rv;
@@ -190,9 +190,8 @@ public abstract class RedisBaseImp implements CacheBaseInterface {
      * @return Object类型 返回结果
      */
     @Override
-    public Object getCacheData(Object key) throws AppDaoException {
+    public Object getCacheData(Object key) {
         Object rv = null;
-        
         try {
             if (StringUtil.isNotEmpty(key)) {
                 final byte[] finalKey = key.toString().getBytes("utf-8");
@@ -213,8 +212,7 @@ public abstract class RedisBaseImp implements CacheBaseInterface {
             }
 
         } catch (Exception e) {
-            LOGGER.warn("获取缓存内容出现异常！", e);
-//            throw new AppDaoException("获取缓存内容出现异常！", e);
+            log.warn("获取缓存内容出现异常！", e);
         }
         return rv;
     }
@@ -232,13 +230,13 @@ public abstract class RedisBaseImp implements CacheBaseInterface {
      */
     @SuppressWarnings("unchecked")
     @Override
-    public <T> T getCacheTData(String key, Class<T> type) throws AppDaoException {
+    public <T> T getCacheTData(String key, Class<T> type) {
         T rv = null;
-        
+
         try {
             if (StringUtil.isNotEmpty(key) && type != null) {
                 final byte[] finalKey = key.getBytes("utf-8");
-                
+
                 byte[] value = jedisCluster.get(finalKey);
                 if (StringUtil.isNotEmpty(value)) {
                     byte[] head = new byte[DEFALUTHEAD.length];
@@ -260,8 +258,7 @@ public abstract class RedisBaseImp implements CacheBaseInterface {
                 }
             }
         } catch (Exception e) {
-            LOGGER.warn("获取缓存内容出现异常！", e);
-//            throw new AppDaoException("获取缓存内容出现异常！", e);
+            log.warn("获取缓存内容出现异常！", e);
         }
         return rv;
     }
@@ -278,7 +275,8 @@ public abstract class RedisBaseImp implements CacheBaseInterface {
         jedisCluster.flushAll();
     }
 
-    
+
+
     @Override
     public boolean tryLock(String key, String serial, long expire) {
         Object rv = jedisCluster.set(key, serial, "NX", "EX", expire);
@@ -296,15 +294,14 @@ public abstract class RedisBaseImp implements CacheBaseInterface {
     @Override
     public boolean getLock(String key, String serial, long expire, long waittime) {
         long startTime = System.currentTimeMillis();
-        while (System.currentTimeMillis() <= startTime + waittime*1000) {
+        while (System.currentTimeMillis() <= startTime + waittime * 1000) {
             if (tryLock(key, serial, expire)) {
                 return true;
             } else {
                 try {
                     Thread.sleep(50);
                 } catch (InterruptedException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
+                    log.warn("线程休眠异常",e);;
                 }
             }
         }
@@ -321,5 +318,5 @@ public abstract class RedisBaseImp implements CacheBaseInterface {
 
         return "OK".equals(rv);
     }
-    
+
 }

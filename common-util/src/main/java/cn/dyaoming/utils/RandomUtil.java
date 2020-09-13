@@ -1,9 +1,3 @@
-/*
- * @(#)RandomUtil.java 创建于2017-02-09
- * 
- * Copyright (c) 2017-2019 by Zhkj. 
- *
- */
 package cn.dyaoming.utils;
 
 

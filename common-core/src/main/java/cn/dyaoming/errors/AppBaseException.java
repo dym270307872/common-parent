@@ -102,6 +102,16 @@ public abstract class AppBaseException extends Exception {
     }
 
 
+    public abstract <T> T create(String message);
+
+
+
+    public abstract <T> T create(String code, String message);
+
+
+
+    public abstract <T> T create(String code, String message, Throwable cause);
+
 
     public String getCode() {
         return code;

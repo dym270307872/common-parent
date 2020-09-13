@@ -24,10 +24,9 @@ public interface CacheRegexInterface{
 	 * 
 	 * @param pattern String类型 key的表达式，也可以使用通配符(*)
 	 * @return Collection 类型 返回结果
-	 * @throws AppDaoException Dao层异常
 	 * @version 0.0.2
 	 */
-	public Collection<String> getKeys(String pattern) throws AppDaoException;
+	public Collection<String> getKeys(String pattern);
 
 
 
@@ -38,9 +37,8 @@ public interface CacheRegexInterface{
 	 * 
 	 * @param pattern String类型 key的表达式，也可以使用通配符(*)
 	 * @return boolean类型 返回结果
-	 * @throws AppDaoException Dao层异常
 	 * @version 0.0.2
 	 */
-	public boolean deleteRegexCacheData(String pattern) throws AppDaoException;
+	public boolean deleteRegexCacheData(String pattern);
 
 }

@@ -7,7 +7,7 @@
 	<groupId>cn.dyaoming.common</groupId>
 	<artifactId>common-parent</artifactId>
 	<packaging>pom</packaging>
-	<version>0.0.4</version>
+	<version>0.0.5</version>
 
 	<name>common-parent</name>
 	<url>https://github.com/dym270307872/common-parent</url>

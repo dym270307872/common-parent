@@ -43,10 +43,9 @@ public interface CacheBaseInterface extends SyncLockInterface{
 	 * 
 	 * @param key String类型 键
 	 * @return boolean类型 返回结果
-	 * @throws AppDaoException dao层异常类
 	 * @version 0.0.1
 	 */
-	public boolean exists(Object key) throws AppDaoException;
+	public boolean exists(Object key);
 
 
 
@@ -56,10 +55,9 @@ public interface CacheBaseInterface extends SyncLockInterface{
 	 * @param key Object类型 键
 	 * @param value Object类型 内容
 	 * @return boolean类型 返回结果
-	 * @throws AppDaoException dao层异常类
 	 * @version 0.0.1
 	 */
-	public boolean setCacheObjectData(Object key, Object value) throws AppDaoException;
+	public boolean setCacheObjectData(Object key, Object value);
 
 
 
@@ -70,11 +68,9 @@ public interface CacheBaseInterface extends SyncLockInterface{
 	 * @param value Object类型 内容
 	 * @param validTime long类型 有效时间（单位：秒）
 	 * @return boolean类型 返回结果
-	 * @throws AppDaoException dao层异常类
 	 * @version 0.0.1
 	 */
-	public boolean setCacheObjectData(Object key, Object value, final long validTime)
-			throws AppDaoException;
+	public boolean setCacheObjectData(Object key, Object value, final long validTime);
 
 
 
@@ -85,11 +81,9 @@ public interface CacheBaseInterface extends SyncLockInterface{
 	 * @param value Object类型 内容
 	 * @param secret boolean类型 加密标识
 	 * @return boolean类型 返回结果
-	 * @throws AppDaoException dao层异常类
 	 * @version 0.0.1
 	 */
-	public boolean setCacheObjectData(Object key, Object value, boolean secret)
-			throws AppDaoException;
+	public boolean setCacheObjectData(Object key, Object value, boolean secret);
 
 
 
@@ -101,12 +95,10 @@ public interface CacheBaseInterface extends SyncLockInterface{
 	 * @param validTime long类型 有效时间（单位：秒）
 	 * @param secret boolean类型 加密标识
 	 * @return boolean类型 返回结果
-	 * @throws AppDaoException dao层异常类
 	 * @version 0.0.1
 	 */
 	public boolean setCacheObjectData(Object key, Object value, final long validTime,
-			boolean secret)
-			throws AppDaoException;
+			boolean secret);
 
 
 
@@ -115,10 +107,9 @@ public interface CacheBaseInterface extends SyncLockInterface{
 	 * 
 	 * @param key String类型 键
 	 * @return boolean类型 返回结果
-	 * @throws AppDaoException dao层异常类
 	 * @version 0.0.1
 	 */
-	public boolean deleteCacheData(Object key) throws AppDaoException;
+	public boolean deleteCacheData(Object key);
 
 
 
@@ -127,10 +118,9 @@ public interface CacheBaseInterface extends SyncLockInterface{
 	 * 
 	 * @param key String类型 键
 	 * @return Object类型 返回结果
-	 * @throws AppDaoException dao层异常类
 	 * @version 0.0.1
 	 */
-	public Object getCacheData(Object key) throws AppDaoException;
+	public Object getCacheData(Object key);
 
 
 
@@ -141,10 +131,9 @@ public interface CacheBaseInterface extends SyncLockInterface{
 	 * @param key String类型 键
 	 * @param type Class类型 内容类型
 	 * @return T类型 返回结果
-	 * @throws AppDaoException dao层异常类
 	 * @version 0.0.1
 	 */
-	public <T> T getCacheTData(String key, Class<T> type) throws AppDaoException;
+	public <T> T getCacheTData(String key, Class<T> type);
 
 
 

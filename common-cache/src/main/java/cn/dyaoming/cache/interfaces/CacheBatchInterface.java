@@ -36,7 +36,7 @@ public interface CacheBatchInterface {
      * @throws AppDaoException 异常内容
      * @version 0.0.2
      */
-    public boolean setList(String redisKey, List args) throws AppDaoException;
+    public boolean setList(String redisKey, List args);
 
 
 
@@ -49,7 +49,7 @@ public interface CacheBatchInterface {
      * @throws AppDaoException 异常内容
      * @version 0.0.2
      */
-    public boolean setList(String redisKey, Object... args) throws AppDaoException;
+    public boolean setList(String redisKey, Object... args);
 
 
 
@@ -63,7 +63,7 @@ public interface CacheBatchInterface {
      * @throws AppDaoException 异常内容
      * @version 0.0.2
      */
-    public boolean setList(String redisKey, Integer index, Object args) throws AppDaoException;
+    public boolean setList(String redisKey, Integer index, Object args);
 
 
 
@@ -77,7 +77,7 @@ public interface CacheBatchInterface {
      * @throws AppDaoException 异常内容
      * @version 0.0.2
      */
-    public boolean insertBefourIndex(String redisKey, Object index, Object value) throws AppDaoException;
+    public boolean insertBefourIndex(String redisKey, Object index, Object value);
 
 
 
@@ -91,7 +91,7 @@ public interface CacheBatchInterface {
      * @throws AppDaoException 异常内容
      * @version 0.0.2
      */
-    public boolean insertAfterIndex(String redisKey, Object index, Object value) throws AppDaoException;
+    public boolean insertAfterIndex(String redisKey, Object index, Object value);
 
 
 
@@ -103,7 +103,7 @@ public interface CacheBatchInterface {
      * @throws AppDaoException 异常内容
      * @version 0.0.2
      */
-    public Object getStack(String redisKey) throws AppDaoException;
+    public Object getStack(String redisKey);
 
 
 
@@ -115,7 +115,7 @@ public interface CacheBatchInterface {
      * @throws AppDaoException 异常内容
      * @version 0.0.2
      */
-    public Object getHeap(String redisKey) throws AppDaoException;
+    public Object getHeap(String redisKey);
 
 
 
@@ -127,7 +127,7 @@ public interface CacheBatchInterface {
      * @throws AppDaoException 异常内容
      * @version 0.0.2
      */
-    public Object getSize(String redisKey) throws AppDaoException;
+    public Object getSize(String redisKey);
 
 
 
@@ -139,7 +139,7 @@ public interface CacheBatchInterface {
      * @throws AppDaoException 异常内容
      * @version 0.0.2
      */
-    public List getList(String redisKey) throws AppDaoException;
+    public List getList(String redisKey);
 
 
 
@@ -152,7 +152,7 @@ public interface CacheBatchInterface {
      * @throws AppDaoException 异常内容
      * @version 0.0.2
      */
-    public Object getListValue(String redisKey, Integer index) throws AppDaoException;
+    public Object getListValue(String redisKey, Integer index);
 
 
 
@@ -166,7 +166,7 @@ public interface CacheBatchInterface {
      * @throws AppDaoException 异常内容
      * @version 0.0.2
      */
-    public List getList(String redisKey, Integer start, Integer end) throws AppDaoException;
+    public List getList(String redisKey, Integer start, Integer end);
 
 
 
@@ -179,7 +179,7 @@ public interface CacheBatchInterface {
      * @throws AppDaoException 异常内容
      * @version 0.0.2
      */
-    public boolean remove(String redisKey, Object value) throws AppDaoException;
+    public boolean remove(String redisKey, Object value);
 
 
 
@@ -194,7 +194,7 @@ public interface CacheBatchInterface {
      * @throws AppDaoException 异常内容
      * @version 0.0.2
      */
-    public boolean setMap(String redisKey, final Map<String, String> args) throws AppDaoException;
+    public boolean setMap(String redisKey, final Map<String, String> args);
 
 
 
@@ -206,7 +206,7 @@ public interface CacheBatchInterface {
      * @throws AppDaoException 异常内容
      * @version 0.0.2
      */
-    public Map<String, String> getMap(String redisKey) throws AppDaoException;
+    public Map<String, String> getMap(String redisKey);
 
 
 
@@ -221,7 +221,7 @@ public interface CacheBatchInterface {
      * @throws AppDaoException dao层异常类
      * @version 0.0.2
      */
-    public String getFromMap(String redisKey, String mapKey) throws AppDaoException;
+    public String getFromMap(String redisKey, String mapKey);
 
 
 
@@ -234,7 +234,7 @@ public interface CacheBatchInterface {
      * @throws AppDaoException 异常内容
      * @version 0.0.2
      */
-    public void putToMap(String redisKey, String key, String value) throws AppDaoException;
+    public void putToMap(String redisKey, String key, String value);
 
 
 
@@ -246,7 +246,7 @@ public interface CacheBatchInterface {
      * @throws AppDaoException 异常内容
      * @version 0.0.2
      */
-    public boolean deleteCacheData(List<String> key) throws AppDaoException;
+    public boolean deleteCacheData(List<String> key);
 
 
 
@@ -258,6 +258,6 @@ public interface CacheBatchInterface {
      * @throws AppDaoException 异常内容
      * @version 0.0.2
      */
-    public boolean deleteCacheData(String[] key) throws AppDaoException;
+    public boolean deleteCacheData(String[] key);
 
 }

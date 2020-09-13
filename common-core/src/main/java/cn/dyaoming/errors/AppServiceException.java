@@ -1,8 +1,9 @@
 package cn.dyaoming.errors;
 
+
 /**
  * <p>
- * 系统服务层异常类
+ * 业务层异常类
  * </p>
  *
  * @author DYAOMING
@@ -11,67 +12,97 @@ package cn.dyaoming.errors;
  */
 public class AppServiceException extends AppBaseException {
 
-	private static final long serialVersionUID = 109554980329675422L;
+    private static final long serialVersionUID = 109554980329675422L;
 
-	/**
-	 * <p>
-	 * 构造函数
-	 * </p>
-	 *
-	 * @param message String类型 异常信息
-	 */
-	public AppServiceException(String message) {
-		super(message);
-	}
 
-	/**
-	 * <p>
-	 * 构造函数
-	 * </p>
-	 *
-	 * @param code    String类型 异常标识
-	 * @param message String类型 异常信息
-	 */
-	public AppServiceException(String code, String message) {
-		super(message);
-		setCode(code);
-	}
 
-	/**
-	 * <p>
-	 * 构造函数
-	 * </p>
-	 *
-	 * @param cause Throwable类型 异常
-	 */
-	public AppServiceException(Throwable cause) {
-		super(cause);
-	}
+    /**
+     * <p>
+     * 构造函数
+     * </p>
+     *
+     * @param message String类型 异常信息
+     */
+    public AppServiceException(String message) {
+        super(message);
+    }
 
-	/**
-	 * <p>
-	 * 构造函数
-	 * </p>
-	 *
-	 * @param message String类型 异常信息
-	 * @param cause   Throwable类型 异常
-	 */
-	public AppServiceException(String message, Throwable cause) {
-		super(message, cause);
-	}
 
-	/**
-	 * <p>
-	 * 构造函数
-	 * </p>
-	 *
-	 * @param code    String类型 异常标识
-	 * @param message String类型 异常信息
-	 * @param cause   Throwable类型 异常
-	 */
-	public AppServiceException(String code, String message, Throwable cause) {
-		super(message, cause);
-		setCode(code);
-	}
 
+    /**
+     * <p>
+     * 构造函数
+     * </p>
+     *
+     * @param code String类型 异常标识
+     * @param message String类型 异常信息
+     */
+    public AppServiceException(String code, String message) {
+        super(message);
+        setCode(code);
+    }
+
+
+
+    /**
+     * <p>
+     * 构造函数
+     * </p>
+     *
+     * @param cause Throwable类型 异常
+     */
+    public AppServiceException(Throwable cause) {
+        super(cause);
+    }
+
+
+
+    /**
+     * <p>
+     * 构造函数
+     * </p>
+     *
+     * @param message String类型 异常信息
+     * @param cause Throwable类型 异常
+     */
+    public AppServiceException(String message, Throwable cause) {
+        super(message, cause);
+    }
+
+
+
+    /**
+     * <p>
+     * 构造函数
+     * </p>
+     *
+     * @param code String类型 异常标识
+     * @param message String类型 异常信息
+     * @param cause Throwable类型 异常
+     */
+    public AppServiceException(String code, String message, Throwable cause) {
+        super(message, cause);
+        setCode(code);
+    }
+
+
+
+    @Override
+    public AppServiceException create(String message) {
+        return new AppServiceException(message);
+    }
+
+
+
+    @Override
+    public AppServiceException create(String code, String message) {
+        return new AppServiceException(code, message);
+    }
+
+
+
+    @Override
+    public AppServiceException create(String code, String message, Throwable cause) {
+        return new AppServiceException(code, message, cause);
+    }
 }

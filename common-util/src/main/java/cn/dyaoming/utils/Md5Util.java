@@ -1,9 +1,3 @@
-/*
- * @(#)Md5Util.java 创建于2014-11-14
- * 
- * Copyright (c) 2014-2016 by Hnzh. 
- *
- */
 package cn.dyaoming.utils;
 
 

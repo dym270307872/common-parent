@@ -3,16 +3,16 @@ package cn.dyaoming.errors;
 
 /**
  * <p>
- * 系统数据访问层异常
+ * 系统消息异常
  * </p>
  *
  * @author DYAOMING
  * @version 0.0.3
  * @since 2020-01-29
  */
-public class AppDaoException extends AppBaseException {
+public class AppMessageException extends AppRunTimeException {
 
-    private static final long serialVersionUID = 1774990961999200277L;
+    private static final long serialVersionUID = 4077571693836525234L;
 
 
 
@@ -23,7 +23,7 @@ public class AppDaoException extends AppBaseException {
      *
      * @param message String类型 异常信息
      */
-    public AppDaoException(String message) {
+    public AppMessageException(String message) {
         super(message);
     }
 
@@ -37,7 +37,7 @@ public class AppDaoException extends AppBaseException {
      * @param code String类型 异常标识
      * @param message String类型 异常信息
      */
-    public AppDaoException(String code, String message) {
+    public AppMessageException(String code, String message) {
         super(message);
         setCode(code);
     }
@@ -52,7 +52,7 @@ public class AppDaoException extends AppBaseException {
      * @param message String类型 异常信息
      * @param cause 异常
      */
-    public AppDaoException(String message, Throwable cause) {
+    public AppMessageException(String message, Throwable cause) {
         super(message, cause);
     }
 
@@ -67,7 +67,7 @@ public class AppDaoException extends AppBaseException {
      * @param message String类型 异常信息
      * @param cause Throwable类型 异常
      */
-    public AppDaoException(String code, String message, Throwable cause) {
+    public AppMessageException(String code, String message, Throwable cause) {
         super(message, cause);
         setCode(code);
     }
@@ -81,28 +81,23 @@ public class AppDaoException extends AppBaseException {
      *
      * @param cause String类型 异常
      */
-    public AppDaoException(Throwable cause) {
+    public AppMessageException(Throwable cause) {
         super(cause);
     }
 
-
-
+    
     @Override
-    public AppDaoException create(String message) {
-        return new AppDaoException(message);
+    public AppMessageException create(String message) {
+        return new AppMessageException(message);
     }
 
-
-
     @Override
-    public AppDaoException create(String code, String message) {
-        return new AppDaoException(code, message);
+    public AppMessageException create(String code, String message) {
+        return new AppMessageException(code, message);
     }
 
-
-
     @Override
-    public AppDaoException create(String code, String message, Throwable cause) {
-        return new AppDaoException(code, message, cause);
+    public AppMessageException create(String code, String message, Throwable cause) {
+        return new AppMessageException(code, message, cause);
     }
 }
