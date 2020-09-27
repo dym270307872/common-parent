@@ -95,17 +95,14 @@ public class AppRunTimeOutException extends AppRunTimeException {
     }
 
     
-    @Override
     public AppRunTimeOutException create(String message) {
         return new AppRunTimeOutException(message);
     }
 
-    @Override
     public AppRunTimeOutException create(String code, String message) {
         return new AppRunTimeOutException(code, message);
     }
 
-    @Override
     public AppRunTimeOutException create(String code, String message, Throwable cause) {
         return new AppRunTimeOutException(code, message, cause);
     }

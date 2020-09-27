@@ -87,21 +87,18 @@ public class AppServiceException extends AppBaseException {
 
 
 
-    @Override
     public AppServiceException create(String message) {
         return new AppServiceException(message);
     }
 
 
 
-    @Override
     public AppServiceException create(String code, String message) {
         return new AppServiceException(code, message);
     }
 
 
 
-    @Override
     public AppServiceException create(String code, String message, Throwable cause) {
         return new AppServiceException(code, message, cause);
     }

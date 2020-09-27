@@ -13,6 +13,7 @@ import java.io.Serializable;
  * @since 2019-04-17
  * @version 0.0.3
  */
+@Deprecated
 public class BaseResult implements Serializable {
 
     private static final long serialVersionUID = 1L;

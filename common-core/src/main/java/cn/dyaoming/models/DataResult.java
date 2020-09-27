@@ -10,6 +10,7 @@ package cn.dyaoming.models;
  * @since 2019-04-17
  * @version 0.0.3
  */
+@Deprecated
 public class DataResult extends BaseResult {
 
     private static final long serialVersionUID = 1L;

@@ -29,10 +29,9 @@ public abstract class RedisRegexImp extends RedisBaseImp implements CacheRegexIn
      * 
      * @param pattern String类型 模糊查询条件
      * @return Collection 符合条件的key值列表
-     * @throws AppDaoException dao层异常
      */
     @Override
-    public Collection<String> getKeys(String pattern) {
+    public Collection<String> getKeys(String pattern){
         Set<String> rv = new HashSet<String>();
         
         try {
@@ -40,8 +39,8 @@ public abstract class RedisRegexImp extends RedisBaseImp implements CacheRegexIn
                 rv = jedisCluster.hkeys(pattern);
             }
         } catch(Exception e) {
-            log.warn("异常：getKeys()方法出现异常，异常详细信息：" + e.getMessage() + "。");
-            throw new AppDaoException("模糊查询keys出现异常！", e);
+            log.warn("异常：getKeys()方法出现异常，异常详细信息：" + e.getMessage() + "。",e);
+            rv = null;
         }
         return rv;
     }
@@ -53,7 +52,6 @@ public abstract class RedisRegexImp extends RedisBaseImp implements CacheRegexIn
      * 
      * @param pattern String类型 模糊条件
      * @return boolean 删除结果
-     * @throws AppDaoException dao层异常
      */
     @Override
     public boolean deleteRegexCacheData(String pattern) {
@@ -73,7 +71,7 @@ public abstract class RedisRegexImp extends RedisBaseImp implements CacheRegexIn
             }
         } catch(Exception e) {
             log.warn("异常：deleteRegexCacheData()方法出现异常，异常详细信息：" + e.getMessage() + "。");
-            throw new AppDaoException("删除缓存内容出现异常！", e);
+            rv = false;
         }
 
         return rv;

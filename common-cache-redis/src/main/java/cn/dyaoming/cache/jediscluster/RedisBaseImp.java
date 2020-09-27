@@ -206,8 +206,9 @@ public abstract class RedisBaseImp implements CacheBaseInterface {
                                 value.length - DEFALUTHEAD.length);
                         body = AesUtil.decrypt(body);
                         rv = SerializeUtil.unSerialize(body);
+                    }else {
+                        rv = SerializeUtil.unSerialize(value);
                     }
-                    rv = SerializeUtil.unSerialize(value);
                 }
             }
 
@@ -230,7 +231,7 @@ public abstract class RedisBaseImp implements CacheBaseInterface {
      */
     @SuppressWarnings("unchecked")
     @Override
-    public <T> T getCacheTData(String key, Class<T> type) {
+    public <T> T getCacheData(String key, Class<T> type) {
         T rv = null;
 
         try {
@@ -259,6 +260,7 @@ public abstract class RedisBaseImp implements CacheBaseInterface {
             }
         } catch (Exception e) {
             log.warn("获取缓存内容出现异常！", e);
+            rv = null;
         }
         return rv;
     }
@@ -301,7 +303,7 @@ public abstract class RedisBaseImp implements CacheBaseInterface {
                 try {
                     Thread.sleep(50);
                 } catch (InterruptedException e) {
-                    log.warn("线程休眠异常",e);;
+                    log.warn("线程休眠异常",e);
                 }
             }
         }

@@ -87,21 +87,18 @@ public class AppDaoException extends AppBaseException {
 
 
 
-    @Override
     public AppDaoException create(String message) {
         return new AppDaoException(message);
     }
 
 
 
-    @Override
     public AppDaoException create(String code, String message) {
         return new AppDaoException(code, message);
     }
 
 
 
-    @Override
     public AppDaoException create(String code, String message, Throwable cause) {
         return new AppDaoException(code, message, cause);
     }

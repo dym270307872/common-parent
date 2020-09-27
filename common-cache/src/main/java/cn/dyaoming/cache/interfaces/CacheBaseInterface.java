@@ -133,7 +133,7 @@ public interface CacheBaseInterface extends SyncLockInterface{
 	 * @return T类型 返回结果
 	 * @version 0.0.1
 	 */
-	public <T> T getCacheTData(String key, Class<T> type);
+	public <T> T getCacheData(String key, Class<T> type);
 
 
 

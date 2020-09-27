@@ -86,18 +86,15 @@ public class AppMessageException extends AppRunTimeException {
     }
 
     
-    @Override
-    public AppMessageException create(String message) {
+    public static AppMessageException create(String message) {
         return new AppMessageException(message);
     }
 
-    @Override
-    public AppMessageException create(String code, String message) {
+    public static AppMessageException create(String code, String message) {
         return new AppMessageException(code, message);
     }
 
-    @Override
-    public AppMessageException create(String code, String message, Throwable cause) {
+    public static AppMessageException create(String code, String message, Throwable cause) {
         return new AppMessageException(code, message, cause);
     }
 }

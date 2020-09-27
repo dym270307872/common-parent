@@ -28,7 +28,7 @@ import org.springframework.util.StringUtils;
 @SuppressWarnings("unchecked")
 public abstract class RedisRegexImp extends RedisBaseImp implements CacheRegexInterface {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(RedisRegexImp.class);
+    private static final Logger log = LoggerFactory.getLogger(RedisRegexImp.class);
 
 
 
@@ -40,7 +40,7 @@ public abstract class RedisRegexImp extends RedisBaseImp implements CacheRegexIn
      * @throws AppDaoException dao层异常
      */
     @Override
-    public Collection<String> getKeys(String pattern) throws AppDaoException {
+    public Collection<String> getKeys(String pattern) {
         Set<String> rv = new HashSet<String>();
 
         try {
@@ -64,8 +64,7 @@ public abstract class RedisRegexImp extends RedisBaseImp implements CacheRegexIn
                 });
             }
         } catch (Exception e) {
-            LOGGER.warn("异常：getKeys()方法出现异常，异常详细信息：" + e.getMessage() + "。");
-            throw new AppDaoException("模糊查询keys方法出现异常！", e);
+            log.warn("异常：getKeys()方法出现异常，异常详细信息：" + e.getMessage() + "。");
         }
 
         return rv;
@@ -81,7 +80,7 @@ public abstract class RedisRegexImp extends RedisBaseImp implements CacheRegexIn
      * @throws AppDaoException dao层异常
      */
     @Override
-    public boolean deleteRegexCacheData(String pattern) throws AppDaoException {
+    public boolean deleteRegexCacheData(String pattern) {
         boolean rv = false;
 
         try {
@@ -106,8 +105,7 @@ public abstract class RedisRegexImp extends RedisBaseImp implements CacheRegexIn
                 rv = true;
             }
         } catch (Exception e) {
-            LOGGER.warn("异常：deleteCacheData()方法出现异常，异常详细信息：" + e.getMessage() + "。");
-            throw new AppDaoException("删除缓存内容出现异常！", e);
+            log.warn("异常：deleteCacheData()方法出现异常，异常详细信息：" + e.getMessage() + "。");
         }
 
         return rv;
