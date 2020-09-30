@@ -19,10 +19,10 @@
 		</dependency>
 	</dependencies>
 
-	<build>
+	<!-- <build>
 		<plugins>
 
-			<!-- Source -->
+			Source
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-source-plugin</artifactId>
@@ -35,7 +35,7 @@
 					</execution>
 				</executions>
 			</plugin>
-			<!-- Javadoc -->
+			Javadoc
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-javadoc-plugin</artifactId>
@@ -49,7 +49,7 @@
 					<charset>UTF-8</charset>
 					<encoding>UTF-8</encoding>
 					<docencoding>UTF-8</docencoding>
-					<!-- <additionalparam>-Xdoclint:none</additionalparam> TODO 临时解决不规范的javadoc生成报错,后面要规范化后把这行去掉 -->
+					<additionalparam>-Xdoclint:none</additionalparam> TODO 临时解决不规范的javadoc生成报错,后面要规范化后把这行去掉
 
 				</configuration>
 				<executions>
@@ -61,7 +61,7 @@
 					</execution>
 				</executions>
 			</plugin>
-			<!-- GPG -->
+			GPG
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-gpg-plugin</artifactId>
@@ -76,5 +76,5 @@
 				</executions>
 			</plugin>
 		</plugins>
-	</build>
+	</build> -->
 </project>
