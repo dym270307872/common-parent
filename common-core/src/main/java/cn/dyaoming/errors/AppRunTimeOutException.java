@@ -12,18 +12,25 @@ package cn.dyaoming.errors;
  */
 public class AppRunTimeOutException extends AppRunTimeException {
 
-
     private static final long serialVersionUID = 7899356287467829429L;
+    /**
+     * 默认错误码
+     */
+    private final static String ERROR_CODE = "4081";
+
+
 
     /**
-	 * <p>
-	 * 构造函数
-	 * </p>
-	 *
-	 */
-	public AppRunTimeOutException() {
-		super("Your request has timed out");
-	}
+     * <p>
+     * 构造函数
+     * </p>
+     */
+    public AppRunTimeOutException() {
+        super("Your request has timed out");
+        setCode(ERROR_CODE);
+    }
+
+
 
     /**
      * <p>
@@ -34,6 +41,7 @@ public class AppRunTimeOutException extends AppRunTimeException {
      */
     public AppRunTimeOutException(String message) {
         super(message);
+        setCode(ERROR_CODE);
     }
 
 
@@ -63,6 +71,7 @@ public class AppRunTimeOutException extends AppRunTimeException {
      */
     public AppRunTimeOutException(String message, Throwable cause) {
         super(message, cause);
+        setCode(ERROR_CODE);
     }
 
 
@@ -92,16 +101,22 @@ public class AppRunTimeOutException extends AppRunTimeException {
      */
     public AppRunTimeOutException(Throwable cause) {
         super(cause);
+        setCode(ERROR_CODE);
     }
 
-    
+
+
     public AppRunTimeOutException create(String message) {
         return new AppRunTimeOutException(message);
     }
 
+
+
     public AppRunTimeOutException create(String code, String message) {
         return new AppRunTimeOutException(code, message);
     }
+
+
 
     public AppRunTimeOutException create(String code, String message, Throwable cause) {
         return new AppRunTimeOutException(code, message, cause);

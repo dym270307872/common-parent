@@ -13,6 +13,12 @@ public class AppAccessException extends AppRunTimeException {
 
 	private static final long serialVersionUID = -1522975184308076926L;
 
+	 /**
+     * 默认错误码
+     */
+    private final static String ERROR_CODE = "4031";
+
+	
 	/**
 	 * <p>
 	 * 构造函数
@@ -21,6 +27,7 @@ public class AppAccessException extends AppRunTimeException {
 	 */
 	public AppAccessException() {
 		super("Unauthorized access");
+		setCode(ERROR_CODE);
 	}
 
 	/**
@@ -32,6 +39,7 @@ public class AppAccessException extends AppRunTimeException {
 	 */
 	public AppAccessException(String message) {
 		super(message);
+		setCode(ERROR_CODE);
 	}
 
 	/**
@@ -57,6 +65,7 @@ public class AppAccessException extends AppRunTimeException {
 	 */
 	public AppAccessException(String message, Throwable cause) {
 		super(message, cause);
+		setCode(ERROR_CODE);
 	}
 
 	/**
@@ -82,6 +91,7 @@ public class AppAccessException extends AppRunTimeException {
 	 */
 	public AppAccessException(Throwable cause) {
 		super(cause);
+		setCode(ERROR_CODE);
 	}
 
     public static AppAccessException create(String message) {
