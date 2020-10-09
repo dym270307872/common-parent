@@ -33,7 +33,6 @@ public interface CacheBatchInterface {
      * @param redisKey String类型 缓存key
      * @param args List类型 缓存内容
      * @return 保存成功标志
-     * @throws AppDaoException 异常内容
      * @version 0.0.2
      */
     public boolean setList(String redisKey, List args);
@@ -46,7 +45,6 @@ public interface CacheBatchInterface {
      * @param redisKey String类型 缓存key
      * @param args Object[]/Object...类型 缓存内容
      * @return 保存成功标志
-     * @throws AppDaoException 异常内容
      * @version 0.0.2
      */
     public boolean setList(String redisKey, Object... args);
@@ -60,7 +58,6 @@ public interface CacheBatchInterface {
      * @param index Integer类型 下标
      * @param args Object类型 缓存内容
      * @return 保存成功标志
-     * @throws AppDaoException 异常内容
      * @version 0.0.2
      */
     public boolean setList(String redisKey, Integer index, Object args);
@@ -74,7 +71,6 @@ public interface CacheBatchInterface {
      * @param index Object类型 下标位置
      * @param value Object类型 缓存内容
      * @return 保存成功标志
-     * @throws AppDaoException 异常内容
      * @version 0.0.2
      */
     public boolean insertBefourIndex(String redisKey, Object index, Object value);
@@ -88,7 +84,6 @@ public interface CacheBatchInterface {
      * @param index Object类型 下标位置
      * @param value Object类型 缓存内容
      * @return 保存成功标志
-     * @throws AppDaoException 异常内容
      * @version 0.0.2
      */
     public boolean insertAfterIndex(String redisKey, Object index, Object value);
@@ -100,7 +95,6 @@ public interface CacheBatchInterface {
      *
      * @param redisKey String类型 缓存key
      * @return 栈信息
-     * @throws AppDaoException 异常内容
      * @version 0.0.2
      */
     public Object getStack(String redisKey);
@@ -112,7 +106,6 @@ public interface CacheBatchInterface {
      *
      * @param redisKey String类型 缓存key
      * @return 堆信息
-     * @throws AppDaoException 异常内容
      * @version 0.0.2
      */
     public Object getHeap(String redisKey);
@@ -124,7 +117,6 @@ public interface CacheBatchInterface {
      *
      * @param redisKey String类型 缓存key
      * @return 堆信息
-     * @throws AppDaoException 异常内容
      * @version 0.0.2
      */
     public Object getSize(String redisKey);
@@ -136,7 +128,6 @@ public interface CacheBatchInterface {
      *
      * @param redisKey String类型 缓存key
      * @return list获取内容数量
-     * @throws AppDaoException 异常内容
      * @version 0.0.2
      */
     public List getList(String redisKey);
@@ -149,7 +140,6 @@ public interface CacheBatchInterface {
      * @param redisKey String类型 缓存key
      * @param index Integer类型 数组下标位置
      * @return 指定下标内容
-     * @throws AppDaoException 异常内容
      * @version 0.0.2
      */
     public Object getListValue(String redisKey, Integer index);
@@ -163,7 +153,6 @@ public interface CacheBatchInterface {
      * @param start Integer类型 数组开始位置下标
      * @param end Integer类型 数组结束位置下标
      * @return 指定下标区间内容
-     * @throws AppDaoException 异常内容
      * @version 0.0.2
      */
     public List getList(String redisKey, Integer start, Integer end);
@@ -176,7 +165,6 @@ public interface CacheBatchInterface {
      * @param redisKey String类型 缓存key
      * @param value Object类型 要删除的元素内容
      * @return 结果标识
-     * @throws AppDaoException 异常内容
      * @version 0.0.2
      */
     public boolean remove(String redisKey, Object value);
@@ -191,7 +179,6 @@ public interface CacheBatchInterface {
      * @param redisKey String类型 缓存key
      * @param args Map类型 缓存内容
      * @return 保存成功标志
-     * @throws AppDaoException 异常内容
      * @version 0.0.2
      */
     public boolean setMap(String redisKey, final Map<String, String> args);
@@ -203,7 +190,6 @@ public interface CacheBatchInterface {
      *
      * @param redisKey String类型 缓存key
      * @return 缓存map内容
-     * @throws AppDaoException 异常内容
      * @version 0.0.2
      */
     public Map<String, String> getMap(String redisKey);
@@ -218,7 +204,6 @@ public interface CacheBatchInterface {
      * @param redisKey String类型 缓存key
      * @param mapKey String类型 map内键值
      * @return String类型 缓存值
-     * @throws AppDaoException dao层异常类
      * @version 0.0.2
      */
     public String getFromMap(String redisKey, String mapKey);
@@ -231,7 +216,6 @@ public interface CacheBatchInterface {
      * @param redisKey String类型 缓存key
      * @param key String类型 map内键名
      * @param value String类型 map内键值
-     * @throws AppDaoException 异常内容
      * @version 0.0.2
      */
     public void putToMap(String redisKey, String key, String value);
@@ -243,7 +227,6 @@ public interface CacheBatchInterface {
      *
      * @param key List类型 键
      * @return boolean类型 返回结果
-     * @throws AppDaoException 异常内容
      * @version 0.0.2
      */
     public boolean deleteCacheData(List<String> key);
@@ -255,7 +238,6 @@ public interface CacheBatchInterface {
      *
      * @param key String[]类型 键
      * @return boolean类型 返回结果
-     * @throws AppDaoException 异常内容
      * @version 0.0.2
      */
     public boolean deleteCacheData(String[] key);

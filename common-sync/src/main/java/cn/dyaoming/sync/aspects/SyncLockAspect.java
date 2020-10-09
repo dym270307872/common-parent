@@ -11,6 +11,8 @@ import org.aspectj.lang.annotation.Aspect;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.Ordered;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import cn.dyaoming.errors.AppBusyException;
@@ -37,6 +39,7 @@ public class SyncLockAspect {
     private SyncLockInterface syncLockInterface;
     
 	@Around("@annotation(syncLock)")
+	@Order(Ordered.HIGHEST_PRECEDENCE)
     public Object around(ProceedingJoinPoint point, SyncLock syncLock) {
         String strClassName = point.getTarget().getClass().getName();
         String strMethodName = point.getSignature().getName();
