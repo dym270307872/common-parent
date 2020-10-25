@@ -1,4 +1,4 @@
-package cn.dyaoming.advices;
+package cn.dyaoming.web.advices;
 
 
 import java.lang.annotation.Annotation;
