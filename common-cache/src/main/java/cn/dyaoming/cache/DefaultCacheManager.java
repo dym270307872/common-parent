@@ -20,6 +20,7 @@ import java.util.Collections;
 public class DefaultCacheManager extends AbstractCacheManager {
 
     private String name = "default";
+    
     private long timeout = 300L;
 
     private boolean secret;
@@ -99,7 +100,7 @@ public class DefaultCacheManager extends AbstractCacheManager {
         long thisTimeout = this.timeout;
         boolean thisSecret = this.secret;
         String thisDatabase = this.database;
-        if (name.indexOf("#") > 0) {
+        if (name.indexOf(SEPARATOR) > 0) {
 
             String[] arg = name.split(SEPARATOR);
             int thisLength = arg.length;

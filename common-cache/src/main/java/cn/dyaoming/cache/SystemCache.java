@@ -7,6 +7,8 @@ import cn.dyaoming.utils.GeneratorKeyUtil;
 import cn.dyaoming.utils.SpringUtil;
 import cn.dyaoming.utils.StringUtil;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.Cache;
@@ -21,6 +23,8 @@ import java.util.concurrent.Callable;
  * @author DYM
  */
 public class SystemCache implements Cache, InitializingBean {
+
+    private static final Logger log = LoggerFactory.getLogger(SystemCache.class);
 
     @Autowired
     private CacheInterface cacheDao;
@@ -45,6 +49,8 @@ public class SystemCache implements Cache, InitializingBean {
      */
     private String database;
 
+    private final static String SEPARATOR = "#";
+
 
 
     /**
@@ -52,6 +58,34 @@ public class SystemCache implements Cache, InitializingBean {
      */
     public SystemCache() {
 
+    }
+
+
+
+    /**
+     * 快速构造函数
+     * 
+     * @param name String类型 缓存名称
+     */
+    public SystemCache(String name) {
+        setName(name);
+        if (name.indexOf(SEPARATOR) > 0) {
+
+            String[] arg = name.split(SEPARATOR);
+            int thisLength = arg.length;
+
+            setName(arg[0]);
+            if (thisLength > 1) {
+                setTimeout(Long.valueOf(arg[1]));
+            }
+            if (thisLength > 2) {
+                setSecret(arg[2]);
+            }
+            if (thisLength > 3) {
+                setDatabase(arg[3]);
+            }
+        }
+        setCacheDao((CacheInterface) SpringUtil.getBean("cacheDao"));
     }
 
 
@@ -112,7 +146,7 @@ public class SystemCache implements Cache, InitializingBean {
 
             Object object = this.cacheDao.getCacheData("cache:" + getName() + ":" + finalKey);
 
-            return (object != null ? new SimpleValueWrapper(object) : null);
+            return(object != null ? new SimpleValueWrapper(object) : null);
         }
     }
 
@@ -140,26 +174,21 @@ public class SystemCache implements Cache, InitializingBean {
     @Override
     public <T> T get(Object key, Callable<T> valueLoader) {
         ValueWrapper vw = get(key);
-        if(vw != null) {
-         return (T) vw;
-        }
-         //使用分布式锁锁住线程-获取返回值，存入缓存。
+        if (vw != null) { return (T) vw; }
+        // 使用分布式锁锁住线程-获取返回值，存入缓存。
         String serial = GeneratorKeyUtil.getSeral();
         try {
-            cacheDao.getLock("lock:"+ key, serial, 2L, 2L);
-         vw = get(key);
-         if(vw != null) {
-         return (T) vw;
-         }
-         Object value = valueLoader.call();
-         put(key, value);
-         return (T) vw;
+            cacheDao.getLock("lock:" + key, serial, 2L, 2L);
+            vw = get(key);
+            if (vw != null) { return (T) vw; }
+            Object value = valueLoader.call();
+            put(key, value);
+            return (T) vw;
         } catch (Exception e) {
-//            e.printStackTrace();
+            log.warn("读取缓存失败，失败原因：", e);
         } finally {
-            cacheDao.releaseLock("lock:"+ key,serial);
+            cacheDao.releaseLock("lock:" + key, serial);
         }
-        
         return null;
     }
 
@@ -170,7 +199,6 @@ public class SystemCache implements Cache, InitializingBean {
         if (StringUtil.isEmpty(key) || StringUtil.isEmpty(value) || timeout == 0L) {
             return;
         } else {
-
             this.cacheDao.setCacheObjectData("cache:" + getName() + ":" + key, value, timeout,
                     secret);
         }
@@ -184,7 +212,6 @@ public class SystemCache implements Cache, InitializingBean {
     @Override
     public void evict(Object key) {
         if (!StringUtil.isEmpty(key)) {
-
             this.cacheDao.deleteRegexCacheData("cache:" + getName() + ":" + key);
         }
     }
@@ -196,13 +223,11 @@ public class SystemCache implements Cache, InitializingBean {
      */
     @Override
     public void clear() {
-
         try {
-			this.cacheDao.clear();
-		} catch (AppDaoException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+            this.cacheDao.clear();
+        } catch (AppDaoException e) {
+            log.warn("清除缓存失败，失败原因：", e);
+        }
     }
 
 
@@ -237,6 +262,15 @@ public class SystemCache implements Cache, InitializingBean {
 
     public void setTimeout(long timeout) {
         this.timeout = timeout;
+    }
+
+
+
+    /**
+     * @param secret 加密标识
+     */
+    public void setSecret(boolean secret) {
+        this.secret = secret;
     }
 
 
