@@ -10,7 +10,7 @@ package cn.dyaoming.errors;
  * @version 0.0.4
  * @since 2020-01-29
  */
-public class AppBusyException extends AppRunTimeException {
+public class AppBusyException extends BaseRunTimeException {
 
     private static final long serialVersionUID = -1522975184308076926L;
 
@@ -103,6 +103,13 @@ public class AppBusyException extends AppRunTimeException {
     public AppBusyException(Throwable cause) {
         super(cause);
         setCode(ERROR_CODE);
+    }
+
+
+
+    @Override
+    public String getCode() {
+        return "B" + super.getCode();
     }
 
 

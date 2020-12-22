@@ -3,16 +3,16 @@ package cn.dyaoming.errors;
 
 /**
  * <p>
- * 系统业务层异常
+ * 应用基础异常类
  * </p>
- *
+ * 
  * @author DYAOMING
  * @since 2020-9-11
  * @version 0.0.5
  */
-public abstract class AppRunTimeException extends RuntimeException {
+public abstract class BaseException extends Exception {
 
-    private static final long serialVersionUID = -5996860581412314248L;
+    private static final long serialVersionUID = -20021811335698269L;
 
     /**
      * 异常错误码
@@ -25,10 +25,21 @@ public abstract class AppRunTimeException extends RuntimeException {
      * <p>
      * 构造函数
      * </p>
-     *
-     * @param message 异常信息
      */
-    public AppRunTimeException(String message) {
+    public BaseException() {
+        super();
+    }
+
+
+
+    /**
+     * <p>
+     * 构造函数
+     * </p>
+     *
+     * @param message String类型 异常信息
+     */
+    public BaseException(String message) {
         super(message);
     }
 
@@ -42,7 +53,7 @@ public abstract class AppRunTimeException extends RuntimeException {
      * @param code String类型 异常标识
      * @param message String类型 异常信息
      */
-    public AppRunTimeException(String code, String message) {
+    public BaseException(String code, String message) {
         super(message);
         setCode(code);
     }
@@ -54,10 +65,10 @@ public abstract class AppRunTimeException extends RuntimeException {
      * 构造函数
      * </p>
      *
-     * @param message 异常信息
-     * @param cause 异常
+     * @param message String类型 异常信息
+     * @param cause Throwable类型 异常
      */
-    public AppRunTimeException(String message, Throwable cause) {
+    public BaseException(String message, Throwable cause) {
         super(message, cause);
     }
 
@@ -72,7 +83,7 @@ public abstract class AppRunTimeException extends RuntimeException {
      * @param message String类型 异常信息
      * @param cause Throwable类型 异常
      */
-    public AppRunTimeException(String code, String message, Throwable cause) {
+    public BaseException(String code, String message, Throwable cause) {
         super(message, cause);
         setCode(code);
     }
@@ -84,11 +95,12 @@ public abstract class AppRunTimeException extends RuntimeException {
      * 构造函数
      * </p>
      *
-     * @param cause 异常
+     * @param cause Throwable类型 异常
      */
-    public AppRunTimeException(Throwable cause) {
+    public BaseException(Throwable cause) {
         super(cause);
     }
+
 
 
     public String getCode() {
@@ -100,5 +112,4 @@ public abstract class AppRunTimeException extends RuntimeException {
     public void setCode(String code) {
         this.code = code;
     }
-
 }

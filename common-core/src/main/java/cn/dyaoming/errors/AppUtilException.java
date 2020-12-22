@@ -10,7 +10,7 @@ package cn.dyaoming.errors;
  * @version 0.0.1
  * @since 2019.3.13
  */
-public class AppUtilException extends AppBaseException {
+public class AppUtilException extends BaseException {
 
     private static final long serialVersionUID = 5726765918962578254L;
 

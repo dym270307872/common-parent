@@ -1,9 +1,25 @@
 package cn.dyaoming.enums;
 
 
+/**
+ * <p>
+ * rest默认状态码枚举
+ * </p>
+ * 
+ * @author DYAOMING
+ * @since 2020/12/22
+ * @version 0.0.1
+ */
 public enum ResultEnum {
 
-    SUCCESS("0000", "成功！"), FAILED("9999", "服务器开小差，请稍后再试或联系管理员！");
+    /**
+     * 成功状态码
+     */
+    SUCCESS("00000", "成功！"),
+    /**
+     * 失败状态码
+     */
+    FAILED("99999", "服务器开小差，请您稍后再试！");
 
     ResultEnum() {
 

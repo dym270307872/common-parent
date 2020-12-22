@@ -10,7 +10,7 @@ package cn.dyaoming.errors;
  * @version 0.0.3
  * @since 2020-01-29
  */
-public class AppParameterValidationException extends AppRunTimeException {
+public class AppParameterValidationException extends BaseRunTimeException {
 
     private static final long serialVersionUID = 4077571693836525234L;
 
@@ -85,14 +85,26 @@ public class AppParameterValidationException extends AppRunTimeException {
         super(cause);
     }
 
-    
+
+
+    @Override
+    public String getCode() {
+        return "A" + super.getCode();
+    }
+
+
+
     public AppParameterValidationException create(String message) {
         return new AppParameterValidationException(message);
     }
 
+
+
     public AppParameterValidationException create(String code, String message) {
         return new AppParameterValidationException(code, message);
     }
+
+
 
     public AppParameterValidationException create(String code, String message, Throwable cause) {
         return new AppParameterValidationException(code, message, cause);

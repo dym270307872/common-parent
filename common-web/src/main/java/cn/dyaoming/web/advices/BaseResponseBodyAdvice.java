@@ -20,8 +20,15 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 
+/**
+ * <p>自定义全局rest返回值统一处理</p>
+ * 
+ * @author DYAOMING
+ * @since 2020/12/22
+ * @version 0.0.5
+ */
 @SuppressWarnings("rawtypes")
-public abstract class BaseResponseBodyAdvice implements ResponseBodyAdvice {
+public class BaseResponseBodyAdvice implements ResponseBodyAdvice {
 
     protected Logger log = LoggerFactory.getLogger(this.getClass());
 

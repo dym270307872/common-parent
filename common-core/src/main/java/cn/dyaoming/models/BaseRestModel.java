@@ -99,6 +99,34 @@ public class BaseRestModel<E> implements Serializable {
      * @param data 数据内容
      * @return BaseRestModel对象
      */
+    public static <E> BaseRestModel<E> success(String message) {
+        return new BaseRestModel(true, message);
+    }
+
+
+
+    /**
+     * <p>
+     * 成功对象静态方法
+     * </p>
+     * 
+     * @param data 数据内容
+     * @return BaseRestModel对象
+     */
+    public static <E> BaseRestModel<E> success(String code, String message) {
+        return new BaseRestModel(true, code, message);
+    }
+
+
+
+    /**
+     * <p>
+     * 成功对象静态方法
+     * </p>
+     * 
+     * @param data 数据内容
+     * @return BaseRestModel对象
+     */
     public static <E> BaseRestModel<E> success(E data) {
         return new BaseRestModel(data);
     }
@@ -107,7 +135,7 @@ public class BaseRestModel<E> implements Serializable {
 
     /**
      * <p>
-     * 成功对象静态方法
+     * 失败对象静态方法
      * </p>
      * 
      * @return BaseRestModel对象
@@ -120,7 +148,20 @@ public class BaseRestModel<E> implements Serializable {
 
     /**
      * <p>
-     * 成功对象静态方法
+     * 失败对象静态方法
+     * </p>
+     * 
+     * @return BaseRestModel对象
+     */
+    public static BaseRestModel failed(String message) {
+        return new BaseRestModel(false, message);
+    }
+
+
+
+    /**
+     * <p>
+     *  失败对象静态方法
      * </p>
      * 
      * @param code 错误码

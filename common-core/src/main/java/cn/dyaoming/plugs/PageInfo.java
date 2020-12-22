@@ -3,9 +3,11 @@ package cn.dyaoming.plugs;
 
 import java.io.Serializable;
 
+
 /**
- * 
- * <p>分页信息</p>
+ * <p>
+ * 分页信息
+ * </p>
  * 
  * @author DYAOMING
  * @since 2020-05-28
@@ -13,7 +15,10 @@ import java.io.Serializable;
  */
 public class PageInfo implements Serializable {
 
-    private int total; // 总条目数
+    /**
+     * 总条目数
+     */
+    private int total;
     private int pages; // 总页数
     private int pageNum; // 当前的页码
     private int[] pageSizes = new int[] { 5, 10, 15, 20, 30, 40, 50 }; // select选项设置：条/页
@@ -31,7 +36,9 @@ public class PageInfo implements Serializable {
 
 
     /**
-     * <p>计算分页参数</p>
+     * <p>
+     * 计算分页参数
+     * </p>
      */
     public void math() {
         if (pageNum <= 1) {

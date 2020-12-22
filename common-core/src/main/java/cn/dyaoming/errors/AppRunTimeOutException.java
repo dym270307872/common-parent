@@ -10,7 +10,7 @@ package cn.dyaoming.errors;
  * @version 0.0.5
  * @since 2020-09-11
  */
-public class AppRunTimeOutException extends AppRunTimeException {
+public class AppRunTimeOutException extends BaseRunTimeException {
 
     private static final long serialVersionUID = 7899356287467829429L;
     /**
@@ -102,6 +102,13 @@ public class AppRunTimeOutException extends AppRunTimeException {
     public AppRunTimeOutException(Throwable cause) {
         super(cause);
         setCode(ERROR_CODE);
+    }
+
+
+
+    @Override
+    public String getCode() {
+        return "B" + super.getCode();
     }
 
 
