@@ -4,6 +4,8 @@ package cn.dyaoming.cache;
 import org.springframework.cache.Cache;
 import org.springframework.cache.support.AbstractCacheManager;
 
+import cn.dyaoming.cache.constants.DefaultCacheConstant;
+
 import java.util.Collection;
 import java.util.Collections;
 
@@ -61,12 +63,7 @@ public class DefaultCacheManager extends AbstractCacheManager {
      * @param secret String类型 加密标识
      */
     public void setSecret(String secret) {
-
-        if ("true".equalsIgnoreCase(secret)) {
-            this.secret = true;
-        } else {
-            this.secret = false;
-        }
+        this.secret = DefaultCacheConstant.NEED_SECRET_CODE.equalsIgnoreCase(secret);
     }
 
 
@@ -110,11 +107,7 @@ public class DefaultCacheManager extends AbstractCacheManager {
                 thisTimeout = Long.valueOf(arg[1]);
             }
             if (thisLength > 2) {
-                if ("true".equalsIgnoreCase(arg[2])) {
-                    thisSecret = true;
-                } else {
-                    thisSecret = false;
-                }
+                thisSecret = DefaultCacheConstant.NEED_SECRET_CODE.equalsIgnoreCase(arg[2]);
             }
             if (thisLength > 3) {
                 thisDatabase = arg[3];

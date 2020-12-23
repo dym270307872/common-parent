@@ -1,6 +1,7 @@
 package cn.dyaoming.cache;
 
 
+import cn.dyaoming.cache.constants.DefaultCacheConstant;
 import cn.dyaoming.cache.interfaces.CacheInterface;
 import cn.dyaoming.errors.AppDaoException;
 import cn.dyaoming.utils.GeneratorKeyUtil;
@@ -279,12 +280,7 @@ public class SystemCache implements Cache, InitializingBean {
      * @param secret 加密标识
      */
     public void setSecret(String secret) {
-
-        if ("true".equalsIgnoreCase(secret)) {
-            this.secret = true;
-        } else {
-            this.secret = false;
-        }
+        this.secret = DefaultCacheConstant.NEED_SECRET_CODE.equalsIgnoreCase(secret);
     }
 
 

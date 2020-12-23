@@ -1,9 +1,10 @@
 package cn.dyaoming.sync;
 
 
-
 import org.springframework.cache.Cache;
 import org.springframework.cache.support.AbstractCacheManager;
+
+import cn.dyaoming.sync.constants.DefaultSyncConstant;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -27,7 +28,6 @@ public class DefaultSyncManager extends AbstractCacheManager {
 
     private String database;
 
-    private final static String TRUE = "true";
     /**
      * 分隔符
      */
@@ -62,7 +62,7 @@ public class DefaultSyncManager extends AbstractCacheManager {
      * @param secret String类型 加密标识
      */
     public void setSecret(String secret) {
-    	this.secret = TRUE.equalsIgnoreCase(secret);
+        this.secret = DefaultSyncConstant.NEED_SECRET_CODE.equalsIgnoreCase(secret);
     }
 
 

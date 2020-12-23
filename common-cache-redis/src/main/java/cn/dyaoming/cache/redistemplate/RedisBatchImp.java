@@ -144,6 +144,7 @@ public abstract class RedisBatchImp extends RedisBaseImp implements CacheBatchIn
      * @return 保存成功标志
      * @version 0.0.2
      */
+    @Override
     public Object getStack(String redisKey) {
         Object rv = null;
 
@@ -165,6 +166,7 @@ public abstract class RedisBatchImp extends RedisBaseImp implements CacheBatchIn
      * @return 保存成功标志
      * @version 0.0.2
      */
+    @Override
     public Object getHeap(String redisKey) {
         Object rv = null;
 

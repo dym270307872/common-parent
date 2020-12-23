@@ -150,14 +150,14 @@ public abstract class RedisBaseImp implements CacheBaseInterface {
                 byte[] valueByte = SerializeUtil.serialize(value);
                 if (secret) {
                     valueByte = AesUtil.encrypt(valueByte);
-                    int length_byte = DEFALUTHEAD.length + valueByte.length;
-                    byte[] all_byte = new byte[length_byte];
+                    int byteLength = DEFALUTHEAD.length + valueByte.length;
+                    byte[] allByte = new byte[byteLength];
 
-                    System.arraycopy(DEFALUTHEAD, 0, all_byte, 0,
+                    System.arraycopy(DEFALUTHEAD, 0, allByte, 0,
                             DEFALUTHEAD.length);
-                    System.arraycopy(valueByte, 0, all_byte, DEFALUTHEAD.length,
+                    System.arraycopy(valueByte, 0, allByte, DEFALUTHEAD.length,
                             valueByte.length);
-                    valueByte = all_byte;
+                    valueByte = allByte;
                 }
                 final byte[] finalValue = valueByte;
                 Object obj = redisTemplate.execute(new RedisCallback<Boolean>() {

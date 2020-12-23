@@ -61,12 +61,7 @@ public class CacheManager extends AbstractCacheManager {
      * @param secret String类型 加密标识
      */
     public void setSecret(String secret) {
-
-        if ("true".equalsIgnoreCase(secret)) {
-            this.secret = true;
-        } else {
-            this.secret = false;
-        }
+        this.secret = "true".equalsIgnoreCase(secret);
     }
 
 
@@ -110,11 +105,7 @@ public class CacheManager extends AbstractCacheManager {
                 thisTimeout = Long.valueOf(arg[1]);
             }
             if (thisLength > 2) {
-                if ("true".equalsIgnoreCase(arg[2])) {
-                    thisSecret = true;
-                } else {
-                    thisSecret = false;
-                }
+                thisSecret = "true".equalsIgnoreCase(arg[2]);
             }
             if (thisLength > 3) {
                 thisDatabase = arg[3];

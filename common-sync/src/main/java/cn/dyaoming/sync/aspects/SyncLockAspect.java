@@ -17,7 +17,7 @@ import org.springframework.stereotype.Component;
 
 import cn.dyaoming.errors.AppBusyException;
 import cn.dyaoming.sync.annotations.SyncLock;
-import cn.dyaoming.sync.constants.SyncDefaultConstant;
+import cn.dyaoming.sync.constants.DefaultSyncConstant;
 import cn.dyaoming.sync.interfaces.SyncLockInterface;
 import cn.dyaoming.utils.GeneratorKeyUtil;
 
@@ -49,7 +49,7 @@ public class SyncLockAspect {
         String serial = GeneratorKeyUtil.getSeral();
         Object obj;
         try {
-            if (syncLockInterface.getLock(key, serial, SyncDefaultConstant.LOCK_TIME, SyncDefaultConstant.WAIT_TIME)) {
+            if (syncLockInterface.getLock(key, serial, DefaultSyncConstant.SYNC_LOCK_TIME, DefaultSyncConstant.RETRY_LOCK_WAIT_TIME)) {
                 LOGGER.debug("已获得锁，进行操作！");
                 try {
                     return point.proceed();
