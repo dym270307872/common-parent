@@ -4,6 +4,13 @@ import java.util.Collection;
 
 import org.springframework.cache.Cache;
 
+/**
+ * <p>同步管理器</p>
+ * 
+ * @author dym
+ * @since 2020/12/23
+ * @version 0.0.1
+ */
 public interface SyncManager {
 
     /**

@@ -387,7 +387,7 @@ public abstract class RedisBaseImp implements CacheBaseInterface {
                 return true;
             } else {
                 try {
-                    Thread.sleep(50);
+                    Thread.sleep(50L);
                 } catch (InterruptedException e) {
                     // TODO Auto-generated catch block
                     e.printStackTrace();

@@ -27,6 +27,7 @@ public class DefaultSyncManager extends AbstractCacheManager {
 
     private String database;
 
+    private final static String TRUE = "true";
     /**
      * 分隔符
      */
@@ -61,12 +62,7 @@ public class DefaultSyncManager extends AbstractCacheManager {
      * @param secret String类型 加密标识
      */
     public void setSecret(String secret) {
-
-        if ("true".equalsIgnoreCase(secret)) {
-            this.secret = true;
-        } else {
-            this.secret = false;
-        }
+    	this.secret = TRUE.equalsIgnoreCase(secret);
     }
 
 

@@ -9,6 +9,13 @@ import java.lang.annotation.Target;
 
 import org.springframework.core.annotation.AliasFor;
 
+/**
+ * <p>同步锁注解</p>
+ * 
+ * @author dyaoming
+ * @since 2020/12/23
+ * @version 0.0.1
+ */
 @Target({ElementType.METHOD, ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 @Inherited
