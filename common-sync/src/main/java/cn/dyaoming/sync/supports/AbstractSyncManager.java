@@ -61,6 +61,7 @@ public abstract class AbstractSyncManager implements CacheManager, InitializingB
 	 * Load the initial caches for this cache manager.
 	 * <p>Called by {@link #afterPropertiesSet()} on startup.
 	 * The returned collection may be empty but must not be {@code null}.
+	 * @return 缓存列表
 	 */
 	protected abstract Collection<? extends Cache> loadCaches();
 
