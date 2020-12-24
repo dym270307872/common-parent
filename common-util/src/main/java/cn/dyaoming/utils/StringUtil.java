@@ -14,12 +14,12 @@ import org.slf4j.LoggerFactory;
  */
 public class StringUtil {
 
-    private final static Logger logger = LoggerFactory.getLogger(StringUtil.class);
+    private final static Logger LOGGER = LoggerFactory.getLogger(StringUtil.class);
 
 
 
     public static boolean isEmpty(Object obj) {
-        return(obj == null || "".equals(obj));
+        return (obj == null || "".equals(obj));
     }
 
 

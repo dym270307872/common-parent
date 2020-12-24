@@ -1,7 +1,5 @@
 package cn.dyaoming.cache;
 
-import cn.dyaoming.cache.SystemCache;
-
 import java.util.ArrayList;
 import java.util.List;
 
