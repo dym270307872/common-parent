@@ -20,7 +20,7 @@ import org.slf4j.LoggerFactory;
  */
 public class HttpAccessWebservice {
 
-    private final static Logger logger = LoggerFactory.getLogger(HttpAccessWebservice.class);
+    private final static Logger LOGGER = LoggerFactory.getLogger(HttpAccessWebservice.class);
 
 
 
@@ -93,7 +93,7 @@ public class HttpAccessWebservice {
                 rv = sb.toString();
 
                 // System.out.println("返回结果：" + rv);
-                logger.info("返回结果：" + rv);
+                LOGGER.info("返回结果：" + rv);
             }
         } catch(IOException e) {
             rv = null;
@@ -101,16 +101,16 @@ public class HttpAccessWebservice {
             System.out.println("接口未开放或暂时不能联通，接口地址：" + args0);
             System.out.println("接口调用异常：" + e.getMessage());
 
-            logger.error("接口未开放或暂时不能联通，接口地址：" + args0);
-            logger.error("接口未开放或暂时不能联通，接口地址：" + e.getMessage());
+            LOGGER.error("接口未开放或暂时不能联通，接口地址：" + args0);
+            LOGGER.error("接口未开放或暂时不能联通，接口地址：" + e.getMessage());
         } catch(Exception e) {
             rv = null;
 
             System.out.println("接口未开放或暂时不能联通，接口地址：" + args0);
             System.out.println("接口调用异常：" + e.getMessage());
 
-            logger.error("接口未开放或暂时不能联通，接口地址：" + args0);
-            logger.error("接口未开放或暂时不能联通，接口地址：" + e.getMessage());
+            LOGGER.error("接口未开放或暂时不能联通，接口地址：" + args0);
+            LOGGER.error("接口未开放或暂时不能联通，接口地址：" + e.getMessage());
         }
 
         return rv;
@@ -211,7 +211,7 @@ public class HttpAccessWebservice {
                 rv = sb.toString();
 
                 // System.out.println("返回结果：" + rv);
-                logger.info("返回结果：" + rv);
+                LOGGER.info("返回结果：" + rv);
             }
         } catch(Exception e) {
             rv = null;

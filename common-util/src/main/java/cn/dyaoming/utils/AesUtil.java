@@ -5,6 +5,9 @@ import javax.crypto.Cipher;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 
 /**
  * <p>
@@ -17,24 +20,24 @@ import javax.crypto.spec.SecretKeySpec;
  */
 public class AesUtil {
 
-	// 默认秘钥
-	private final static String DEFAULTKEY = "e67M5gbCL9cZs0pS";
+    private final static Logger LOGGER = LoggerFactory.getLogger(AesUtil.class);
+    
+	/**
+	 *  默认秘钥
+	 */
+	private final static String DEFAULT_KEY = "e67M5gbCL9cZs0pS";
 
 
 
 	/**
 	 * 功能描述：AES加密 方法。
-	 * 
-	 * 创建时间：2016-03-17
-	 * 
-	 * 创建人： DYM
 	 *
 	 * @param encryptString String类型 要加密的数据
 	 * @return byte[]类型 加密后结果
 	 */
 	public static byte[] encrypt(String encryptString) {
 		try {
-			String encryptKey = DEFAULTKEY;
+			String encryptKey = DEFAULT_KEY;
 
 			byte[] raw = encryptKey.getBytes("UTF-8");
 			SecretKeySpec skeySpec = new SecretKeySpec(raw, "AES");
@@ -49,11 +52,9 @@ public class AesUtil {
 			return encrypted;
 
 		} catch(Exception e) {
-			System.out.println(e.toString());
-			e.printStackTrace();
-
-			return null;
+		    LOGGER.warn("AES加密失败",e);
 		}
+		return null;
 
 	}
 
@@ -70,7 +71,7 @@ public class AesUtil {
 	 */
 	public static byte[] encrypt(byte[] encryptByte) {
 		try {
-			String encryptKey = DEFAULTKEY;
+			String encryptKey = DEFAULT_KEY;
 
 			byte[] raw = encryptKey.getBytes("UTF-8");
 			SecretKeySpec skeySpec = new SecretKeySpec(raw, "AES");
@@ -106,7 +107,7 @@ public class AesUtil {
 	 */
 	public static byte[] decrypt(byte[] decryptByte) {
 		try {
-			String decryptKey = DEFAULTKEY;
+			String decryptKey = DEFAULT_KEY;
 
 			byte[] raw = decryptKey.getBytes("UTF-8");
 

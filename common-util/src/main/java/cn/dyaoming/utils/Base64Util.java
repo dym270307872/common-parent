@@ -24,7 +24,7 @@ public class Base64Util {
 	 * @param data byte[]类型 要加密的数据
 	 * @return String类型 加密后结果
 	 */
-	public static String encryptBASE64(byte[] data) {
+	public static String encryptBase64(byte[] data) {
 		return (new BASE64Encoder()).encodeBuffer(data);
 	}
 
@@ -36,7 +36,7 @@ public class Base64Util {
 	 * @param data String类型 要加密的数据
 	 * @return String类型 加密后结果
 	 */
-	public static String encryptBASE64(String data) {
+	public static String encryptBase64(String data) {
 		return (new BASE64Encoder()).encodeBuffer(data.getBytes());
 	}
 
@@ -49,7 +49,7 @@ public class Base64Util {
 	 * @param encode String类型 编码类型
 	 * @return String类型 加密后结果
 	 */
-	public static String encryptBASE64(String data, String encode) {
+	public static String encryptBase64(String data, String encode) {
 
 		try {
 			if (encode == null || "".equals(encode)) {
@@ -79,7 +79,7 @@ public class Base64Util {
 	 * @param data String类型 要解密数据
 	 * @return byte[]类型 解密后byte数组结果
 	 */
-	public static byte[] decryptBASE64(String data) {
+	public static byte[] decryptBase64(String data) {
 		try {
 
 			return (new BASE64Decoder()).decodeBuffer(data);
@@ -101,7 +101,7 @@ public class Base64Util {
 	 * @return byte[]类型 解密后byte数组结果
 	 * @throws Exception 异常
 	 */
-	public static byte[] decryptBASE64(byte[] data, String encode) throws Exception {
+	public static byte[] decryptBase64(byte[] data, String encode) throws Exception {
 		try {
 			if (encode == null || "".equals(encode)) {
 

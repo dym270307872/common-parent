@@ -45,7 +45,7 @@ public class MachineUtil {
 	 * 
 	 * @throws UnknownHostException
 	 */
-	public static String getLocalIP() throws Exception {
+	public static String getLocalIp() throws Exception {
 		InetAddress addr = InetAddress.getLocalHost();
 		byte[] ipAddr = addr.getAddress();
 		String ipAddrStr = "";
@@ -61,7 +61,7 @@ public class MachineUtil {
 	
 	public static void main(String[] args) throws Exception {
 		// TODO Auto-generated method stub
-		System.out.println(getLocalIP());
+		System.out.println(getLocalIp());
 	}
 
 }

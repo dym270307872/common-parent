@@ -71,7 +71,7 @@ public class GeneratorKeyUtil {
      * @return String
      * @since 1.0.0
      */
-    public static String randomUUID() {
+    public static String randomUuid() {
         return UUID.randomUUID().toString().replace("-", "");
     }
 

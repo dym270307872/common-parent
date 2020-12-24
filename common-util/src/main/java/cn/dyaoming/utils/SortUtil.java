@@ -1,86 +1,66 @@
 package cn.dyaoming.utils;
 
-
-
 import java.util.Arrays;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-
 /**
- * 类描述： 排序工具类。
+ * <p>
+ * 排序工具类
+ * </p>
  * 
  * @author DYAOMING
- * @serial 2019-04-21
+ * @since 2020/12/23
  * @version 0.0.1
  */
 public class SortUtil {
 
-    private final static Logger logger = LoggerFactory.getLogger(Md5Util.class);
+
+    /**
+     * 功能描述：字符串排序方法。
+     * 
+     * @param target String类型 要处理的字符串
+     * @param isAsc 是否升序
+     * @return String类型 返回字符串
+     */
+    public static String sortStr(String target, boolean isAsc) {
+        if (StringUtil.isBlank(target)) { return ""; }
+        char[] chars = target.toCharArray();
+        Arrays.sort(chars);
+        if (!isAsc) {
+            reverse(chars);
+        }
+        return chars.toString().trim();
+    }
 
 
 
-	/**
-	 * 功能描述：字符串排序方法。
-	 * 
-	 * @param target String类型 要处理的字符串
-	 * @return String类型 返回字符串
-	 */
-	public static String sortStr(String target) {
-		target = target.replaceAll(" ", "");
-		String rv = target;
-
-		char[] t_arr = target.toCharArray();
-		Arrays.sort(t_arr);
-		rv = String.valueOf(t_arr);
-		return rv;
-	}
+    /**
+     * <p>
+     * 字符数组倒叙方法
+     * </p>
+     * 
+     * @param arr 字符数组
+     */
+    private static void reverse(char[] arr) {
+        int size = arr.length;
+        for(int i = 0, mid = size >> 1, j = size - 1; i < mid; i++, j--) {
+            swap(arr, i, j);
+        }
+    }
 
 
 
-	/**
-	 * 功能描述：字符串排序方法（按照字符ASCII的值升序排序）。
-	 * 
-	 * @param target String类型 要处理的字符串
-	 * @return String类型 返回字符串
-	 */
-	public static String sortStringASCIIAsc(String target) {
-		String rv = target;
-
-		char[] arr_char = target.toCharArray();
-
-		Arrays.sort(arr_char);
-		rv = String.valueOf(arr_char);
-
-		return rv;
-	}
-
-
-
-	/**
-	 * 功能描述：字符串排序方法（按照字符ASCII的值降序序排序）。
-	 *
-	 * @param target String类型 要处理的字符串
-	 * @return String类型 返回字符串
-	 */
-	public static String sortStringASCIIDesc(String target) {
-		String rv = target;
-
-		char[] arr_char = target.toCharArray();
-
-		Arrays.sort(arr_char);
-
-		int a_c_l = arr_char.length;
-		char[] t_arr_char = new char[a_c_l];
-
-		for(int i = 0; i < a_c_l; i++) {
-			t_arr_char[i] = arr_char[(a_c_l - 1) - i];
-		}
-
-		rv = String.valueOf(t_arr_char);
-
-		return rv;
-	}
-
+    /**
+     * <p>
+     * 数组内字符交换方法
+     * </p>
+     * 
+     * @param arr 字符数组
+     * @param i 交换左下标
+     * @param j 小环右下标
+     */
+    private static void swap(char[] arr, int i, int j) {
+        char tmp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = tmp;
+    }
 }

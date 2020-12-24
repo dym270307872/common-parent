@@ -21,7 +21,7 @@ public class Md5Util {
 	 * @param str 需要加密的内容
 	 * @return 加密结果
 	 */
-	public static String getMD5L8(String str) {
+	public static String getMd5L8(String str) {
 		try {
 			// 生成一个MD5加密计算摘要
 			MessageDigest md = MessageDigest.getInstance("MD5");
