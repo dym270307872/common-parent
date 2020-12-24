@@ -1,6 +1,7 @@
 package cn.dyaoming.cache;
 
 
+import com.sun.istack.internal.Nullable;
 import org.springframework.cache.Cache;
 import org.springframework.cache.support.AbstractCacheManager;
 
@@ -12,11 +13,11 @@ import java.util.Collections;
  * <p>
  * 缓存控制器
  * </p>
- * 
+ *
  * @author DYAOMING
- * @since 2019-04-09
  * @version 0.0.1
  */
+@SuppressWarnings("ALL")
 @Deprecated
 public class CacheManager extends AbstractCacheManager {
 
@@ -33,12 +34,11 @@ public class CacheManager extends AbstractCacheManager {
     private final static String SEPARATOR = "#";
 
 
-
     /**
      * <p>
      * 设置缓存名
      * </p>
-     * 
+     *
      * @param name 缓存名称
      */
     public void setName(String name) {
@@ -46,24 +46,21 @@ public class CacheManager extends AbstractCacheManager {
     }
 
 
-
     public void setTimeout(long timeout) {
         this.timeout = timeout;
     }
-
 
 
     /**
      * <p>
      * 加密标识设置
      * </p>
-     * 
+     *
      * @param secret String类型 加密标识
      */
     public void setSecret(String secret) {
         this.secret = "true".equalsIgnoreCase(secret);
     }
-
 
 
     public void setDatabase(String database) {
@@ -73,11 +70,9 @@ public class CacheManager extends AbstractCacheManager {
     private Collection<? extends Cache> caches = Collections.emptySet();
 
 
-
     public void setCaches(Collection<? extends Cache> caches) {
         this.caches = caches;
     }
-
 
 
     @Override
@@ -87,7 +82,7 @@ public class CacheManager extends AbstractCacheManager {
 
 
 
-    // @Nullable
+    @Nullable
     @Override
     protected Cache getMissingCache(String name) {
 
@@ -95,11 +90,11 @@ public class CacheManager extends AbstractCacheManager {
         long thisTimeout = this.timeout;
         boolean thisSecret = this.secret;
         String thisDatabase = this.database;
-        if (name.indexOf("#") > 0) {
+        if (name.indexOf(SEPARATOR) > 0) {
 
             String[] arg = name.split(SEPARATOR);
             int thisLength = arg.length;
-            
+
             thisName = arg[0];
             if (thisLength > 1) {
                 thisTimeout = Long.valueOf(arg[1]);

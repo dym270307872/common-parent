@@ -29,7 +29,7 @@ public class SpringUtil implements ApplicationContextAware {
     private static Environment environment;
 
 
-
+    @Override
     public void setApplicationContext(ApplicationContext applicationContext) {
         SpringUtil.applicationContext = applicationContext;
     }

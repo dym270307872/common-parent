@@ -207,7 +207,7 @@ public class NumberUtil {
 		}
 		// 整数金额处理
 		if (isMoney) {
-			if (chEnd.equals("元")) {// 是否以'元'结尾，补充“整”
+			if ("元".equals(chEnd)) {// 是否以'元'结尾，补充“整”
 				cnchars.add("整");
 			}
 		}

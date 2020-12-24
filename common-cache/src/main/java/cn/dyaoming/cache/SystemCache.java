@@ -207,7 +207,7 @@ public class SystemCache implements Cache, InitializingBean {
 
 
 
-    /*
+    /**
      * 根据Key 删除缓存
      */
     @Override
@@ -219,7 +219,7 @@ public class SystemCache implements Cache, InitializingBean {
 
 
 
-    /*
+    /**
      * 清楚系统缓存
      */
     @Override
