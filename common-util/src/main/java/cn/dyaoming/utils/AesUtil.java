@@ -133,17 +133,9 @@ public class AesUtil {
 	}
 
 
-
-
-
-
 	/**
 	 * 功能描述：AES加密 方法。
-	 * 
-	 * 创建时间：2016-03-17
-	 * 
-	 * 创建人： 于昌亮
-	 * 
+	 *
 	 * @param encryptString String类型 要加密的数据
 	 * @param encryptKey String类型 加密时使用的KEY
 	 * @return byte[]类型 加密后结果
@@ -188,11 +180,7 @@ public class AesUtil {
 
 	/**
 	 * 功能描述：AES解密 方法。
-	 * 
-	 * 创建时间：2016-03-17
-	 * 
-	 * 创建人： 于昌亮
-	 * 
+	 *
 	 * @param decryptString byte[]类型 要解密的数据（需要使用Base64将字符串转换成byte[]）
 	 * @param decryptKey String类型 解密时使用的KEY
 	 * @return String类型 解密后结果

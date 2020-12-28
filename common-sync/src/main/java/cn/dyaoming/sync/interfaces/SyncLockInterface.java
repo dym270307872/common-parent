@@ -7,9 +7,27 @@ package cn.dyaoming.sync.interfaces;
  * 
  * @author dym
  * @since 2020/12/23
- * @version 0.0.1
+ * @version 0.0.5
  */
 public interface SyncLockInterface {
+
+	/**
+	 * 设置并发锁lua脚本
+	 */
+	public final static String SET_LOCK_LUA_CODE = "if (redis.call('exists', KEYS[1]) == 0) then redis.call('hset', KEYS[1], ARGV[1], 1); redis.call('pexpire', KEYS[1], ARGV[2]); return 'OK'; end;"
+			+ " if (redis.call('hexists', KEYS[1], ARGV[1]) == 1) then "
+			+ "local ttl = redis.call('pttl', KEYS[1])"
+			+ "redis.call('hincrby', KEYS[1], ARGV[1], 1); redis.call('pexpire', KEYS[1], ARGV[2] + ttl); return 'OK'; end;"
+			+ " return 'ERROR';";
+
+	/**
+	 * 接触并发锁lua脚本
+	 */
+	public final static String REMOVE_LOCK_LUA_CODE = "if (redis.call('exists', KEYS[1]) == 0) then return 'OK'; end;"
+			+ "if (redis.call('hexists', KEYS[1], ARGV[1]) == 0) then return 'OK';end; "
+			+ "local counter = redis.call('hincrby', KEYS[1], ARGV[1], -1); "
+			+ "if (counter > 0) then return 'OK'; else redis.call('del', KEYS[1]);  return 'OK'; end;"
+			+ " return 'ERROR';";
 
 	/**
 	 * <p>

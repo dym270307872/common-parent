@@ -41,7 +41,7 @@ public class SyncLockAspect {
     
 	@Around("@annotation(syncLock)")
 	@Order(Ordered.HIGHEST_PRECEDENCE)
-    public Object around(ProceedingJoinPoint point, SyncLock syncLock) {
+    public Object around(ProceedingJoinPoint point, SyncLock syncLock) throws Throwable {
         String strClassName = point.getTarget().getClass().getName();
         String strMethodName = point.getSignature().getName();
         String key = strClassName + strMethodName;
@@ -51,20 +51,14 @@ public class SyncLockAspect {
         try {
             if (syncLockInterface.getLock(key, serial, DefaultSyncConstant.SYNC_LOCK_TIME, DefaultSyncConstant.RETRY_LOCK_WAIT_TIME)) {
                 LOGGER.debug("已获得锁，进行操作！");
-                try {
-                    return point.proceed();
-                } catch (Throwable e) {
-                    // e.printStackTrace();
-                }
+                return point.proceed();
             } else {
                 LOGGER.debug("未获得锁，抛出异常！");
                 throw new AppBusyException();
             }
-
         } finally {
             syncLockInterface.releaseLock(key, serial);
         }
-        return null;
     }
 
 }

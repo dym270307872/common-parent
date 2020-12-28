@@ -2,21 +2,20 @@ package cn.dyaoming.cache.redistemplate;
 
 
 import cn.dyaoming.cache.interfaces.CacheBaseInterface;
-import cn.dyaoming.errors.AppDaoException;
 import cn.dyaoming.utils.AesUtil;
 import cn.dyaoming.utils.SerializeUtil;
 import cn.dyaoming.utils.StringUtil;
 
 import java.util.*;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.redis.connection.RedisConnection;
-import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
+import org.springframework.data.redis.connection.ReturnType;
 import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.util.StringUtils;
 
 
 /**
@@ -28,7 +27,6 @@ import org.springframework.util.StringUtils;
  * @since 2019-05-15
  * @version V1.0
  */
-@SuppressWarnings({ "rawtypes", "unchecked" })
 public abstract class RedisBaseImp implements CacheBaseInterface {
 
     /**
@@ -36,10 +34,10 @@ public abstract class RedisBaseImp implements CacheBaseInterface {
      */
     private static final Logger log = LoggerFactory.getLogger(RedisBaseImp.class);
 
+
     protected Integer dbIndex = null;
 
     protected RedisTemplate redisTemplate;
-
 
     @Autowired
     public void setRedisTemplate(RedisTemplate redisTemplate) {
@@ -79,7 +77,7 @@ public abstract class RedisBaseImp implements CacheBaseInterface {
 
         try {
             if (StringUtil.isNotEmpty(key)) {
-                final byte[] finalKey = key.toString().getBytes("utf-8");
+                final byte[] finalKey = key.toString().getBytes(ENCODE_TYPE);
 
                 Object obj = redisTemplate.execute(new RedisCallback<Boolean>() {
                     @Override
@@ -146,7 +144,7 @@ public abstract class RedisBaseImp implements CacheBaseInterface {
         boolean rv = false;
         try {
             if (StringUtil.isNotEmpty(key)) {
-                final byte[] finalKey = key.toString().getBytes("utf-8");
+                final byte[] finalKey = key.toString().getBytes(ENCODE_TYPE);
                 byte[] valueByte = SerializeUtil.serialize(value);
                 if (secret) {
                     valueByte = AesUtil.encrypt(valueByte);
@@ -176,7 +174,6 @@ public abstract class RedisBaseImp implements CacheBaseInterface {
             }
         } catch (Exception e) {
             log.warn("异常：setCacheObjectData()方法出现异常，异常详细信息：" + e.getMessage() + "。");
-//            throw new AppDaoException("设置缓存内容出现异常！", e);
         }
 
         return rv;
@@ -196,7 +193,7 @@ public abstract class RedisBaseImp implements CacheBaseInterface {
 
         try {
             if (StringUtil.isNotEmpty(key)) {
-                final byte[] finalKey = key.toString().getBytes("utf-8");
+                final byte[] finalKey = key.toString().getBytes(ENCODE_TYPE);
                 redisTemplate.execute(new RedisCallback<Long>() {
                     @Override
                     public Long doInRedis(RedisConnection connection)
@@ -210,7 +207,6 @@ public abstract class RedisBaseImp implements CacheBaseInterface {
             }
         } catch (Exception e) {
             log.warn("异常：deleteCacheData()方法出现异常，异常详细信息：" + e.getMessage() + "。");
-//            throw new AppDaoException("删除缓存内容出现异常！", e);
         }
 
         return rv;
@@ -231,7 +227,7 @@ public abstract class RedisBaseImp implements CacheBaseInterface {
         try {
 
             if (StringUtil.isNotEmpty(key)) {
-                final byte[] finalKey = key.toString().getBytes("utf-8");
+                final byte[] finalKey = key.toString().getBytes(ENCODE_TYPE);
                 final byte[] value = (byte[]) redisTemplate.execute(new RedisCallback<byte[]>() {
                     @Override
                     public byte[] doInRedis(RedisConnection connection) throws DataAccessException {
@@ -254,7 +250,6 @@ public abstract class RedisBaseImp implements CacheBaseInterface {
             }
         } catch (Exception e) {
             log.warn("异常：getCacheData()方法出现异常，异常详细信息：" + e.getMessage() + "。");
-//            throw new AppDaoException("获取缓存内容出现异常！", e);
         }
 
         return rv;
@@ -274,7 +269,7 @@ public abstract class RedisBaseImp implements CacheBaseInterface {
         T rv = null;
         try {
             if (StringUtil.isNotEmpty(key) && type != null) {
-                final byte[] finalKey = key.toString().getBytes("utf-8");
+                final byte[] finalKey = key.toString().getBytes(ENCODE_TYPE);
                 final byte[] value = (byte[]) redisTemplate.execute(new RedisCallback<byte[]>() {
                     @Override
                     public byte[] doInRedis(RedisConnection connection) throws DataAccessException {
@@ -303,7 +298,6 @@ public abstract class RedisBaseImp implements CacheBaseInterface {
             }
         } catch (Exception e) {
             log.warn("获取缓存内容出现异常！", e);
-//            throw new AppDaoException("获取缓存内容出现异常！", e);
         }
         return rv;
     }
@@ -332,17 +326,23 @@ public abstract class RedisBaseImp implements CacheBaseInterface {
     
     @Override
     public boolean tryLock(String key, String serial, long expire) {
-        return (Boolean) redisTemplate.execute((RedisCallback) connection -> {
+        return (boolean) redisTemplate.execute((RedisCallback) connection -> {
+            try {
+//                boolean acquire = connection.setNX(key.getBytes(ENCODE_TYPE), serial.getBytes(ENCODE_TYPE));
+                connection.eval(SET_LOCK_LUA_CODE.getBytes(ENCODE_TYPE), ReturnType.VALUE,1,key,serial,expire);
 
-            Boolean acquire = connection.setNX(key.getBytes(), serial.getBytes());
+//                if (acquire) {
+//                    connection.expire(key.getBytes(), expire);
+//                    return true;
+//                } else {
+//                    byte[] value = connection.get(key.getBytes());
+//
+//                    if (Objects.nonNull(value) && value.length > 0) {
+//                        return Arrays.equals(value, serial.getBytes());
+//                    }
+//                }
+            }catch (Exception e){
 
-            if (acquire) {
-                connection.expire(key.getBytes(), expire);
-                return true;
-            } else {
-                byte[] value = connection.get(key.getBytes());
-
-                if (Objects.nonNull(value) && value.length > 0) { return Arrays.equals(value,serial.getBytes()); }
             }
             return false;
         });
@@ -372,8 +372,8 @@ public abstract class RedisBaseImp implements CacheBaseInterface {
 
     @Override
     public boolean releaseLock(String key, String serial) {
-        return (Boolean) redisTemplate.execute((RedisCallback) connection -> {
-            byte[] value = connection.get(key.getBytes());
+        return (boolean) redisTemplate.execute((RedisCallback) connection -> {
+            byte[] value = connection.get(key.getBytes(ENCODE_TYPE));
             if (Objects.nonNull(value) && value.length > 0) {
                 if (Arrays.equals(value,serial.getBytes())) {
                     connection.del(key.getBytes());
