@@ -94,19 +94,19 @@ public class AppParameterValidationException extends BaseRunTimeException {
 
 
 
-    public AppParameterValidationException create(String message) {
+    public static AppParameterValidationException create(String message) {
         return new AppParameterValidationException(message);
     }
 
 
 
-    public AppParameterValidationException create(String code, String message) {
+    public static AppParameterValidationException create(String code, String message) {
         return new AppParameterValidationException(code, message);
     }
 
 
 
-    public AppParameterValidationException create(String code, String message, Throwable cause) {
+    public static AppParameterValidationException create(String code, String message, Throwable cause) {
         return new AppParameterValidationException(code, message, cause);
     }
 }

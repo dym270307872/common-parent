@@ -329,7 +329,7 @@ public abstract class RedisBaseImp implements CacheBaseInterface {
         return (boolean) redisTemplate.execute((RedisCallback) connection -> {
             try {
 //                boolean acquire = connection.setNX(key.getBytes(ENCODE_TYPE), serial.getBytes(ENCODE_TYPE));
-                connection.eval(SET_LOCK_LUA_CODE.getBytes(ENCODE_TYPE), ReturnType.VALUE,1,key,serial,expire);
+//                connection.eval(SET_LOCK_LUA_CODE.getBytes(ENCODE_TYPE), ReturnType.VALUE,1,key,serial,expire);
 
 //                if (acquire) {
 //                    connection.expire(key.getBytes(), expire);
@@ -349,34 +349,13 @@ public abstract class RedisBaseImp implements CacheBaseInterface {
     }
 
 
-
     @Override
-    public boolean getLock(String key, String serial, long expire, long waittime) {
-        long startTime = System.currentTimeMillis();
-        while (System.currentTimeMillis() <= startTime + waittime*1000) {
-            if (tryLock(key, serial, expire)) {
-                return true;
-            } else {
-                try {
-                    Thread.sleep(50);
-                } catch (InterruptedException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
-            }
-        }
-        return false;
-    }
-
-
-
-    @Override
-    public boolean releaseLock(String key, String serial) {
+    public boolean releaseLock(Object lockKey, String serial) {
         return (boolean) redisTemplate.execute((RedisCallback) connection -> {
-            byte[] value = connection.get(key.getBytes(ENCODE_TYPE));
+            byte[] value = connection.get(lockKey.toString().getBytes());
             if (Objects.nonNull(value) && value.length > 0) {
                 if (Arrays.equals(value,serial.getBytes())) {
-                    connection.del(key.getBytes());
+                    connection.del(lockKey.getBytes());
                     return true;
                 }
             }

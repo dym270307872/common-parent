@@ -1,5 +1,6 @@
 /**
  * <p>悲观锁注解切片类</p>
+ *
  * @author DYAOMING
  */
 package cn.dyaoming.sync.aspects;
@@ -33,14 +34,13 @@ public class SyncLockAspect {
      * 日志常量声明
      */
     private static final Logger LOGGER = LoggerFactory.getLogger(SyncLockAspect.class);
-    
-    
-    
+
+
     @Autowired
     private SyncLockInterface syncLockInterface;
-    
-	@Around("@annotation(syncLock)")
-	@Order(Ordered.HIGHEST_PRECEDENCE)
+
+    @Around("@annotation(syncLock)")
+    @Order(Ordered.HIGHEST_PRECEDENCE)
     public Object around(ProceedingJoinPoint point, SyncLock syncLock) throws Throwable {
         String strClassName = point.getTarget().getClass().getName();
         String strMethodName = point.getSignature().getName();
@@ -49,13 +49,9 @@ public class SyncLockAspect {
         String serial = GeneratorKeyUtil.getSeral();
         Object obj;
         try {
-            if (syncLockInterface.getLock(key, serial, DefaultSyncConstant.SYNC_LOCK_TIME, DefaultSyncConstant.RETRY_LOCK_WAIT_TIME)) {
-                LOGGER.debug("已获得锁，进行操作！");
-                return point.proceed();
-            } else {
-                LOGGER.debug("未获得锁，抛出异常！");
-                throw new AppBusyException();
-            }
+            syncLockInterface.getLock(key, serial, DefaultSyncConstant.SYNC_LOCK_TIME, DefaultSyncConstant.RETRY_LOCK_WAIT_TIME);
+            LOGGER.debug("已获得锁，进行操作！");
+            return point.proceed();
         } finally {
             syncLockInterface.releaseLock(key, serial);
         }

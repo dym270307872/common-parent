@@ -1,7 +1,5 @@
 package cn.dyaoming.cache.interfaces;
 
-
-import cn.dyaoming.errors.AppDaoException;
 import cn.dyaoming.sync.interfaces.SyncLockInterface;
 
 
@@ -15,20 +13,20 @@ public interface CacheBaseInterface extends SyncLockInterface {
     /**
      * 加密标识头
      */
-    public final static byte[] DEFALUTHEAD = {-27, -73, -78, -27, -118, -96, -27, -81, -122,
+    byte[] DEFALUTHEAD = {-27, -73, -78, -27, -118, -96, -27, -81, -122,
             58};
     /**
      * 默认加密标识
      */
-    public final static boolean DEFALUTSECRET = false;
+    boolean DEFALUTSECRET = false;
     /**
      * 默认缓存时长（秒）
      */
-    public final static long DEFALUTTIME = -1L;
+    long DEFALUTTIME = -1L;
 	/**
 	 * 字符集编码格式
 	 */
-	public final static String ENCODE_TYPE = "utf-8";
+	String ENCODE_TYPE = "utf-8";
 
 	/**
      * 功能描述：初始化数据库下标。
@@ -37,7 +35,7 @@ public interface CacheBaseInterface extends SyncLockInterface {
      * @version 0.0.3
      * @since 2019-11-22
      */
-    public void init(String dbIndex);
+    void init(String dbIndex);
 
 
     /**
@@ -47,7 +45,7 @@ public interface CacheBaseInterface extends SyncLockInterface {
      * @return boolean类型 返回结果
      * @version 0.0.1
      */
-    public boolean exists(Object key);
+    boolean exists(Object key);
 
 
     /**
@@ -58,7 +56,7 @@ public interface CacheBaseInterface extends SyncLockInterface {
      * @return boolean类型 返回结果
      * @version 0.0.1
      */
-    public boolean setCacheObjectData(Object key, Object value);
+    boolean setCacheObjectData(Object key, Object value);
 
 
     /**
@@ -70,7 +68,7 @@ public interface CacheBaseInterface extends SyncLockInterface {
      * @return boolean类型 返回结果
      * @version 0.0.1
      */
-    public boolean setCacheObjectData(Object key, Object value, final long validTime);
+    boolean setCacheObjectData(Object key, Object value, final long validTime);
 
 
     /**
@@ -82,7 +80,7 @@ public interface CacheBaseInterface extends SyncLockInterface {
      * @return boolean类型 返回结果
      * @version 0.0.1
      */
-    public boolean setCacheObjectData(Object key, Object value, boolean secret);
+    boolean setCacheObjectData(Object key, Object value, boolean secret);
 
 
     /**
@@ -95,7 +93,7 @@ public interface CacheBaseInterface extends SyncLockInterface {
      * @return boolean类型 返回结果
      * @version 0.0.1
      */
-    public boolean setCacheObjectData(Object key, Object value, final long validTime,
+    boolean setCacheObjectData(Object key, Object value, final long validTime,
                                       boolean secret);
 
 
@@ -106,7 +104,7 @@ public interface CacheBaseInterface extends SyncLockInterface {
      * @return boolean类型 返回结果
      * @version 0.0.1
      */
-    public boolean deleteCacheData(Object key);
+    boolean deleteCacheData(Object key);
 
 
     /**
@@ -116,7 +114,7 @@ public interface CacheBaseInterface extends SyncLockInterface {
      * @return Object类型 返回结果
      * @version 0.0.1
      */
-    public Object getCacheData(Object key);
+    Object getCacheData(Object key);
 
 
     /**
@@ -128,16 +126,14 @@ public interface CacheBaseInterface extends SyncLockInterface {
      * @return T类型 返回结果
      * @version 0.0.1
      */
-    public <T> T getCacheData(String key, Class<T> type);
+    <T> T getCacheData(String key, Class<T> type);
 
 
     /**
      * 描述：清空缓存
      *
-     * @throws AppDaoException dao层异常类
-     * @version 0.0.1
      * @version 0.0.1
      */
-    public void clear() throws AppDaoException;
+    void clear();
 
 }

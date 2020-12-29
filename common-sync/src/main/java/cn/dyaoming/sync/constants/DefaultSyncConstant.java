@@ -20,7 +20,7 @@ public class DefaultSyncConstant {
 	public final static long SYNC_LOCK_TIME = 10L;
 	
 	/**
-	 * 重试锁等待时长
+	 * 重试锁等待时长60s
 	 */
-	public final static long RETRY_LOCK_WAIT_TIME = 10L;
+	public final static long RETRY_LOCK_WAIT_TIME = 60L;
 }

@@ -14,6 +14,7 @@ import org.springframework.util.StringUtils;
 
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
+import redis.clients.util.SafeEncoder;
 
 
 /**
@@ -118,7 +119,7 @@ public abstract class RedisBaseImp implements CacheBaseInterface {
             if (StringUtil.isNotEmpty(key)) {
                 jedis = getResource();
                 selectDb(jedis);
-                rv = jedis.exists(key.toString());
+                rv = jedis.exists(SafeEncoder.encode(key.toString()));
             }
         } finally {
             closeResource(jedis);

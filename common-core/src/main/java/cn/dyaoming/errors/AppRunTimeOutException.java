@@ -113,19 +113,19 @@ public class AppRunTimeOutException extends BaseRunTimeException {
 
 
 
-    public AppRunTimeOutException create(String message) {
+    public static AppRunTimeOutException create(String message) {
         return new AppRunTimeOutException(message);
     }
 
 
 
-    public AppRunTimeOutException create(String code, String message) {
+    public static AppRunTimeOutException create(String code, String message) {
         return new AppRunTimeOutException(code, message);
     }
 
 
 
-    public AppRunTimeOutException create(String code, String message, Throwable cause) {
+    public static AppRunTimeOutException create(String code, String message, Throwable cause) {
         return new AppRunTimeOutException(code, message, cause);
     }
 }

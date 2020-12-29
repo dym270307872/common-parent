@@ -114,19 +114,19 @@ public class AppBusyException extends BaseRunTimeException {
 
 
 
-    public AppBusyException create(String message) {
+    public static AppBusyException create(String message) {
         return new AppBusyException(message);
     }
 
 
 
-    public AppBusyException create(String code, String message) {
+    public static AppBusyException create(String code, String message) {
         return new AppBusyException(code, message);
     }
 
 
 
-    public AppBusyException create(String code, String message, Throwable cause) {
+    public static AppBusyException create(String code, String message, Throwable cause) {
         return new AppBusyException(code, message, cause);
     }
 

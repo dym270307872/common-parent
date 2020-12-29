@@ -15,7 +15,6 @@ public class AppMessageException extends BaseRunTimeException {
     private static final long serialVersionUID = 4077571693836525234L;
 
 
-
     /**
      * <p>
      * 构造函数
@@ -28,13 +27,12 @@ public class AppMessageException extends BaseRunTimeException {
     }
 
 
-
     /**
      * <p>
      * 构造函数
      * </p>
      *
-     * @param code String类型 异常标识
+     * @param code    String类型 异常标识
      * @param message String类型 异常信息
      */
     public AppMessageException(String code, String message) {
@@ -43,35 +41,32 @@ public class AppMessageException extends BaseRunTimeException {
     }
 
 
-
     /**
      * <p>
      * 构造函数
      * </p>
      *
      * @param message String类型 异常信息
-     * @param cause 异常
+     * @param cause   异常
      */
     public AppMessageException(String message, Throwable cause) {
         super(message, cause);
     }
 
 
-
     /**
      * <p>
      * 构造函数
      * </p>
      *
-     * @param code String类型 异常标识
+     * @param code    String类型 异常标识
      * @param message String类型 异常信息
-     * @param cause Throwable类型 异常
+     * @param cause   Throwable类型 异常
      */
     public AppMessageException(String code, String message, Throwable cause) {
         super(message, cause);
         setCode(code);
     }
-
 
 
     /**
@@ -85,7 +80,7 @@ public class AppMessageException extends BaseRunTimeException {
         super(cause);
     }
 
-    
+
     public static AppMessageException create(String message) {
         return new AppMessageException(message);
     }
