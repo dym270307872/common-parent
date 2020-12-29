@@ -28,7 +28,7 @@ public class SortUtil {
         if (!isAsc) {
             reverse(chars);
         }
-        return chars.toString().trim();
+        return String.valueOf(chars);
     }
 
 

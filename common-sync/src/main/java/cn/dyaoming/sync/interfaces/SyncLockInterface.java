@@ -35,6 +35,8 @@ public interface SyncLockInterface {
             + "if (counter > 0) then return 'OK'; else redis.call('del', KEYS[1]);  return 'OK'; end;"
             + " return 'ERROR';";
 
+    String SUCCESS_CODE = "OK";
+
     /**
      * <p>
      * 尝试获取同步锁（不重试）
@@ -60,7 +62,8 @@ public interface SyncLockInterface {
      */
     default void getLock(Object lockKey, Object serial, long expire, long waittime) {
         long startTime = System.currentTimeMillis();
-        while (System.currentTimeMillis() <= startTime + waittime * 1000) {
+        long stopTime = startTime + waittime * 1000;
+        while (System.currentTimeMillis() <= stopTime) {
             if (tryLock(lockKey, serial, expire)) {
                 return;
             } else {

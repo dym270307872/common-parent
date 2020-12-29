@@ -4,11 +4,9 @@ package cn.dyaoming.utils;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
-import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.core.env.ConfigurableEnvironment;
 import org.springframework.core.env.Environment;
 import org.springframework.core.env.MutablePropertySources;
-import org.springframework.core.env.PropertySource;
 import org.springframework.stereotype.Component;
 
 
@@ -24,34 +22,29 @@ import org.springframework.stereotype.Component;
 @Component("dymSpringUtil")
 public class SpringUtil implements ApplicationContextAware {
     
-    private static ApplicationContext applicationContext;
-
-    private static Environment environment;
+    private static ApplicationContext staticApplicationContext;
+    
+    private static Environment staticEnvironment;
 
 
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) {
-        SpringUtil.applicationContext = applicationContext;
+        SpringUtil.setStaticApplicationContext(applicationContext);
     }
 
 
-
-    public static ApplicationContext getApplicationContext() {
-        return applicationContext;
+    private synchronized static void setStaticApplicationContext(ApplicationContext applicationContext) {
+        SpringUtil.staticApplicationContext = applicationContext;
     }
-
-
-
-    public static Environment getEnvironment() {
-        return environment;
-    }
-
-
+    
 
     public void setEnvironment(Environment environment) {
-        SpringUtil.environment = environment;
+        SpringUtil.setStaticEnvironment(environment);
     }
 
+    public synchronized static void setStaticEnvironment(Environment environment) {
+        SpringUtil.staticEnvironment = environment;
+    }
 
 
     /**
@@ -64,7 +57,7 @@ public class SpringUtil implements ApplicationContextAware {
      */
     @SuppressWarnings("unchecked")
     public static <T> T getBean(String name) throws BeansException {
-        return (T) applicationContext.getBean(name);
+        return (T) staticApplicationContext.getBean(name);
     }
 
 
@@ -75,7 +68,7 @@ public class SpringUtil implements ApplicationContextAware {
      * @return String类型 变量值
      */
     public static String getProperty(String propertyName) {
-        return environment.getProperty(propertyName);
+        return staticEnvironment.getProperty(propertyName);
     }
 
 
@@ -87,7 +80,7 @@ public class SpringUtil implements ApplicationContextAware {
      * @return String类型 变量值
      */
     public static String getProperty(String propertyName, String defaultValue) {
-        return environment.getProperty(propertyName, defaultValue);
+        return staticEnvironment.getProperty(propertyName, defaultValue);
     }
 
 
@@ -99,7 +92,7 @@ public class SpringUtil implements ApplicationContextAware {
      */
     public static void setProperty(String propertyName, String propertyValue) {
 
-        ConfigurableEnvironment ce = (ConfigurableEnvironment) environment;
+        ConfigurableEnvironment ce = (ConfigurableEnvironment) staticEnvironment;
         MutablePropertySources mps = ce.getPropertySources();
         // TODO 添加系统变量未实现 
 //        mps.addFirst(new PropertySource());

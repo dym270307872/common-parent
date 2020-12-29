@@ -224,11 +224,7 @@ public class SystemCache implements Cache, InitializingBean {
      */
     @Override
     public void clear() {
-        try {
             this.cacheDao.clear();
-        } catch (AppDaoException e) {
-            log.warn("清除缓存失败，失败原因：", e);
-        }
     }
 
 

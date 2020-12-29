@@ -32,9 +32,9 @@
 // * @since 2019-05-15
 // * @version V1.0
 // */
-//public abstract class RedisBatchImp extends RedisBaseImp implements CacheBatchInterface {
+//public abstract class AbstractRedisBatchImp extends AbstractRedisBaseImp implements CacheBatchInterface {
 //
-//    private static final Logger log = LoggerFactory.getLogger(RedisBatchImp.class);
+//    private static final Logger log = LoggerFactory.getLogger(AbstractRedisBatchImp.class);
 //
 //   
 //
