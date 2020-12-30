@@ -86,6 +86,7 @@ public class SystemCache implements Cache, InitializingBean {
             }
         }
         setCacheDao((CacheInterface) SpringUtil.getBean("cacheDao"));
+        this.cacheDao.init(this.database);
     }
 
 
