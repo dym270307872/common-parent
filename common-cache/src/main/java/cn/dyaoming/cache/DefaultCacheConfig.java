@@ -4,7 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.support.BeanDefinitionRegistry;
+import org.springframework.beans.factory.support.RootBeanDefinition;
 import org.springframework.cache.Cache;
+import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.CachingConfigurerSupport;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.cache.interceptor.KeyGenerator;
@@ -14,7 +17,7 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 @EnableCaching
-@ComponentScan("cn.dyaoming")
+@ComponentScan("cn.dyaoming.utils")
 public class DefaultCacheConfig extends CachingConfigurerSupport{
 
     
@@ -25,7 +28,7 @@ public class DefaultCacheConfig extends CachingConfigurerSupport{
     
     @Bean
     @Override
-    public org.springframework.cache.CacheManager cacheManager() {
+    public CacheManager cacheManager() {
         DefaultCacheManager cacheManager = new DefaultCacheManager();
 
         if (cacheNames != null) {
@@ -44,5 +47,4 @@ public class DefaultCacheConfig extends CachingConfigurerSupport{
         return new cn.dyaoming.cache.CacheKeyGenerator();
     }
 
-   
 }

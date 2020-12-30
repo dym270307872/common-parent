@@ -3,7 +3,6 @@ package cn.dyaoming.cache;
 
 import cn.dyaoming.cache.constants.DefaultCacheConstant;
 import cn.dyaoming.cache.interfaces.CacheInterface;
-import cn.dyaoming.errors.AppDaoException;
 import cn.dyaoming.utils.GeneratorKeyUtil;
 import cn.dyaoming.utils.SpringUtil;
 import cn.dyaoming.utils.StringUtil;
