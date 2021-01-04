@@ -89,7 +89,7 @@ public class AppParameterValidationException extends BaseRunTimeException {
 
     @Override
     public String getCode() {
-        return "A" + super.getCode();
+        return super.getCode() != null ? "A" + super.getCode() : null;
     }
 
 

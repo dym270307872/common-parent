@@ -109,7 +109,7 @@ public class AppBusyException extends BaseRunTimeException {
 
     @Override
     public String getCode() {
-        return "B" + super.getCode();
+        return super.getCode() != null ? "B" + super.getCode() : null;
     }
 
 
