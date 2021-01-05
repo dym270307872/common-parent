@@ -9,19 +9,17 @@ import javax.management.ObjectName;
 
 /**
  * <p>设备工具类</p>
- * @author dym
- *
+ * 
+ * @author DYAOMING
+ * @since 2021/01/05
+ * @version 0.0.1
  */
 public class MachineUtil {
 
 	/**
 	 * 获取当前机器端口号
 	 * 
-	 * @throws MalformedObjectNameException
-	 * @throws MBeanException 
-	 * @throws ReflectionException 
-	 * @throws AttributeNotFoundException 
-	 * @throws InstanceNotFoundException 
+	 * @throws Exception 异常内容
 	 */
 	public static String getLocalPort() throws Exception {
 		MBeanServer mBeanServer = ManagementFactory.getPlatformMBeanServer();
@@ -43,7 +41,7 @@ public class MachineUtil {
 	/**
 	 * 获取当前机器的IP
 	 * 
-	 * @throws UnknownHostException
+	 * @throws Exception 异常内容
 	 */
 	public static String getLocalIp() throws Exception {
 		InetAddress addr = InetAddress.getLocalHost();
@@ -56,12 +54,6 @@ public class MachineUtil {
 			ipAddrStr += ipAddr[i] & 0xFF;
 		}
 		return ipAddrStr;
-	}
-	
-	
-	public static void main(String[] args) throws Exception {
-		// TODO Auto-generated method stub
-		System.out.println(getLocalIp());
 	}
 
 }

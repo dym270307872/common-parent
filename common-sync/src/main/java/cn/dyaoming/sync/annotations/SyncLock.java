@@ -14,7 +14,7 @@ import org.springframework.core.annotation.AliasFor;
  * 
  * @author dyaoming
  * @since 2020/12/23
- * @version 0.0.1
+ * @version 0.0.5
  */
 @Target({ElementType.METHOD, ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
@@ -25,6 +25,7 @@ public @interface SyncLock {
     /**
      * <p>工作空间</p>
      * {@link #syncNames}
+     * @return value
      */
     @AliasFor("syncNames")
     String[] value() default {};
@@ -32,17 +33,20 @@ public @interface SyncLock {
     /**
      * <p>工作空间</p>
      * {@link #value}
+     * @return syncNames
      */
     @AliasFor("value")
     String[] syncNames() default {};
 
     /**
      * <p>自定义同步锁识别钥匙</p>
+     * @return 自定义锁键值
      */
     String key() default "";
 
     /**
      * <p>自定义同步锁钥匙生成序列</p>
+     * @return 锁键值生成序列
      */
     String keyGenerator() default "";
     

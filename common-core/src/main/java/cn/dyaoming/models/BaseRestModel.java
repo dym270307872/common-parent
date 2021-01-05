@@ -96,7 +96,7 @@ public class BaseRestModel<E> implements Serializable {
      * 成功对象静态方法
      * </p>
      * 
-     * @param data 数据内容
+     * @param message 结果说明
      * @return BaseRestModel对象
      */
     public static <E> BaseRestModel<E> success(String message) {
@@ -110,7 +110,8 @@ public class BaseRestModel<E> implements Serializable {
      * 成功对象静态方法
      * </p>
      * 
-     * @param data 数据内容
+     * @param code 结果标识
+     * @param message 结果说明
      * @return BaseRestModel对象
      */
     public static <E> BaseRestModel<E> success(String code, String message) {
@@ -151,6 +152,7 @@ public class BaseRestModel<E> implements Serializable {
      * 失败对象静态方法
      * </p>
      * 
+     * @param message 错误说明
      * @return BaseRestModel对象
      */
     public static BaseRestModel failed(String message) {

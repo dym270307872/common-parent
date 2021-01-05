@@ -58,7 +58,6 @@ public interface SyncLockInterface {
      * @param serial   同步钥匙内容
      * @param expire   同步锁时长
      * @param waittime 等待时长
-     * @return 是否获取到同步锁
      */
     default void getLock(Object lockKey, Object serial, long expire, long waittime) {
         long startTime = System.currentTimeMillis();

@@ -48,7 +48,6 @@ public abstract class AbstractRedisBatchImp extends AbstractRedisBaseImp impleme
      * @param redisKey String类型 缓存key
      * @param args List类型 缓存内容
      * @return 保存成功标志
-     * @throws AppDaoException 异常内容
      * @version 0.0.2
      */
     @Override
