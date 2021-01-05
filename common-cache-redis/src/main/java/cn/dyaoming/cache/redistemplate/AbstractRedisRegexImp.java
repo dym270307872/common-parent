@@ -5,7 +5,6 @@ import java.io.UnsupportedEncodingException;
 import java.util.*;
 
 import cn.dyaoming.cache.interfaces.CacheRegexInterface;
-import cn.dyaoming.errors.AppDaoException;
 import cn.dyaoming.utils.StringUtil;
 
 import org.slf4j.Logger;
@@ -37,7 +36,6 @@ public abstract class AbstractRedisRegexImp extends AbstractRedisBaseImp impleme
      * 
      * @param pattern String类型 模糊查询条件
      * @return Collection 符合条件的key值列表
-     * @throws AppDaoException dao层异常
      */
     @Override
     public Collection<String> getKeys(String pattern) {
@@ -77,7 +75,6 @@ public abstract class AbstractRedisRegexImp extends AbstractRedisBaseImp impleme
      * 
      * @param pattern String类型 模糊条件
      * @return boolean 删除结果
-     * @throws AppDaoException dao层异常
      */
     @Override
     public boolean deleteRegexCacheData(String pattern) {

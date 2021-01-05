@@ -139,7 +139,8 @@ public class Base64Util {
 		}
 		// 对字节数组Base64编码
 		BASE64Encoder encoder = new BASE64Encoder();
-		return encoder.encode(data).replace("\r\n", ""); // 返回Base64编码过的字节数组字符串
+		// 返回Base64编码过的字节数组字符串
+		return encoder.encode(data).replace("\r\n", "");
 	}
 
 
@@ -176,7 +177,8 @@ public class Base64Util {
 			// Base64解码
 			byte[] b = decoder.decodeBuffer(imgStr);
 			for(int i = 0; i < b.length; ++i) {
-				if (b[i] < 0) {// 调整异常数据
+				// 调整异常数据
+				if (b[i] < 0) {
 					b[i] += 256;
 				}
 			}

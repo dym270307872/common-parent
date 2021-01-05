@@ -12,6 +12,11 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
+/**
+ * 默认缓存配置类
+ * @author dym
+ * @since 2021/01/05
+ */
 @Configuration
 @ComponentScan("cn.dyaoming.utils")
 public class DefaultCacheConfig extends CachingConfigurerSupport{

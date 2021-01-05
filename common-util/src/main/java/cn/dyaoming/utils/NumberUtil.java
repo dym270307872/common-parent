@@ -67,12 +67,12 @@ public class NumberUtil {
 
     public static Integer romanToArab(String param) throws ArithmeticException {
         Integer arab = 0;
-        String[] s_param = param.split("");
-        for(int i = 0; i < s_param.length; i++) {
-            if (i < s_param.length - 1 && template.get(s_param[i]) < template.get(s_param[i + 1])) {
-                arab -= template.get(s_param[i]);
+        String[] params = param.split("");
+        for(int i = 0; i < params.length; i++) {
+            if (i < params.length - 1 && template.get(params[i]) < template.get(params[i + 1])) {
+                arab -= template.get(params[i]);
             } else {
-                arab += template.get(s_param[i]);
+                arab += template.get(params[i]);
             }
         }
 
@@ -147,19 +147,19 @@ public class NumberUtil {
      */
     private static String arabToCn(long num, boolean isColloquial, boolean isMoney)
             throws ArithmeticException {
-        String[] char_dw = CN_UNITS;
-        String[] char_gw = CN_CHARS;
+        String[] dwChars = CN_UNITS;
+        String[] gwChars = CN_CHARS;
         if (isMoney) {
-            char_dw = CNFT_UNITS;
-            char_gw = CNFT_CHARS;
+            dwChars = CNFT_UNITS;
+            gwChars = CNFT_CHARS;
         }
 
         if (num < 10) {// 10以下直接返回对应汉字
-            return new String(char_gw[(int) num] + char_dw[0]);// ASCII2int
+            return new String(gwChars[(int) num] + dwChars[0]);// ASCII2int
         }
 
         char[] chars = String.valueOf(num).toCharArray();
-        if (chars.length > char_dw.length) {// 超过单位表示范围的返回空
+        if (chars.length > dwChars.length) {// 超过单位表示范围的返回空
             throw new ArithmeticException("超过单位表示范围");
         }
 
@@ -167,9 +167,9 @@ public class NumberUtil {
         ArrayList<String> cnchars = new ArrayList<String>(chars.length * 2);// 创建数组，将数字填入单位对应的位置
         for(int pos = chars.length - 1; pos >= 0; pos--) {// 从低位向高位循环
             char ch = chars[pos];
-            String cnChar = char_gw[ch - '0'];// ascii2int 汉字
+            String cnChar = gwChars[ch - '0'];// ascii2int 汉字
             int unitPos = chars.length - pos - 1;// 对应的单位坐标
-            String cnUnit = char_dw[unitPos];// 单位
+            String cnUnit = dwChars[unitPos];// 单位
 
             boolean isZero = (ch == '0');// 是否为0
             boolean isZeroLow = (pos + 1 < chars.length && chars[pos + 1] == '0');// 是否低位为0
@@ -187,20 +187,21 @@ public class NumberUtil {
                 int size = cnchars.size();
                 cnchars.remove(size - 1);
                 if (size >= 2) {
-                    if (!char_gw[0].equals(cnchars.get(size - 2))) {// 补0
-                        cnchars.add(char_gw[0]);
+                    if (!gwChars[0].equals(cnchars.get(size - 2))) {// 补0
+                        cnchars.add(gwChars[0]);
                     }
                 }
             }
 
-            if (isUnitStep || !isZero) {// 单位进位(万、亿)，或者非0时加上单位
+            // 单位进位(万、亿)，或者非0时加上单位
+            if (isUnitStep || !isZero) {
                 cnchars.add(cnUnit);
                 isLastUnitStep = isUnitStep;
             }
-            if (isZero && (isZeroLow || isUnitStep)) {// 当前位为0低位为0，或者当前位为0并且为单位进位时进行省略
+            // 当前位为0低位为0，或者当前位为0并且为单位进位时进行省略
+            if (isZero && (isZeroLow || isUnitStep)) {
                 continue;
             }
-            // }
 
             cnchars.add(cnChar);
             isLastUnitStep = false;
@@ -211,7 +212,7 @@ public class NumberUtil {
         // 清除最后一位的0
         int chSize = cnchars.size();
         String chEnd = cnchars.get(chSize - 1);
-        if (char_gw[0].equals(chEnd) || (char_dw[0].equals(chEnd) && !isMoney)) {
+        if (gwChars[0].equals(chEnd) || (dwChars[0].equals(chEnd) && !isMoney)) {
             cnchars.remove(chSize - 1);
         }
         // 整数金额处理
@@ -225,7 +226,7 @@ public class NumberUtil {
         if (isColloquial) {
             String chFirst = cnchars.get(0);
             String chSecond = cnchars.get(1);
-            if (chFirst.equals(char_gw[1]) && chSecond.startsWith(char_dw[1])) {// 是否以'一'开头，紧跟'十'
+            if (chFirst.equals(gwChars[1]) && chSecond.startsWith(dwChars[1])) {// 是否以'一'开头，紧跟'十'
                 cnchars.remove(0);
             }
         }
@@ -276,27 +277,27 @@ public class NumberUtil {
 
         if (!"".equals(cn)) {
 
-            List<String> l_cn = Arrays.asList(CN_CHARS);
+            List<String> cnList = Arrays.asList(CN_CHARS);
 
             int[] sum = { 0, 0, 0, 0 };
             String[] cnt = cn.split("");
             for(int i = 0; i < cnt.length; i++) {
                 if ("千".equals(cnt[i])) {
-                    sum[0] = l_cn.indexOf(cnt[i - 1]);
+                    sum[0] = cnList.indexOf(cnt[i - 1]);
                 } else if ("百".equals(cnt[i])) {
-                    sum[1] = l_cn.indexOf(cnt[i - 1]);
+                    sum[1] = cnList.indexOf(cnt[i - 1]);
                 } else if ("十".equals(cnt[i])) {
-                    if ("十".equals(cnt[0]) || ("零".equals(cnt[0]) && l_cn.indexOf(cnt[1]) == -1)
+                    if ("十".equals(cnt[0]) || ("零".equals(cnt[0]) && cnList.indexOf(cnt[1]) == -1)
                             || "零".equals(cnt[i - 1])) {
                         sum[2] = 1;
                     } else {
-                        sum[2] = l_cn.indexOf(cnt[i - 1]);
+                        sum[2] = cnList.indexOf(cnt[i - 1]);
                     }
                 }
             }
 
-            if (l_cn.indexOf(cnt[cnt.length - 1]) != -1) {
-                sum[3] = l_cn.indexOf(cnt[cnt.length - 1]);
+            if (cnList.indexOf(cnt[cnt.length - 1]) != -1) {
+                sum[3] = cnList.indexOf(cnt[cnt.length - 1]);
             } else {
                 sum[3] = 0;
             }

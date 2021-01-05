@@ -55,11 +55,8 @@ public class GeneratorKeyUtil {
      * @since 1.0.0
      */
     public static synchronized long getNextId() {
-
-        return System.currentTimeMillis() + random.nextInt(); // 单纯时间同时保存多条记录时会造成主键冲突
-                                                              // modifed by
-                                                              // liusp at
-                                                              // 20130312
+        // 单纯时间同时保存多条记录时会造成主键冲突
+        return System.currentTimeMillis() + random.nextInt();
     }
 
 

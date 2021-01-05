@@ -3,10 +3,12 @@ package cn.dyaoming.cache.interfaces;
 
 import cn.dyaoming.sync.interfaces.SyncLockInterface;
 
-
 /**
+ *
  * 功能描述：缓存接口类。
  *
+ * @author dym
+ * @since 2021/01/05
  * @version 0.0.1
  */
 public interface CacheBaseInterface extends SyncLockInterface {

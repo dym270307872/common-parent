@@ -21,13 +21,17 @@ import org.slf4j.LoggerFactory;
 public class AesUtil {
 
     private final static Logger LOGGER = LoggerFactory.getLogger(AesUtil.class);
-    
+
+
 	/**
 	 *  默认秘钥
 	 */
 	private final static String DEFAULT_KEY = "e67M5gbCL9cZs0pS";
 
-
+	/**
+	 * 秘钥长度
+	 */
+	private final static int KEY_LENGTH = 16;
 
 	/**
 	 * 功能描述：AES加密 方法。
@@ -148,7 +152,7 @@ public class AesUtil {
 			}
 
 			// 判断Key是否为16位
-			if (encryptKey.length() != 16) {
+			if (encryptKey.length() != KEY_LENGTH) {
 				System.out.print("Key长度不是16位");
 				return null;
 			}
@@ -194,7 +198,7 @@ public class AesUtil {
 			}
 
 			// 判断Key是否为16位
-			if (decryptKey.length() != 16) {
+			if (decryptKey.length() != KEY_LENGTH) {
 				System.out.print("Key长度不是16位");
 				return null;
 			}

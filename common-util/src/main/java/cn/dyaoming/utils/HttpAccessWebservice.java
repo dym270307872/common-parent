@@ -42,21 +42,21 @@ public class HttpAccessWebservice {
 
         try {
             // 拼接 URL + PARAM
-            StringBuffer sb_url = new StringBuffer();
-            sb_url.append(args0);
+            StringBuffer sbUrl = new StringBuffer();
+            sbUrl.append(args0);
             // sb_url_param.append("/");
             // sb_url_param.append(args1);
-            sb_url.append("?");
+            sbUrl.append("?");
             // sb_url_param.append(args2);
             // sb_url_param.append("=");
             // sb_url_param.append(args3);
 
             // 处理 特殊 字符 空格 加号 等
-            String str_param = args3.toString().replaceAll("\\+", "%2B");
+            String strParam = args3.toString().replaceAll("\\+", "%2B");
 
             // URL wsUrl = new URL(sb_url + new
             // String(URLEncoder.encode(str_param,"UTF-8")));
-            URL wsUrl = new URL(sb_url + str_param);
+            URL wsUrl = new URL(sbUrl + strParam);
 
             // 打开和URL之间的连接
             HttpURLConnection httpConn = (HttpURLConnection) wsUrl.openConnection();
@@ -138,14 +138,14 @@ public class HttpAccessWebservice {
         try {
 
             // 拼接 URL
-            StringBuffer sb_url = new StringBuffer();
-            sb_url.append(args0);
+            StringBuffer sbUrl = new StringBuffer();
+            sbUrl.append(args0);
             // sb_url.append("/");
             // sb_url.append(args1);
 
             // URL wsUrl = new URL(URLEncoder.encode(sb_url.toString(),
             // "UTF-8"));
-            URL wsUrl = new URL(sb_url.toString());
+            URL wsUrl = new URL(sbUrl.toString());
 
             // 打开和URL之间的连接
             HttpURLConnection httpConn = (HttpURLConnection) wsUrl.openConnection();
@@ -177,17 +177,17 @@ public class HttpAccessWebservice {
 
             // 处理 参数，根据实际情况 进行编码、签名、加密、解密等
             // 拼接 URL + PARAM
-            StringBuffer sb_content = new StringBuffer();
+            StringBuffer sbContent = new StringBuffer();
             // sb_content.append("?");
             // sb_content.append(args2);
             // sb_content.append("=");
-            sb_content.append(args3);
+            sbContent.append(args3);
 
             // 处理 特殊 字符 空格 加号 等
-            String str_content = sb_content.toString().replaceAll("\\+", "%2B");
+            String strContent = sbContent.toString().replaceAll("\\+", "%2B");
 
             // 编码
-            String content = str_content; // URLEncoder.encode(str_content,
+            String content = strContent; // URLEncoder.encode(str_content,
                                           // "UTF-8");
 
             pw.print(content);
