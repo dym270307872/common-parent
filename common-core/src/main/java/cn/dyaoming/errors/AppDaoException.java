@@ -87,19 +87,19 @@ public class AppDaoException extends BaseException {
 
 
 
-    public AppDaoException create(String message) {
+    public static AppDaoException create(String message) {
         return new AppDaoException(message);
     }
 
 
 
-    public AppDaoException create(String code, String message) {
+    public static AppDaoException create(String code, String message) {
         return new AppDaoException(code, message);
     }
 
 
 
-    public AppDaoException create(String code, String message, Throwable cause) {
+    public static AppDaoException create(String code, String message, Throwable cause) {
         return new AppDaoException(code, message, cause);
     }
 }

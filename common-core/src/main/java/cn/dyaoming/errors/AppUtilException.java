@@ -87,19 +87,19 @@ public class AppUtilException extends BaseException {
 
 
 
-    public AppUtilException create(String message) {
+    public static AppUtilException create(String message) {
         return new AppUtilException(message);
     }
 
 
 
-    public AppUtilException create(String code, String message) {
+    public static AppUtilException create(String code, String message) {
         return new AppUtilException(code, message);
     }
 
 
 
-    public AppUtilException create(String code, String message, Throwable cause) {
+    public static AppUtilException create(String code, String message, Throwable cause) {
         return new AppUtilException(code, message, cause);
     }
 }

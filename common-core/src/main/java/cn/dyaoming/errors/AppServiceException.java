@@ -87,19 +87,19 @@ public class AppServiceException extends BaseException {
 
 
 
-    public AppServiceException create(String message) {
+    public static AppServiceException create(String message) {
         return new AppServiceException(message);
     }
 
 
 
-    public AppServiceException create(String code, String message) {
+    public static AppServiceException create(String code, String message) {
         return new AppServiceException(code, message);
     }
 
 
 
-    public AppServiceException create(String code, String message, Throwable cause) {
+    public static AppServiceException create(String code, String message, Throwable cause) {
         return new AppServiceException(code, message, cause);
     }
 }
