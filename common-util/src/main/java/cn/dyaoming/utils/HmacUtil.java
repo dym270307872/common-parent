@@ -27,7 +27,7 @@ public class HmacUtil {
 			SecretKeySpec secretKey = new SecretKeySpec(key.getBytes(), HMACSHA256);
 			sha256Hmac.init(secretKey);
 			byte[] bytes = sha256Hmac.doFinal(message.getBytes());
-			outPut = EncodingUtil.encodeBase64(bytes);
+			outPut = EncodingUtil.toHexString(bytes);
 		} catch (Exception e) {
 			LOGGER.warn("Error HmacSHA256========" + e.getMessage());
 		}
