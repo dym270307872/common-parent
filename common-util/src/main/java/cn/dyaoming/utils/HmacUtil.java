@@ -34,7 +34,4 @@ public class HmacUtil {
 		return outPut;
 	}
 	
-	public static void main(String[] args) {
-		System.out.println(HmacUtil.sha256("QQ270307872dym","123456"));
-	}
 }

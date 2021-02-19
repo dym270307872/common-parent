@@ -7,7 +7,7 @@
 	<groupId>cn.dyaoming.common</groupId>
 	<artifactId>common-parent</artifactId>
 	<packaging>pom</packaging>
-	<version>0.0.5</version>
+	<version>0.0.6</version>
 	<modules>
 		<module>common-core</module>
 		<module>common-util</module>

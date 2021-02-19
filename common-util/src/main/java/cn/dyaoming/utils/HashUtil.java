@@ -52,12 +52,4 @@ public class HashUtil {
 		return new byte[0];
 	}
 	
-	
-	public static void main(String[] args) {
-		String valueString = "QQ270307872dym";
-		System.out.println(md5Encode(valueString));
-		System.out.println(sha1Encode(valueString));
-		System.out.println(sha256Encode(valueString));
-//		System.out.println(Md5Util.md5(valueString));
-	}
 }
