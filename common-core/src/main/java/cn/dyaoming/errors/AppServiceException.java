@@ -8,7 +8,7 @@ package cn.dyaoming.errors;
  *
  * @author DYAOMING
  * @since 2020-01-29
- * @version 0.0.3
+ * @version 0.0.6
  */
 public class AppServiceException extends BaseException {
 
@@ -85,6 +85,11 @@ public class AppServiceException extends BaseException {
         setCode(code);
     }
 
+    
+    @Override
+    public String getCode() {
+        return super.getCode() != null ? "B" + super.getCode() : null;
+    }
 
 
     public static AppServiceException create(String message) {

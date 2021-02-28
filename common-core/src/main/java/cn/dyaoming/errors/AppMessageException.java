@@ -7,7 +7,7 @@ package cn.dyaoming.errors;
  * </p>
  *
  * @author DYAOMING
- * @version 0.0.3
+ * @version 0.0.6
  * @since 2020-01-29
  */
 public class AppMessageException extends BaseRunTimeException {
@@ -40,6 +40,19 @@ public class AppMessageException extends BaseRunTimeException {
         setCode(code);
     }
 
+    
+    /**
+     * <p>
+     * 构造函数
+     * </p>
+     *
+     * @param code    String类型 异常标识
+     * @param message String类型 异常信息
+     */
+    public AppMessageException(BaseException exception) {
+        this(exception.getCode(),exception.getMessage(),exception);
+    }
+    
 
     /**
      * <p>
@@ -91,5 +104,9 @@ public class AppMessageException extends BaseRunTimeException {
 
     public static AppMessageException create(String code, String message, Throwable cause) {
         return new AppMessageException(code, message, cause);
+    }
+    
+    public static AppMessageException createFrom(BaseException exception) {
+        return new AppMessageException(exception);
     }
 }

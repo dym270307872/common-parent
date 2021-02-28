@@ -10,7 +10,7 @@ package cn.dyaoming.errors;
  * @version 0.0.3
  * @since 2020-01-29
  */
-public class AppDaoException extends BaseException {
+public class AppDaoException extends AppServerException {
 
     private static final long serialVersionUID = 1774990961999200277L;
 

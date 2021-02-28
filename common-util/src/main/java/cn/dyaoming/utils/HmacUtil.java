@@ -29,7 +29,7 @@ public class HmacUtil {
 		try {
 			byte[] bytes = encode(message.getBytes(StandardCharsets.UTF_8), key.getBytes(StandardCharsets.UTF_8),
 					HMAC_MD5);
-			outPut = EncodingUtil.toHexString(bytes);
+			outPut = BaseCodingUtil.toHexString(bytes);
 		} catch (Exception e) {
 			LOGGER.warn("Error HmacSHA256========" + e.getMessage());
 		}
@@ -41,7 +41,7 @@ public class HmacUtil {
 		try {
 			byte[] bytes = encode(message.getBytes(StandardCharsets.UTF_8), key.getBytes(StandardCharsets.UTF_8),
 					HMAC_SHA_1);
-			outPut = EncodingUtil.toHexString(bytes);
+			outPut = BaseCodingUtil.toHexString(bytes);
 		} catch (Exception e) {
 			LOGGER.warn("Error HmacSHA256========" + e.getMessage());
 		}
@@ -53,7 +53,7 @@ public class HmacUtil {
 		try {
 			byte[] bytes = encode(message.getBytes(StandardCharsets.UTF_8), key.getBytes(StandardCharsets.UTF_8),
 					HMAC_SHA_256);
-			outPut = EncodingUtil.toHexString(bytes);
+			outPut = BaseCodingUtil.toHexString(bytes);
 		} catch (Exception e) {
 			LOGGER.warn("Error HmacSHA256========" + e.getMessage());
 		}

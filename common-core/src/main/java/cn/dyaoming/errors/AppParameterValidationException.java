@@ -10,7 +10,7 @@ package cn.dyaoming.errors;
  * @version 0.0.3
  * @since 2020-01-29
  */
-public class AppParameterValidationException extends BaseRunTimeException {
+public class AppParameterValidationException extends AppMessageException {
 
     private static final long serialVersionUID = 4077571693836525234L;
 
