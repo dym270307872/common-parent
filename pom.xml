@@ -23,7 +23,7 @@
 
 	<properties>
 	    <!-- spring begin -->
-        <spring.version>4.3.19.RELEASE</spring.version>
+        <spring.version>5.2.22.RELEASE</spring.version>
         <!-- spring end -->
         
 		<!-- json begin -->
